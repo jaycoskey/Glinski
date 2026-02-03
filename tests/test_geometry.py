@@ -42,10 +42,29 @@ class TestGeometry(unittest.TestCase):
 
     def test_hexpos_hexvec_add_pawns(self):
         vec_bp = sum(G.VECS_PAWN_BLACK_CAPT, start=HexVec(0, 0))
-        assert(vec_bp == G.VECS_PAWN_BLACK_ADV[0])
+        self.assertEqual(vec_bp, G.VECS_PAWN_BLACK_ADV[0])
 
         vec_wp = sum(G.VECS_PAWN_WHITE_CAPT, start=HexVec(0, 0))
-        assert(vec_wp == G.VECS_PAWN_WHITE_ADV[0])
+        self.assertEqual(vec_wp, G.VECS_PAWN_WHITE_ADV[0])
+
+    def test_is_pos_on_board(self):
+        NE = HexPos( 5,  5)
+        N  = HexPos( 0,  5)
+        NW = HexPos(-5,  0)
+        SE = HexPos( 5,  0)
+        S  = HexPos( 0, -5)
+        SW = HexPos(-5, -5)
+        CORNERS = [NE, N, NW, SE, S, SW]
+        self.assertTrue(all([G.is_pos_on_board(p) for p in CORNERS]))
+
+        OFF_E  = HexPos( 6,  3)
+        OFF_NE = HexPos( 3,  6)
+        OFF_NW = HexPos(-3,  3)
+        OFF_SE = HexPos( 3, -3)
+        OFF_SW = HexPos(-3, -6)
+        OFF_W  = HexPos(-6, -3)
+        OFFS = [OFF_E, OFF_NE, OFF_NW, OFF_SE, OFF_SW, OFF_W]
+        self.assertTrue(all([not G.is_pos_on_board(p) for p in OFFS]))
 
 
 if __name__ == '__main__':
