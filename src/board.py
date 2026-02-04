@@ -2,7 +2,7 @@
 # by Jay M. Coskey, 2026
 
 import re
-from typing import Dict, List
+from typing import Dict, Generator, List
 
 from src.board_color import BoardColor
 from src.geometry import Geometry as G
@@ -42,6 +42,56 @@ class Board:
         self.history_nonprogress_halfmove_counts = None  # TODO
         self.history_ep_targets = None  # TODO
         self.history_zobrist_hashes = None  # TODO (Intentionlly not using Counter class)
+
+    def find_mates_in_1(self):  # -> Generator[Move]
+        moves = self.board.get_legal_moves()
+        result = []
+        for move in moves:
+            b.move_make(move)
+            if b.is_checkmate():
+                result.append(move)
+            b.move_undo(move)
+        return result
+
+    # Assume the next player to move is White
+    # Returns a tree structure of moves, with depth 3:
+    #   mates_in_2[m_p][m_opp][
+    #   A first move, followed by a series of moves that brings about checkmate to the opponent.
+    def find_mates_in_2(self)-> Dict:
+        mates_in_2 = {}
+        moves_p = self.get_legal_moves()
+        for m_p in moves_p:
+            inevitable_mates = find_mates_in_2_starting_with(m_p)
+            if inevitable_mates:
+                mates_in_2[m_p] = inevitable_mates
+        return mates_in_2
+
+    # p:   The Player who makes move m_p.
+    # opp: The opponent of Player p. Player opp makes move m_opp.
+    #
+    def find_mates_in_2_starting_with(self, m_p):
+        inevitable_mates = {}
+        self.move_make(m_p)
+        moves_opp = b.get_legal_moves()
+        for m_opp in moves_opp:
+            self.move_make(m_opp)
+            if self.is_game_over():
+                is_mate_avoidable = True
+                sefl.move_undo(m_p)
+                break
+            else:
+                mates_p = [m2_p for m2_p in b.get_legal_moves() if b.is_checkmate(m2_p)]
+                if len(mates_p) == 0:
+                    is_mate_avoidable = True
+                    self.move_undo(m_opp)
+                    break
+                if not m_p in inevitable_mates:
+                    inevitable_mates[m_opp] = mates_p
+                    self.move_undo(m_opp)
+        if is_mate_avoidable:
+            return {}
+        else:
+            return inevitable_mates
 
     def get_board_errors(self):
         raise NotImplementedError("board.get_board_errors()")
