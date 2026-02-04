@@ -6,7 +6,14 @@ from enum import Enum, auto
 
 from src.hex_vec import HexVec
 
-
+# Notes on converting between different position representations:
+#   alg_to_pos  (geometry.py)
+#   npos_to_alg (geometry.py)
+#   npos_to_bb  (bitboard.py)
+#   npos_to_pos (geometry.py)
+#   pos_to_alg  (geometry.py)
+#   pos_to_npos (geometry.py)
+#
 @dataclass(frozen=True)
 class HexPos:
     hex0: int
