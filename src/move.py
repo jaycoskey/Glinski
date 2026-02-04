@@ -4,7 +4,7 @@
 import re
 import sys
 
-from src.geometry import Geometry as Geom
+from src.geometry import Geometry as G
 from src.move_eval import MoveEval
 from src.move_regexp import MoveRegexp
 from src.piece_type import PieceType
@@ -78,8 +78,8 @@ class Move:
     def __str__(self):
         return "{0}{1}{2}{3}".format(
             PieceType.to_symbol(self.pt),
-            BoardGeometry.npos_to_alg[self.fr_npos],
-            BoardGeometry.npos_to_alg[self.to_npos],
+            G.npos_to_alg[self.fr_npos],
+            G.npos_to_alg[self.to_npos],
             self.post_str,
         )
 
