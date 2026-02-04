@@ -72,6 +72,22 @@ def npos_to_bb(npos: int):
 
 # ========================================
 
+BB_CORNERS = BB_A6 | BB_A1 | BB_F11 | BB_F1 | BB_L6 | BB_L1
+
+# ========================================
+
+BB_EDGE_NE = BB_F11 | BB_G10 | BB_H9 | BB_I8 | BB_K7 | BB_L6
+BB_EDGE_NW = BB_A6 | BB_B7 | BB_C8 | BB_D9 | BB_E10 | BB_F11
+BB_EDGE_E  = BB_L6 | BB_L5 | BB_L4 | BB_L3 | BB_L2 | BB_L1
+BB_EDGE_SE = BB_F1 | BB_G1 | BB_H1 | BB_I1 | BB_L1 | BB_L1
+BB_EDGE_SW = BB_A1 | BB_B1 | BB_C1 | BB_D1 | BB_E1 | BB_F1
+BB_EDGE_W  = BB_A6 | BB_A5 | BB_A4 | BB_A3 | BB_A2 | BB_A1
+
+BITBOARD_EDGES = [BB_EDGE_NE, BB_EDGE_NW, BB_EDGE_E,
+        BB_EDGE_SE, BB_EDGE_SW, BB_EDGE_W]
+
+# ========================================
+
 BB_FILE_A = (BB_A6 | BB_A5 | BB_A4 | BB_A3 | BB_A2 | BB_A1)
 BB_FILE_B = (BB_B7 | BB_B6 | BB_B5 | BB_B4 | BB_B3 | BB_B2
         | BB_B1)
@@ -100,24 +116,6 @@ BITBOARD_FILES = [
 
 # ========================================
 
-BB_CORNERS = BB_A1 | BB_A6 | BB_F1 | BB_F11 | BB_L1 | BB_L6
-
-# ========================================
-
-BB_EDGE_NE = BB_F11 | BB_G10 | BB_H9 | BB_I8 | BB_K7 | BB_L6
-BB_EDGE_NW = BB_A6 | BB_B7 | BB_C8 | BB_D9 | BB_E10 | BB_F11
-BB_EDGE_E  = BB_L6 | BB_L5 | BB_L4 | BB_L3 | BB_L2 | BB_L1
-BB_EDGE_SE = BB_F1 | BB_G1 | BB_H1 | BB_I1 | BB_L1 | BB_L1
-BB_EDGE_SW = BB_A1 | BB_B1 | BB_C1 | BB_D1 | BB_E1 | BB_F1
-BB_EDGE_W  = BB_A6 | BB_A5 | BB_A4 | BB_A3 | BB_A2 | BB_A1
-
-BITBOARD_EDGES = [BB_EDGE_NE, BB_EDGE_NW, BB_EDGE_E,
-        BB_EDGE_SE, BB_EDGE_SW, BB_EDGE_W]
-
-# ========================================
-
-BB_CORNERS = BB_A6 | BB_A1 | BB_F11 | BB_F1 | BB_L6 | BB_L1
-
 BB_RING0 = BB_F6
 
 BB_RING1 = BB_E6 | BB_E5 | BB_F7 | BB_F5 | BB_G6 | BB_G5
@@ -145,37 +143,6 @@ BB_RING5 = (BB_A6 | BB_A5 | BB_A4 | BB_A3 | BB_A2 | BB_A1
 
 BITBOARD_RINGS = [BB_RING0, BB_RING1, BB_RING2,
         BB_RING3, BB_RING4, BB_RING5]
-
-# ========================================
-
-BB_WEFT0 = BB_F1
-BB_WEFT1 = BB_E1 | BB_G1
-BB_WEFT2 = BB_D1 | BB_F2 | BB_H1
-BB_WEFT3 = BB_C1 | BB_E2 | BB_G2 | BB_I1
-BB_WEFT4 = BB_B1 | BB_D2 | BB_F3 | BB_H2 | BB_K1
-BB_WEFT5 = BB_A1 | BB_C2 | BB_E3 | BB_G3 | BB_I2 | BB_L1
-BB_WEFT6 =     BB_B2 | BB_D3 | BB_F4 | BB_H3 | BB_K2
-BB_WEFT7 = BB_A2 | BB_C3 | BB_E4 | BB_G4 | BB_I3 | BB_L2
-BB_WEFT8 =     BB_B3 | BB_D4 | BB_F5 | BB_H4 | BB_K3
-BB_WEFT9 = BB_A3 | BB_C4 | BB_E5 | BB_G5 | BB_I4 | BB_L3
-BB_WEFT10 =    BB_B4 | BB_D5 | BB_F6 | BB_H5 | BB_K4
-BB_WEFT11 = BB_A4 | BB_C5 | BB_E6 | BB_G6 | BB_I5 | BB_L4
-BB_WEFT12 =    BB_B5 | BB_D6 | BB_F7 | BB_H6 | BB_K5
-BB_WEFT13 = BB_A5 | BB_C6 | BB_E7 | BB_G7 | BB_I6 | BB_L5
-BB_WEFT14 =    BB_B6 | BB_D7 | BB_F8 | BB_H7 | BB_K6
-BB_WEFT15 = BB_A6 | BB_C7 | BB_E8 | BB_G8 | BB_I7 | BB_L6
-BB_WEFT16 = BB_B7 | BB_D8 | BB_F9 | BB_H8 | BB_K7
-BB_WEFT17 = BB_C8 | BB_E9 | BB_G9 | BB_I8
-BB_WEFT18 = BB_D9 | BB_F10 | BB_H9
-BB_WEFT19 = BB_E10 | BB_G10
-BB_WEFT20 = BB_F11
-
-BITBOARD_WEFTS = [
-        BB_WEFT0, BB_WEFT1, BB_WEFT2, BB_WEFT3, BB_WEFT4,
-        BB_WEFT5, BB_WEFT6, BB_WEFT7, BB_WEFT8, BB_WEFT9,
-        BB_WEFT10, BB_WEFT11, BB_WEFT12, BB_WEFT13, BB_WEFT14,
-        BB_WEFT15, BB_WEFT16, BB_WEFT17, BB_WEFT18, BB_WEFT19,
-        BB_WEFT20]
 
 # ========================================
 
@@ -214,4 +181,35 @@ BB_SPACES_DARK = (BB_A4 | BB_A1
         | BB_I8 | BB_I5 | BB_I2
         | BB_K6 | BB_K3
         | BB_L4 | BB_L1)
+
+# ========================================
+
+BB_WEFT0 = BB_F1
+BB_WEFT1 = BB_E1 | BB_G1
+BB_WEFT2 = BB_D1 | BB_F2 | BB_H1
+BB_WEFT3 = BB_C1 | BB_E2 | BB_G2 | BB_I1
+BB_WEFT4 = BB_B1 | BB_D2 | BB_F3 | BB_H2 | BB_K1
+BB_WEFT5 = BB_A1 | BB_C2 | BB_E3 | BB_G3 | BB_I2 | BB_L1
+BB_WEFT6 =     BB_B2 | BB_D3 | BB_F4 | BB_H3 | BB_K2
+BB_WEFT7 = BB_A2 | BB_C3 | BB_E4 | BB_G4 | BB_I3 | BB_L2
+BB_WEFT8 =     BB_B3 | BB_D4 | BB_F5 | BB_H4 | BB_K3
+BB_WEFT9 = BB_A3 | BB_C4 | BB_E5 | BB_G5 | BB_I4 | BB_L3
+BB_WEFT10 =    BB_B4 | BB_D5 | BB_F6 | BB_H5 | BB_K4
+BB_WEFT11 = BB_A4 | BB_C5 | BB_E6 | BB_G6 | BB_I5 | BB_L4
+BB_WEFT12 =    BB_B5 | BB_D6 | BB_F7 | BB_H6 | BB_K5
+BB_WEFT13 = BB_A5 | BB_C6 | BB_E7 | BB_G7 | BB_I6 | BB_L5
+BB_WEFT14 =    BB_B6 | BB_D7 | BB_F8 | BB_H7 | BB_K6
+BB_WEFT15 = BB_A6 | BB_C7 | BB_E8 | BB_G8 | BB_I7 | BB_L6
+BB_WEFT16 = BB_B7 | BB_D8 | BB_F9 | BB_H8 | BB_K7
+BB_WEFT17 = BB_C8 | BB_E9 | BB_G9 | BB_I8
+BB_WEFT18 = BB_D9 | BB_F10 | BB_H9
+BB_WEFT19 = BB_E10 | BB_G10
+BB_WEFT20 = BB_F11
+
+BITBOARD_WEFTS = [
+        BB_WEFT0, BB_WEFT1, BB_WEFT2, BB_WEFT3, BB_WEFT4,
+        BB_WEFT5, BB_WEFT6, BB_WEFT7, BB_WEFT8, BB_WEFT9,
+        BB_WEFT10, BB_WEFT11, BB_WEFT12, BB_WEFT13, BB_WEFT14,
+        BB_WEFT15, BB_WEFT16, BB_WEFT17, BB_WEFT18, BB_WEFT19,
+        BB_WEFT20]
 
