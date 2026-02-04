@@ -4,15 +4,15 @@
 from enum import Enum
 
 
-# The values of PieceType need to be positive integers, for
-# collision-free computation of Move object hash functions.
+PIECE_TYPE_COUNT = 6
+
 class PieceType(Enum):
-    King = 1
-    Queen = 2
-    Rook = 3
-    Bishop = 4
-    Knight = 5
-    Pawn = 6
+    King   = 0
+    Queen  = 1
+    Rook   = 2
+    Bishop = 3
+    Knight = 4
+    Pawn   = 5
 
     def __str__(self):
         return self.to_symbol()

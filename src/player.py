@@ -3,6 +3,8 @@
 
 from enum import Enum
 
+PLAYER_COUNT = 2
+
 
 class Player(Enum):
     Black = 0

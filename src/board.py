@@ -1,35 +1,33 @@
-#!/usr/bin/env python
+# !/usr/bin/env python
 # by Jay M. Coskey, 2026
 
 import re
 from typing import Dict, List
 
 from src.board_color import BoardColor
-from src.geometry import *
+from src.geometry import Geometry as G
 from src.hex_vec import HexVec
 from src.hex_pos import HexPos
 from src.move import Move
-from src.piece_type import PieceType
-from src.player import Player
+from src.piece import Piece
+from src.piece_type import PieceType, PIECE_TYPE_COUNT
+from src.player import Player, PLAYER_COUNT
+from src.zobrist import ZOBRIST_HASH_TABLE
 
-from src.util import static_init
+Npos = int
 
 
-@static_init
 class Board:
-    @classmethod
-    def static_init(cls):
-        # TODO: Initialize _ZOBRIST_HASH_TABLE
-        # cls._ZOBRIST_HASH_TABLE = ZobristHashTable()
-        pass
-
     # Different ways to initialize board:
     #   * By data showing piece placements by color and piece type:
     #         placements: Dict[Player, Dict[PieceType, List[Pos]]]
     #   * By a FEN string:
     #         placements: str
-    def __init__(self, placements):
-        self.pieces = [None for k in range(SPACE_COUNT)]
+    def __init__(self, placements=None):
+        if placements is None:
+            placements = G.INIT_PIECES_DICT
+
+        self.pieces = [None for k in range(G.SPACE_COUNT)]
         for player in placements.keys():
             for pt in placements[player].keys():
                 for pos in placements[player][pt]:
@@ -73,7 +71,7 @@ class Board:
         raise NotImplementedError("board.get_moves_pseudolegal_slider()")
 
     def get_piece(self, npos: Npos):
-        raise NotImplementedError("board.get_piece()")
+        return self.pieces[npos]
 
     def get_pieces(self, player: Player):
         raise NotImplementedError("board.get_pieces()")
@@ -107,8 +105,25 @@ class Board:
     def get_space_color(npos) -> BoardColor:
         raise NotImplementedError("board.get_space_color()")
 
+    # For each piece on the Board, there is a corresponding unique triple:
+    #   (Board position ID, player ID, piece_type ID).
+    # That is used to look up a value in the ZobristHashTable that
+    # corresponds to that triplet.
+    #   * The Board position ID (npos) selects a plane.
+    #   * The Player value (p_val) selects a row within that plane.
+    #   * The PieceType value (p_val) selects a column within that plane.
+    # All such values are XORed together to form the final result.
     def get_zobrist_hash(self):
-        raise NotImplementedError("board.get_zobrist_hash()")
+        result = 0
+        for npos in range(G.SPACE_COUNT):
+            piece = self.get_piece(npos)
+            if piece:
+                p_val = piece.player.value
+                pt_val = piece.pt.value
+                zobrist_index = (npos * PLAYER_COUNT * PIECE_TYPE_COUNT
+                    + p_val * PIECE_TYPE_COUNT + pt_val)
+                result ^= ZOBRIST_HASH_TABLE[zobrist_index]
+        return result
 
     # ========================================
 
@@ -248,9 +263,12 @@ class Board:
     def moves_undo(self, ms):
         raise NotImplementedError("board.moves_undo()")
 
+    # Note that the piece addition is done via pos, but removal uses npos.
     def piece_add(self, pos: HexPos, player: Player, pt: PieceType):
-        raise NotImplementedError("board.piece_add()")
+        npos = G.pos_to_npos(pos)
+        self.pieces[npos] = Piece(player, pt)
 
+    # Note that the piece addition is done via pos, but removal uses npos.
     def piece_remove(self, pos, player=None, pt=None):
         raise NotImplementedError("board.piece_remove()")
 
