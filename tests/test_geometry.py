@@ -47,6 +47,22 @@ class TestGeometry(unittest.TestCase):
         vec_wp = sum(G.VECS_PAWN_WHITE_CAPT, start=HexVec(0, 0))
         self.assertEqual(vec_wp, G.VECS_PAWN_WHITE_ADV[0])
 
+    def test_hexpos_to_alg(self):
+        NW = HexPos(-5, 0)
+        SW = HexPos(-5, -5)
+        self.assertEqual(G.pos_to_alg(NW), 'a6')
+        self.assertEqual(G.pos_to_alg(SW), 'a1')
+
+        N = HexPos( 0, 5)
+        S = HexPos(0, -5)
+        self.assertEqual(G.pos_to_alg(N), 'f11')
+        self.assertEqual(G.pos_to_alg(S), 'f1')
+
+        NE = HexPos(5, 5)
+        SE = HexPos(5, 0)
+        self.assertEqual(G.pos_to_alg(NE), 'l6')
+        self.assertEqual(G.pos_to_alg(SE), 'l1')
+
     def test_is_pos_on_board(self):
         NE = HexPos( 5,  5)
         N  = HexPos( 0,  5)

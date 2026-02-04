@@ -10,6 +10,8 @@ from src.player import Player
 
 from src.util import static_init
 
+# Npos = int
+
 
 @static_init
 class Geometry:
@@ -71,6 +73,7 @@ class Geometry:
         setattr(cls, "SPACES_COUNT", SPACES_COUNT)
 
         FILE_CHARS = list("abcdefghikl")
+        setattr(cls, "FILE_CHARS", FILE_CHARS)
         FILE_CHAR_TO_HEX0 = {
             # GREP Coordinates choice
             letter: k - 5 for k, letter in enumerate(FILE_CHARS)
@@ -281,7 +284,7 @@ class Geometry:
         # SE: HexPos( 5,  0)     -5
         # S:  HexPos( 0, -5)     -5
         # SW: HexPos(-5, -5)      0
-        print(f'Evaluating is_pos_on_board({pos})')
+
         result = (
             -5 <= pos.hex0 <= 5      # W --> E
             and -5 <= pos.hex1 <= 5  # SW --> NE
@@ -296,3 +299,9 @@ class Geometry:
     @classmethod
     def npos_to_pos(cls, n: int) -> str:
         return HexPos(cls.COORD_HEX0, cls.COORD_HEX1)
+
+    @classmethod
+    def pos_to_alg(cls, pos: HexPos) -> str:
+        file_char = cls.FILE_CHARS[pos.hex0 + 5]
+        rank = 6 - max(0, pos.hex0) + pos.hex1
+        return file_char + str(rank)
