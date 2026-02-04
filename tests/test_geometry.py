@@ -10,7 +10,7 @@ import unittest
 
 class TestGeometry(unittest.TestCase):
     def test_geometry_constants(self):
-        self.assertEqual(G.SPACES_COUNT, 91)
+        self.assertEqual(G.SPACE_COUNT, 91)
 
         self.assertEqual(G.A6, G.alg_to_pos("a6"))
         self.assertEqual(G.A1, G.alg_to_pos("a1"))

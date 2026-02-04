@@ -6,11 +6,12 @@ import re
 from src.bitboard import *
 from src.hex_pos import HexPos
 from src.hex_vec import HexVec
+from src.piece_type import PieceType
 from src.player import Player
 
 from src.util import static_init
 
-# Npos = int
+Npos = int
 
 
 @static_init
@@ -67,10 +68,15 @@ class Geometry:
         setattr(cls, "COORD_HEX1", COORD_HEX1)
 
         #
-        # Define SPACES_COUNT
+        # Define SPACE_COUNT
         #
-        SPACES_COUNT = 91
-        setattr(cls, "SPACES_COUNT", SPACES_COUNT)
+        SPACE_COUNT = 91
+        setattr(cls, "SPACE_COUNT", SPACE_COUNT)
+
+        COORDS_TO_NPOS = {
+                (COORD_HEX0[npos], COORD_HEX1[npos]): npos
+                for npos in range(SPACE_COUNT) }
+        setattr(cls, "COORDS_TO_NPOS", COORDS_TO_NPOS)
 
         FILE_CHARS = list("abcdefghikl")
         setattr(cls, "FILE_CHARS", FILE_CHARS)
@@ -127,9 +133,9 @@ class Geometry:
         H4 = alg_to_pos('h4'); H5 = alg_to_pos('h5'); H6 = alg_to_pos('h6');
         H7 = alg_to_pos('h7'); H8 = alg_to_pos('h8'); H9 = alg_to_pos('h9');
 
-        I1 = alg_to_pos('h1'); I2 = alg_to_pos('h2'); I3 = alg_to_pos('h3');
-        I4 = alg_to_pos('h4'); I5 = alg_to_pos('h5'); I6 = alg_to_pos('h6');
-        I7 = alg_to_pos('h7'); I8 = alg_to_pos('h8');
+        I1 = alg_to_pos('i1'); I2 = alg_to_pos('i2'); I3 = alg_to_pos('i3');
+        I4 = alg_to_pos('i4'); I5 = alg_to_pos('i5'); I6 = alg_to_pos('i6');
+        I7 = alg_to_pos('i7'); I8 = alg_to_pos('i8');
 
         K1 = alg_to_pos('k1'); K2 = alg_to_pos('k2'); K3 = alg_to_pos('k3');
         K4 = alg_to_pos('k4'); K5 = alg_to_pos('k5'); K6 = alg_to_pos('k6');
@@ -149,20 +155,20 @@ class Geometry:
         INIT_PAWN_HOME_WHITE = [B1, C2, D3, E4, F5, G4, H3, I2, K1]
         INIT_PIECES_DICT = {
                 Player.Black: {
-                    "K": [G10],
-                    "Q": [E10],
-                    "R": [C8, I8],
-                    "B": [F11, F10, F9],
-                    "N": [D9, H9],
-                    "P": INIT_PAWN_HOME_BLACK,
+                    PieceType.King:   [G10],
+                    PieceType.Queen:  [E10],
+                    PieceType.Rook:   [C8, I8],
+                    PieceType.Bishop: [F11, F10, F9],
+                    PieceType.Knight: [D9, H9],
+                    PieceType.Pawn:   INIT_PAWN_HOME_BLACK,
                 },
                 Player.White: {
-                    "K": [G1],
-                    "Q": [E1],
-                    "R": [C1, I1],
-                    "B": [F3, F2, F1],
-                    "N": [D1, H1],
-                    "P": INIT_PAWN_HOME_WHITE,
+                    PieceType.King:   [G1],
+                    PieceType.Queen:  [E1],
+                    PieceType.Rook:   [C1, I1],
+                    PieceType.Bishop: [F3, F2, F1],
+                    PieceType.Knight: [D1, H1],
+                    PieceType.Pawn:   INIT_PAWN_HOME_WHITE,
                 }
                 }
         setattr(cls, "INIT_PIECES_DICT", INIT_PIECES_DICT)
@@ -256,13 +262,13 @@ class Geometry:
         VECS_PAWN_WHITE_CAPT = [VEC2, VEC10]
         VECS_PAWN_WHITE_HOP = [2 * VEC0]
 
-        setattr(cls, "VECS_PAWN_BLACK_ADV", VECS_PAWN_WHITE_ADV)
+        setattr(cls, "VECS_PAWN_BLACK_ADV",  VECS_PAWN_WHITE_ADV)
         setattr(cls, "VECS_PAWN_BLACK_CAPT", VECS_PAWN_WHITE_CAPT)
-        setattr(cls, "VECS_PAWN_BLACK_HOP", VECS_PAWN_WHITE_HOP)
+        setattr(cls, "VECS_PAWN_BLACK_HOP",  VECS_PAWN_WHITE_HOP)
 
-        setattr(cls, "VECS_PAWN_WHITE_ADV", VECS_PAWN_WHITE_ADV)
+        setattr(cls, "VECS_PAWN_WHITE_ADV",  VECS_PAWN_WHITE_ADV)
         setattr(cls, "VECS_PAWN_WHITE_CAPT", VECS_PAWN_WHITE_CAPT)
-        setattr(cls, "VECS_PAWN_WHITE_HOP", VECS_PAWN_WHITE_HOP)
+        setattr(cls, "VECS_PAWN_WHITE_HOP",  VECS_PAWN_WHITE_HOP)
 
     @classmethod
     def alg_to_pos(cls, alg: str):
@@ -297,11 +303,16 @@ class Geometry:
         return cls.BOARD_SPACE_NAMES[n].lower()
 
     @classmethod
-    def npos_to_pos(cls, n: int) -> str:
-        return HexPos(cls.COORD_HEX0, cls.COORD_HEX1)
+    def npos_to_pos(cls, npos: int) -> str:
+        return HexPos(cls.COORD_HEX0[npos], cls.COORD_HEX1[npos])
 
     @classmethod
     def pos_to_alg(cls, pos: HexPos) -> str:
         file_char = cls.FILE_CHARS[pos.hex0 + 5]
         rank = 6 - max(0, pos.hex0) + pos.hex1
         return file_char + str(rank)
+
+    @classmethod
+    def pos_to_npos(cls, pos: HexPos) -> Npos:
+        npos = cls.COORDS_TO_NPOS[(pos.hex0, pos.hex1)]
+        return npos
