@@ -1,4 +1,4 @@
-# !/usr/bin/env python
+#!/usr/bin/env python
 # by Jay M. Coskey, 2026
 
 import re
@@ -31,6 +31,9 @@ class Board:
         for player in placements.keys():
             for pt in placements[player].keys():
                 for pos in placements[player][pt]:
+                    # piece_name = f'{player.name} {pt.name}'
+                    # space_name = f'{G.pos_to_alg(pos)}=HexPos{pos}'
+                    # print(f'INFO: adding ({piece_name:<12}) to {space_name}')
                     self.piece_add(pos, player, pt)
 
         self.cur_player = None  # TODO
@@ -87,6 +90,50 @@ class Board:
 
     def get_pieces_map(self):
         raise NotImplementedError("board.get_pieces_map()")
+
+    def get_print_str(self, indent_board=8, indent_incr=2, item_width=4):
+        result_rows = []
+
+        ROWS = [[                     40                     ],
+                [                 30,     51                 ],
+                [             21,     41,     61             ],
+                [         13,     31,     52,     70         ],
+                [      6,     22,     42,     62,     78     ],
+                [  0,     14,     32,     53,     71,     85 ],
+                [      7,     23,     43,     63,     79     ],
+                [  1,     15,     33,     54,     72,     86 ],
+                [      8,     24,     44,     64,     80     ],
+                [  2,     16,     34,     55,     73,     87 ],
+                [      9,     25,     45,     65,     81,    ],
+                [  3,     17,     35,     56,     74,     88 ],
+                [     10,     26,     46,     66,     82,    ],
+                [  4,     18,     36,     57,     75,     89 ],
+                [     11,     27,     47,     67,     83     ],
+                [  5,     19,     37,     58,     76,     90 ],
+                    [ 12 ,    28,     48,     68,     84 ],
+                        [ 20,     38,     59,     77 ],
+                            [ 29,     49,     69 ],
+                                [ 39,     60 ],
+                                    [ 50 ]]
+
+        def row_indent_size(row_num):
+            result = indent_board
+            rows_from_middle = abs(10 - row_num)
+            if rows_from_middle > 5:
+                result += (rows_from_middle - 5) * indent_incr
+            elif rows_from_middle % 2 == 0:
+                result += indent_incr
+            return result
+
+        for row_num, row in enumerate(ROWS):
+            row_str = row_indent_size(row_num) * ' '  # Indentation
+            for item in row:
+                index = int(item)
+                piece = self.pieces[index]
+                txt = str(piece) if piece else '-'
+                row_str += str(txt.ljust(item_width))
+            result_rows.append(row_str.rstrip())  # End of row
+        return '\n'.join(result_rows)
 
     # When moving a slider, check space in progression,
     # until the piece moves off the board or contacts a piece.
@@ -248,9 +295,11 @@ class Board:
 
     def move_undo(self, m):
         raise NotImplementedError("board.move_undo()")
-        # Revert GameState. If GameState = GameState.Over, then revert to GameState.InProgress. Clear any win/draw details.
+        # Revert GameState. If GameState = GameState.Over,
+        #  then revert to GameState.InProgress. Clear any win/draw details.
         # Truncate history. Call pop on history stacks:
-        #   (a) checks, (b) checkmates, (c) ep targets, (d) moves, (e) nonprogress halfmove counts, (f) zobrish hashes()
+        #   (a) checks, (b) checkmates, (c) ep targets, (d) moves,
+        #   (e) nonprogress halfmove counts, (f) zobrish hashes()
         # Reset BoardCondition states from the history stacks.
         # Unpromote.      If promotion, swap promoted piece for original Pawn.
         # Unmove-piece2.  If Move was castling, move Rook back.
@@ -269,8 +318,12 @@ class Board:
         self.pieces[npos] = Piece(player, pt)
 
     # Note that the piece addition is done via pos, but removal uses npos.
-    def piece_remove(self, pos, player=None, pt=None):
-        raise NotImplementedError("board.piece_remove()")
+    def piece_remove(self, npos: Npos, player: Player=None, pt: PieceType=None):
+        self.pieces[npos] = None
+
+    def print(self, indent_board=8, indent_incr=2, item_width=4):
+        text = self.get_print_str(indent_board, indent_incr, item_width)
+        print(text)
 
     # For each move, info such as is_check() and is_repetition_3x()
     # should be cached so it is not re-computed multiple times.
