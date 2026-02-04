@@ -24,7 +24,7 @@ class Board:
         pass
 
     # Different ways to initialize board:
-    #   * By data representing piece placements by color and piece type:
+    #   * By data showing piece placements by color and piece type:
     #         placements: Dict[Player, Dict[PieceType, List[Pos]]]
     #   * By a FEN string:
     #         placements: str
@@ -92,9 +92,17 @@ class Board:
 
     # When moving a slider, check space in progression,
     # until the piece moves off the board or contacts a piece.
+    # Called by get_moves_pseudolegal_slider().
     # TODO: Pre-compute this, so rays can be found by lookup.
     def get_ray(p: HexPos, v: HexVec):
-        raise NotImplementedError("board.get_ray()")
+        result = []
+        cursor = p
+        for k in range(0, 10):
+            cursor = cursor + v
+            if is_pos_on_board(cursor):
+                result.append(cursor)
+            else:
+                return result
 
     def get_space_color(npos) -> BoardColor:
         raise NotImplementedError("board.get_space_color()")
@@ -156,7 +164,7 @@ class Board:
         raise NotImplementedError("board.is_king_attacked()")
 
     # Check whether cur_player's King is being attacked.
-    # when do_check_pseudolegal=False, pseudolegality is presumed.
+    # When do_check_pseudolegal=False, pseudolegality is presumed.
     # Consider adding player=self.cur_player param for sanity check
     #     to determine whether last move left own King attacked.
     def is_move_legal(m: Move, do_check_pseudolegality=False):
@@ -167,7 +175,7 @@ class Board:
         b.move_make(m)
         is_legal = not b.is_king_attacked()
         b.move_undo(m)
-        return not is_legal
+        return is_legal
 
     def is_move_pseudolegal(m: Move):
         raise NotImplementedError("board.is_move_pseudolegal()")
@@ -184,11 +192,55 @@ class Board:
     def is_npos_pawn_promo(self, npos: HexPos):
         raise NotImplementedError("board.is_npos_pawn_promo()")
 
+    def is_pos_on_board(self, pos: HexPos):
+        return G.is_pos_on_board(pos)
+
     def move_make(self, m):
         raise NotImplementedError("board.move_make()")
+        # Phases of Move execution, not including checking for legality:
+        #   Capture. Remove destination piece (incl. en passant)
+        #   Move.
+        #     Move-piece1. Move piece.
+        #     Move-piece2. (If castling in a variant that supports it, move Rook.)
+        #     Promote. If promotion, swap Pawn for promotion piece.
+        #   Update history [designed to support Move undo]:
+        #     old_count = history_nonprogress_halfmove_counts[self.halfmove_count]
+        #     Update halfmove_count += 1
+        #     Update history stacks:
+        #       (a) history_checks
+        #       (b) history_checkmates  # Added to support move.redo(), which advances a half-step forward
+        #       (c) history_ep_targets.append(ep_target if ep_target else None)
+        #       (d) history_moves.append(m)
+        #       (e) is_progress_move = m.is_progress_move (m.is_capture() or m.pt == PieceType.Pawn)
+        #           history_nonprogress_halfmove_counts.append(0 if is_progress_move else old_count + 1)
+        #       (f) history_zobrist_hashes.append(self.get_zobrist_hash())
+        #   Update conditions:
+        #     Set flags in board.game_conditions:GameConditions
+        #       is_check
+        #       is_checkmate
+        #       is_ep_target = bool(self.ep_target)
+        #       is nonprogress_halfmove_count_50 = history_nonprogress_halfmove_count[self.halfmove_count] >= 100
+        #       is nonprogress_halfmove_count_75 = history_nonprogress_halfmove_count[self.halfmove_count] >= 150
+        #       is_board_repetition_3x = max(Counter(history_zobrist_hashes).values()) >= 3
+        #       is_board_repetition_5x = max(Counter(history_zobrist_hashes).values()) >= 5
+        #   End of game
+        #     game_over = (checkmate | stalemate | 75-move-rule | 5x board repetition
+        #                     | offer & acceptance of end of game)
+        #     if game_over:
+        #       Update Termination info, including game_state = GameState.IsOver
+        #     if is_checkmate or is_check:
+        #       Notify opponent.
 
     def move_undo(self, m):
         raise NotImplementedError("board.move_undo()")
+        # Revert GameState. If GameState = GameState.Over, then revert to GameState.InProgress. Clear any win/draw details.
+        # Truncate history. Call pop on history stacks:
+        #   (a) checks, (b) checkmates, (c) ep targets, (d) moves, (e) nonprogress halfmove counts, (f) zobrish hashes()
+        # Reset BoardCondition states from the history stacks.
+        # Unpromote.      If promotion, swap promoted piece for original Pawn.
+        # Unmove-piece2.  If Move was castling, move Rook back.
+        # Unmove-piece1.  Move primary piece back to original space.
+        # Uncapture.      If move was capture, restore removed piece.
 
     def moves_make(self, ms):
         raise NotImplementedError("board.moves_make()")
@@ -206,6 +258,6 @@ class Board:
     # should be cached so it is not re-computed multiple times.
     # This method stores and caches that info.
     # Should there be a separate mode for find-mate-in-two puzzles,
-    #   which ignore certain end-game conditions?
+    #   ignoring certain end-game conditions?
     def set_board_conditions(self):
         raise NotImplementedError("board.set_board_conditions()")
