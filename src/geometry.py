@@ -81,7 +81,7 @@ class Geometry:
         FILE_CHARS = list("abcdefghikl")
         setattr(cls, "FILE_CHARS", FILE_CHARS)
         FILE_CHAR_TO_HEX0 = {
-            # GREP Coordinates choice
+            # GREP Choice of coordinates
             letter: k - 5 for k, letter in enumerate(FILE_CHARS)
             }
         setattr(cls, "FILE_CHAR_TO_HEX0", FILE_CHAR_TO_HEX0)

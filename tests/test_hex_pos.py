@@ -57,7 +57,7 @@ class Test_HexPos(unittest.TestCase):
         self.assertEqual(center + 2*v0  +  2*v5  +  3*v9  +  5*v2  -  v1, center)
         #                (0,0)  + <0,2> + <2,-2> + <-6,-3>+ <5,5>  - <1,2>
 
-    # GREP: Coordinate choice
+    # GREP: Choice of coordinates
     def test_hex_pos_rank(self):
         self.assertEqual(HexPos(0, 0).rank(), 6)
 

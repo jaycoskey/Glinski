@@ -37,7 +37,7 @@ class HexPos:
     def __sub__(self, other: "HexPos"):
         return HexVec(self.hex0 - other.hex0, self.hex1 - other.hex1)
 
-    # GREP: Coordinate choice
+    # GREP: Choice of coordinates
     # TODO: DESIGN: Consider moving this to geometry.py.
     def rank(self):
         return 6 - (self.hex0 if self.hex0 > 0 else 0) + self.hex1
