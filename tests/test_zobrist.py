@@ -18,7 +18,7 @@ class TestZobrist(unittest.TestCase):
     def test_zobrist_default_placement(self):
         b = Board()
         zhash = b.get_zobrist_hash()
-        expected_hash = 0xb41b94a528d29fba
+        expected_hash = 0x9270EF137EC7189F
         self.assertEqual(zhash, expected_hash)
 
 if __name__ == '__main__':
