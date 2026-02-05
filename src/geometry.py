@@ -2,6 +2,7 @@
 # by Jay M. Coskey, 2026
 
 import re
+from typing import List
 
 from src.bitboard import *
 from src.hex_pos import HexPos
@@ -96,6 +97,8 @@ class Geometry:
             hex1 = rank - 6 + max(0, hex0)
             return HexPos(hex0, hex1)
 
+        # ========================================
+
         # Define Board Spaces
         #     A6 ... A1 ...... F11 ... F1 ...... L6 ... L1
         #
@@ -147,6 +150,8 @@ class Geometry:
         for k, alg in enumerate(BOARD_SPACE_NAMES):
             setattr(cls, alg, alg_to_pos(alg))
 
+        # ========================================
+
         #
         # Define initial placement of pieces,
         # using multiple representations.
@@ -173,6 +178,7 @@ class Geometry:
                 }
         setattr(cls, "INIT_PIECES_DICT", INIT_PIECES_DICT)
 
+
         INIT_PIECES_FEN = "6/p5P/rp4PR/n1p3P1N/q2p2P2Q/bbb1p1P1BBB/k2p2P2K/n1p3P1N/rp4PR/p5P/6 w - - 0 1"
         setattr(cls, "INIT_PIECES_FEN", INIT_PIECES_FEN)
 
@@ -190,6 +196,8 @@ class Geometry:
                       -   -   -   -   -   -
              """.split())
         setattr(cls, "INIT_PIECES_LIST", INIT_PIECES_LIST)
+
+        # ========================================
 
         ZERO = HexVec(0, 0)
         setattr(cls, "ZERO", ZERO)
@@ -269,6 +277,51 @@ class Geometry:
         setattr(cls, "VECS_PAWN_WHITE_ADV",  VECS_PAWN_WHITE_ADV)
         setattr(cls, "VECS_PAWN_WHITE_CAPT", VECS_PAWN_WHITE_CAPT)
         setattr(cls, "VECS_PAWN_WHITE_HOP",  VECS_PAWN_WHITE_HOP)
+
+        # ========================================
+
+        # When moving a slider, check space in progression,
+        # until the piece moves off the board or contacts a piece.
+        # Called by get_moves_pseudolegal_slider().
+        # Pre-compute this, so rays can be found by lookup.
+        def get_ray(pos: HexPos, vec: HexVec) -> List[Npos]:
+            result = []
+            cursor = pos
+            for k in range(0, 10):
+                cursor = cursor + vec
+                if cls.is_pos_on_board(cursor):
+                    result.append(cls.pos_to_npos(cursor))
+                else:
+                    return result
+
+        def get_rays(pos: HexPos, vecs: List[HexVec]) -> List[List[Npos]]:
+            result = []
+            for vec in vecs:
+                ray = get_ray(pos, vec)
+                if ray:  # Do not append zero-length rays.
+                    result.append(ray)
+            return result
+
+        RAYS_BISHOP = {}
+        for npos in range(SPACE_COUNT):
+            pos = HexPos(COORD_HEX0[npos], COORD_HEX1[npos])
+            RAYS_BISHOP[npos] = get_rays(pos, VECS_DIAG)
+        setattr(cls, "RAYS_BISHOP", RAYS_BISHOP)
+
+        RAYS_QUEEN = {}
+        for npos in range(SPACE_COUNT):
+            pos = HexPos(COORD_HEX0[npos], COORD_HEX1[npos])
+            RAYS_QUEEN[npos] = get_rays(pos, VECS_12)
+        setattr(cls, "RAYS_QUEEN", RAYS_QUEEN)
+
+        RAYS_ROOK = {}
+        for npos in range(SPACE_COUNT):
+            pos = HexPos(COORD_HEX0[npos], COORD_HEX1[npos])
+            RAYS_ROOK[npos] = get_rays(pos, VECS_ORTHO)
+        setattr(cls, "RAYS_ROOK", RAYS_ROOK)
+
+    # ========================================
+    # ========================================
 
     @classmethod
     def alg_to_pos(cls, alg: str):

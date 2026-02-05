@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # by Jay M. Coskey, 2026
 
+from src.bitboard import BitBoard, BITBOARD_SPACES
 from src.geometry import Geometry as G
+from src.geometry import *
 from src.hex_pos import HexPos
 from src.hex_vec import HexVec
 
@@ -81,6 +83,61 @@ class TestGeometry(unittest.TestCase):
         OFF_W  = HexPos(-6, -3)
         OFFS = [OFF_E, OFF_NE, OFF_NW, OFF_SE, OFF_SW, OFF_W]
         self.assertTrue(all([not G.is_pos_on_board(p) for p in OFFS]))
+
+    def test_rays_bishop(self):
+        computed = BitBoard(G.SPACE_COUNT)
+        for ray in G.RAYS_BISHOP[G.pos_to_npos(G.F6)]:
+            for npos in ray:
+                computed |= BITBOARD_SPACES[npos]
+
+        expected = (BB_G7 | BB_H8  # VECS1
+                | BB_H5 | BB_K4    # VECS3
+                | BB_G4 | BB_H2    # VECS5
+                | BB_E4 | BB_D2    # VECS7
+                | BB_D5 | BB_B4    # VECS9
+                | BB_E7 | BB_D8)   # VECS11
+
+        self.assertEqual(computed, expected)
+
+    def test_rays_queen(self):
+        computed = BitBoard(G.SPACE_COUNT)
+        for ray in G.RAYS_QUEEN[G.pos_to_npos(G.F6)]:
+            for npos in ray:
+                computed |= BITBOARD_SPACES[npos]
+
+        expected = (
+            BB_F7 | BB_F8 | BB_F9 | BB_F10 | BB_F11  # VEC0
+            | BB_G7 | BB_H8                          # VEC1
+            | BB_G6 | BB_H6 | BB_I6 | BB_K6 | BB_L6  # VEC2
+            | BB_H5 | BB_K4                          # VEC3
+            | BB_G5 | BB_H4 | BB_I3 | BB_K2 | BB_L1  # VEC4
+            | BB_G4 | BB_H2                          # VEC5
+            | BB_F5 | BB_F4 | BB_F3 | BB_F2 | BB_F1  # VEC6
+            | BB_E4 | BB_D2                          # VEC7
+            | BB_E5 | BB_D4 | BB_C3 | BB_B2 | BB_A1  # VEC8
+            | BB_D5 | BB_B4                          # VEC9
+            | BB_E6 | BB_D6 | BB_C6 | BB_B6 | BB_A6  # VEC10
+            | BB_E7 | BB_D8                          # VEC11
+            )
+
+        self.assertEqual(computed, expected)
+
+    def test_rays_rook(self):
+        computed = BitBoard(G.SPACE_COUNT)
+        for ray in G.RAYS_ROOK[G.pos_to_npos(G.F6)]:
+            for npos in ray:
+                computed |= BITBOARD_SPACES[npos]
+
+        expected = (
+            BB_F7 | BB_F8 | BB_F9 | BB_F10 | BB_F11  # VEC0
+            | BB_G6 | BB_H6 | BB_I6 | BB_K6 | BB_L6  # VEC2
+            | BB_G5 | BB_H4 | BB_I3 | BB_K2 | BB_L1  # VEC4
+            | BB_F5 | BB_F4 | BB_F3 | BB_F2 | BB_F1  # VEC6
+            | BB_E5 | BB_D4 | BB_C3 | BB_B2 | BB_A1  # VEC8
+            | BB_E6 | BB_D6 | BB_C6 | BB_B6 | BB_A6  # VEC10
+            )
+
+        self.assertEqual(computed, expected)
 
 
 if __name__ == '__main__':
