@@ -75,6 +75,27 @@ def npos_to_bb(npos: int):
 BB_CORNERS = BB_A6 | BB_A1 | BB_F11 | BB_F1 | BB_L6 | BB_L1
 
 # ========================================
+# In Glinski's Hexagonal Chess, "courts" are the spaces behind
+# the initial pawn locations, where the King and Queen reside.
+# A representation of this can be useful in detecting the Board
+#   layout error of Pawns being behind their initial home positions.
+BB_COURT_BLACK = (BB_C8
+        | BB_D9 | BB_D8
+        | BB_E10 | BB_E9 | BB_E8
+        | BB_F11 | BB_F10 | BB_F9 | BB_F8
+        | BB_G10 | BB_G9 | BB_G8
+        | BB_H9 | BB_H8
+        | BB_I8)
+
+BB_COURT_WHITE = (BB_C1
+        | BB_D2 | BB_D1
+        | BB_E3 | BB_E2 | BB_E1
+        | BB_F4 | BB_F3 | BB_F2 | BB_F1
+        | BB_G3 | BB_G2 | BB_G1
+        | BB_H2 | BB_H2
+        | BB_I1)
+
+# ========================================
 
 BB_EDGE_NE = BB_F11 | BB_G10 | BB_H9 | BB_I8 | BB_K7 | BB_L6
 BB_EDGE_NW = BB_A6 | BB_B7 | BB_C8 | BB_D9 | BB_E10 | BB_F11
