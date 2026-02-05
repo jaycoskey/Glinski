@@ -22,10 +22,14 @@ class HexPos:
     def __add__(self, other: HexVec):
         return HexPos(self.hex0 + other.hex0, self.hex1 + other.hex1)
 
-    def __eq__(self, other):
+    def __eq__(self, other: "HexPos"):
         return self.hex0 == other.hex0 and self.hex1 == other.hex1
 
-    def __ne__(self, other):
+    def __iadd__(self, other: HexVec):
+        self.hex0 += other.hex0
+        self.hex1 += other.hex1
+
+    def __ne__(self, other: "HexPos"):
         return not self.__eq__(other)
 
     def __repr__(self):
