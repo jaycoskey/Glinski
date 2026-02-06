@@ -212,7 +212,7 @@ class Board:
         return '\n'.join(result_rows)
 
     # When moving a slider, check space in progression,
-    # un jjjtil the piece moves off the board or contacts a piece.
+    # until the piece moves off the board or contacts a piece.
     # Called by get_moves_pseudolegal_slider().
     # TODO: Pre-compute this, so rays can be found by lookup.
     def get_ray(p: HexPos, v: HexVec):
@@ -316,11 +316,6 @@ class Board:
             return PAWN_PROMO_WHITE[npos]
 
     # ========================================
-
-    def is_pos_on_board(self, pos: HexPos):
-        return G.is_pos_on_board(pos)
-
-    # ========================================
     # Called by is_condition_check() / is_condition_checkmate()
     # When player=None, player=self.cur_player is assumed.
     # In theory, player=self.cur_player.opponent() could be used
@@ -333,7 +328,7 @@ class Board:
     # When do_check_pseudolegal=False, pseudolegality is presumed.
     # Consider adding player=self.cur_player param for sanity check
     #     to determine whether last move left own King attacked.
-    def is_move_legal(m: Move, do_check_pseudolegality=False):
+    def is_move_legal(self, m: Move, do_check_pseudolegality=False):
         if do_check_pseudolegality:
             pseudolegal = self.is_move_pseudolegal(m)
             if not pseudolegal:
@@ -348,20 +343,7 @@ class Board:
 
     # ========================================
 
-    def is_empty(self, npos: Npos):
-        raise NotImplementedError("board.is_npos_empty()")
-
-    def is_ep_target(self, npos: Npos):
-        raise NotImplementedError("board.is_npos_ep_target()")
-
-    def is_in_pawn_home_zone(self, npos: Npos):
-        raise NotImplementedError("board.is_npos_pawn_home()")
-
-    def is_in_pawn_promo_zone(self, npos: Npos):
-        raise NotImplementedError("board.is_npos_pawn_promo()")
-
-    # ========================================
-
+    # Convenience method
     def is_pos_on_board(self, pos: HexPos):
         return G.is_pos_on_board(pos)
 
