@@ -152,9 +152,8 @@ class Geometry:
 
         # ========================================
 
-        #
         # Define initial placement of pieces,
-        # using multiple representations.
+        #   using multiple representations.
         #
         INIT_PAWN_HOME_BLACK = [B7, C7, D7, E7, F7, G7, H7, I7, K7]
         INIT_PAWN_HOME_WHITE = [B1, C2, D3, E4, F5, G4, H3, I2, K1]
@@ -262,21 +261,104 @@ class Geometry:
         #
         # Define Pawn movement directions
         #
-        VECS_PAWN_BLACK_ADV = [VEC6]
-        VECS_PAWN_BLACK_CAPT = [VEC4, VEC8]
-        VECS_PAWN_BLACK_HOP = [2 * VEC6]
+        VECS_PAWN_ADV_BLACK: HexVec = VEC6
+        VECS_PAWN_ADV_WHITE: HexVec = VEC0
 
-        VECS_PAWN_WHITE_ADV = [VEC0]
-        VECS_PAWN_WHITE_CAPT = [VEC2, VEC10]
-        VECS_PAWN_WHITE_HOP = [2 * VEC0]
+        VECS_PAWN_CAPT_BLACK: List[HexVec] = [VEC4, VEC8]
+        VECS_PAWN_CAPT_WHITE: List[HexVec] = [VEC2, VEC10]
 
-        setattr(cls, "VECS_PAWN_BLACK_ADV",  VECS_PAWN_WHITE_ADV)
-        setattr(cls, "VECS_PAWN_BLACK_CAPT", VECS_PAWN_WHITE_CAPT)
-        setattr(cls, "VECS_PAWN_BLACK_HOP",  VECS_PAWN_WHITE_HOP)
+        VECS_PAWN_HOP_BLACK: HexVec = 2 * VEC6
+        VECS_PAWN_HOP_WHITE: HexVec = 2 * VEC0
 
-        setattr(cls, "VECS_PAWN_WHITE_ADV",  VECS_PAWN_WHITE_ADV)
-        setattr(cls, "VECS_PAWN_WHITE_CAPT", VECS_PAWN_WHITE_CAPT)
-        setattr(cls, "VECS_PAWN_WHITE_HOP",  VECS_PAWN_WHITE_HOP)
+        setattr(cls, "VECS_PAWN_ADV_BLACK",  VECS_PAWN_ADV_BLACK)
+        setattr(cls, "VECS_PAWN_ADV_WHITE",  VECS_PAWN_ADV_WHITE)
+
+        setattr(cls, "VECS_PAWN_CAPT_BLACK", VECS_PAWN_CAPT_BLACK)
+        setattr(cls, "VECS_PAWN_CAPT_WHITE", VECS_PAWN_CAPT_WHITE)
+
+        setattr(cls, "VECS_PAWN_HOP_BLACK",  VECS_PAWN_HOP_BLACK)
+        setattr(cls, "VECS_PAWN_HOP_WHITE",  VECS_PAWN_HOP_WHITE)
+
+        # ========================================
+        LEAP_KING = {}
+        for npos in range(SPACE_COUNT):
+            pos = cls.npos_to_pos(npos)
+            npos_leap = [cls.pos_to_npos(pos + vec)
+                        for vec in VECS_12
+                        if cls.is_pos_on_board(pos + vec)]
+            LEAP_KING[npos] = npos_leap
+        setattr(cls, "LEAP_KING", LEAP_KING)
+
+        LEAP_KNIGHT = {}
+        for npos in range(SPACE_COUNT):
+            pos = cls.npos_to_pos(npos)
+            npos_leap = [cls.pos_to_npos(pos + vec)
+                        for vec in VECS_KNIGHT
+                        if cls.is_pos_on_board(pos + vec)]
+            LEAP_KNIGHT[npos] = npos_leap
+        setattr(cls, "LEAP_KNIGHT", LEAP_KNIGHT)
+
+        # ========================================
+        #
+        # This section could likely be more compact, at the cost of clarity.
+        #
+        LEAP_PAWN_ADV_BLACK = {}
+        for npos in range(SPACE_COUNT):
+            if BB_COURT_BLACK[npos] or BB_PROMO_BLACK[npos]:
+                continue
+            pos = cls.npos_to_pos(npos)
+            pos_adv = pos + VECS_PAWN_ADV_BLACK
+            LEAP_PAWN_ADV_BLACK[npos] = cls.pos_to_npos(pos_adv)
+        setattr(cls, "LEAP_PAWN_ADV_BLACK", LEAP_PAWN_ADV_BLACK)
+
+        LEAP_PAWN_ADV_WHITE = {}
+        for npos in range(SPACE_COUNT):
+            if BB_COURT_WHITE[npos] or BB_PROMO_WHITE[npos]:
+                continue
+            pos = cls.npos_to_pos(npos)
+            pos_adv = pos + VECS_PAWN_ADV_WHITE
+            LEAP_PAWN_ADV_WHITE[npos] = cls.pos_to_npos(pos_adv)
+        setattr(cls, "LEAP_PAWN_ADV_WHITE", LEAP_PAWN_ADV_WHITE)
+
+        # --------------------
+
+        LEAP_PAWN_CAPT_BLACK = {}
+        for npos in range(SPACE_COUNT):
+            if BB_COURT_BLACK[npos] or BB_PROMO_BLACK[npos]:
+                continue
+            pos = cls.npos_to_pos(npos)
+            npos_capt = [cls.pos_to_npos(pos + vec)
+                        for vec in VECS_PAWN_CAPT_BLACK
+                        if cls.is_pos_on_board(pos + vec)]
+            LEAP_PAWN_CAPT_BLACK[npos] = npos_capt
+        setattr(cls, "LEAP_PAWN_CAPT_BLACK", LEAP_PAWN_CAPT_BLACK)
+
+        LEAP_PAWN_CAPT_WHITE = {}
+        for npos in range(SPACE_COUNT):
+            if BB_COURT_WHITE[npos] or BB_PROMO_WHITE[npos]:
+                continue
+            pos = cls.npos_to_pos(npos)
+            npos_capt = [cls.pos_to_npos(pos + vec)
+                        for vec in VECS_PAWN_CAPT_WHITE
+                        if cls.is_pos_on_board(pos + vec)]
+            LEAP_PAWN_CAPT_WHITE[npos] = npos_capt
+        setattr(cls, "LEAP_PAWN_CAPT_WHITE", LEAP_PAWN_CAPT_WHITE)
+
+        # --------------------
+
+        LEAP_PAWN_HOP_BLACK = {}
+        for pos in INIT_PAWN_HOME_BLACK:
+            npos = cls.pos_to_npos(pos)
+            pos_hop = cls.npos_to_pos(npos) + VECS_PAWN_HOP_BLACK
+            LEAP_PAWN_HOP_BLACK[npos] = cls.pos_to_npos(pos_hop)
+        setattr(cls, "LEAP_PAWN_HOP_BLACK", LEAP_PAWN_HOP_BLACK)
+
+        LEAP_PAWN_HOP_WHITE = {}
+        for pos in INIT_PAWN_HOME_WHITE:
+            npos = cls.pos_to_npos(pos)
+            pos_hop = cls.npos_to_pos(npos) + VECS_PAWN_HOP_WHITE
+            LEAP_PAWN_HOP_WHITE[npos] = cls.pos_to_npos(pos_hop)
+        setattr(cls, "LEAP_PAWN_HOP_WHITE", LEAP_PAWN_HOP_WHITE)
 
         # ========================================
 

@@ -11,7 +11,27 @@ import unittest
 
 
 class TestGeometry(unittest.TestCase):
-    def test_geometry_constants(self):
+    def test_add_vecs12(self):
+        self.assertEqual(sum(G.VECS_12, G.ZERO), G.ZERO)
+
+    def test_add_knights_vecs(self):
+        center = HexPos(5, 5)
+        pos = center
+        for k in range(len(G.VECS_KNIGHT)):
+            kvec = G.VECS_KNIGHT[k]
+            pos = pos + kvec
+            if k < 11:
+                self.assertNotEqual(pos, center)
+        self.assertEqual(pos, center)  # Back to where we started
+
+    def test_add_pawn_capture_vecs(self):
+        vec_bp = sum(G.VECS_PAWN_CAPT_BLACK, start=HexVec(0, 0))
+        self.assertEqual(vec_bp, G.VECS_PAWN_ADV_BLACK)
+
+        vec_wp = sum(G.VECS_PAWN_CAPT_WHITE, start=HexVec(0, 0))
+        self.assertEqual(vec_wp, G.VECS_PAWN_ADV_WHITE)
+
+    def test_constants(self):
         self.assertEqual(G.SPACE_COUNT, 91)
 
         self.assertEqual(G.A6, G.alg_to_pos("a6"))
@@ -29,27 +49,7 @@ class TestGeometry(unittest.TestCase):
         self.assertEqual(G.npos_to_alg(85), "l6")
         self.assertEqual(G.npos_to_alg(90), "l1")
 
-    def test_hexpos_hexvec_add_vecs12(self):
-        self.assertEqual(sum(G.VECS_12, G.ZERO), G.ZERO)
-
-    def test_hexpos_hexvec_add_knights(self):
-        center = HexPos(5, 5)
-        pos = center
-        for k in range(len(G.VECS_KNIGHT)):
-            kvec = G.VECS_KNIGHT[k]
-            pos = pos + kvec
-            if k < 11:
-                self.assertNotEqual(pos, center)
-        self.assertEqual(pos, center)  # Back to where we started
-
-    def test_hexpos_hexvec_add_pawns(self):
-        vec_bp = sum(G.VECS_PAWN_BLACK_CAPT, start=HexVec(0, 0))
-        self.assertEqual(vec_bp, G.VECS_PAWN_BLACK_ADV[0])
-
-        vec_wp = sum(G.VECS_PAWN_WHITE_CAPT, start=HexVec(0, 0))
-        self.assertEqual(vec_wp, G.VECS_PAWN_WHITE_ADV[0])
-
-    def test_hexpos_to_alg(self):
+    def test_conversion_pos_to_alg(self):
         NW = HexPos(-5, 0)
         SW = HexPos(-5, -5)
         self.assertEqual(G.pos_to_alg(NW), 'a6')
@@ -64,6 +64,50 @@ class TestGeometry(unittest.TestCase):
         SE = HexPos(5, 0)
         self.assertEqual(G.pos_to_alg(NE), 'l6')
         self.assertEqual(G.pos_to_alg(SE), 'l1')
+
+    def test_leaps_king(self):
+        computed = BitBoard(G.SPACE_COUNT)
+        pos = G.F6
+        npos = G.pos_to_npos(pos)
+        for dest_npos in G.LEAP_KING[npos]:
+            computed |= BITBOARD_SPACES[dest_npos]
+        expected = (BB_F7 | BB_G7 | BB_G6 | BB_H5 | BB_G5 | BB_G4
+                | BB_F5 | BB_E4 | BB_E5 | BB_D5 | BB_E6 | BB_E7)
+        self.assertEqual(computed, expected)
+
+    def test_leaps_knight(self):
+        computed = BitBoard(G.SPACE_COUNT)
+        pos = G.F6
+        npos = G.pos_to_npos(pos)
+        for dest_npos in G.LEAP_KNIGHT[npos]:
+            computed |= BITBOARD_SPACES[dest_npos]
+
+        expected = (BB_E8 | BB_G8
+                | BB_H7 | BB_I5
+                | BB_I4 | BB_H3
+                | BB_G3 | BB_E3
+                | BB_D3 | BB_C4
+                | BB_C5 | BB_D7)
+        self.assertEqual(computed, expected)
+
+    def test_leaps_pawn(self):
+        pos_w = G.F5
+        npos_w = G.pos_to_npos(pos_w)
+
+        computed_adv_w = BITBOARD_SPACES[G.LEAP_PAWN_ADV_WHITE[npos_w]]
+        leap_adv_w = G.LEAP_PAWN_ADV_WHITE[npos_w]
+        expected_adv_w = BB_F6
+        self.assertEqual(computed_adv_w, expected_adv_w)
+
+        computed_capt_w = BitBoard(G.SPACE_COUNT)
+        for npos_capt_w in G.LEAP_PAWN_CAPT_WHITE[npos_w]:
+            computed_capt_w |= BITBOARD_SPACES[npos_capt_w]
+        expected_capt_w = BB_E5 | BB_G5
+        self.assertEqual(computed_capt_w, expected_capt_w)
+
+        computed_hop_w = BITBOARD_SPACES[G.LEAP_PAWN_HOP_WHITE[npos_w]]
+        expected_hop_w = BB_F7
+        self.assertEqual(computed_hop_w, expected_hop_w)
 
     def test_is_pos_on_board(self):
         NE = HexPos( 5,  5)
