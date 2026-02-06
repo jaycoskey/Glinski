@@ -91,19 +91,42 @@ class TestGeometry(unittest.TestCase):
         self.assertEqual(computed, expected)
 
     def test_leaps_pawn(self):
+        pos_b = G.F7
+        npos_b = G.pos_to_npos(pos_b)
         pos_w = G.F5
         npos_w = G.pos_to_npos(pos_w)
+
+        # --------------------
+
+        computed_adv_b = BITBOARD_SPACES[G.LEAP_PAWN_ADV_BLACK[npos_b]]
+        leap_adv_b = G.LEAP_PAWN_ADV_WHITE[npos_b]
+        expected_adv_b = BB_F6
+        self.assertEqual(computed_adv_b, expected_adv_b)
 
         computed_adv_w = BITBOARD_SPACES[G.LEAP_PAWN_ADV_WHITE[npos_w]]
         leap_adv_w = G.LEAP_PAWN_ADV_WHITE[npos_w]
         expected_adv_w = BB_F6
         self.assertEqual(computed_adv_w, expected_adv_w)
 
+        # --------------------
+
+        computed_capt_b = BitBoard(G.SPACE_COUNT)
+        for npos_capt_b in G.LEAP_PAWN_CAPT_BLACK[npos_b]:
+            computed_capt_b |= BITBOARD_SPACES[npos_capt_b]
+        expected_capt_b = BB_E6 | BB_G6
+        self.assertEqual(computed_capt_b, expected_capt_b)
+
         computed_capt_w = BitBoard(G.SPACE_COUNT)
         for npos_capt_w in G.LEAP_PAWN_CAPT_WHITE[npos_w]:
             computed_capt_w |= BITBOARD_SPACES[npos_capt_w]
         expected_capt_w = BB_E5 | BB_G5
         self.assertEqual(computed_capt_w, expected_capt_w)
+
+        # --------------------
+
+        computed_hop_b = BITBOARD_SPACES[G.LEAP_PAWN_HOP_BLACK[npos_b]]
+        expected_hop_b = BB_F5
+        self.assertEqual(computed_hop_b, expected_hop_b)
 
         computed_hop_w = BITBOARD_SPACES[G.LEAP_PAWN_HOP_WHITE[npos_w]]
         expected_hop_w = BB_F7
