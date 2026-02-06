@@ -136,6 +136,15 @@ BITBOARD_FILES = [
         BB_FILE_I, BB_FILE_K, BB_FILE_L]
 
 # ========================================
+BB_PROMO_BLACK = (BB_A1 | BB_B1 | BB_C1 | BB_D1 | BB_E1
+        | BB_F1
+        | BB_G1 | BB_H1 | BB_I1 | BB_K1 | BB_L1)
+
+BB_PROMO_WHITE = (BB_A6 | BB_B7 | BB_C8 | BB_D9 | BB_E10
+        | BB_F11
+        | BB_G10 | BB_H9 | BB_I8 | BB_K7 | BB_L6)
+
+# ========================================
 
 BB_RING0 = BB_F6
 
