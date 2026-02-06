@@ -2,8 +2,9 @@
 # by Jay M. Coskey, 2026
 
 import re
-from typing import Dict, Generator, List
+from typing import Dict, Generator, Iterable, List
 
+from src.bitboard import BB_COURT_BLACK, BB_COURT_WHITE
 from src.board_color import BoardColor
 from src.geometry import Geometry as G
 from src.hex_vec import HexVec
@@ -93,6 +94,8 @@ class Board:
         else:
             return inevitable_mates
 
+    # ========================================
+
     def get_board_errors(self):
         raise NotImplementedError("board.get_board_errors()")
 
@@ -101,6 +104,28 @@ class Board:
 
     def get_fen(self):
         raise NotImplementedError("board.get_fen()")
+
+    # ========================================
+
+    def get_leap_pawn_adv(self, npos: Npos) -> Npos:
+        if self.cur_player == Player.Black:
+            return G.LEAP_PAWN_ADV_BLACK[npos]
+        else:
+            return G.LEAP_PAWN_ADV_WHITE[npos]
+
+    def get_leap_pawn_capt(self, npos: Npos) -> Iterable[Npos]:
+        if self.cur_player == Player.Black:
+            return G.LEAP_PAWN_CAPT_BLACK[npos]
+        else:
+            return G.LEAP_PAWN_CAPT_WHITE[npos]
+
+    def get_leap_pawn_hop(self, npos: Npos) -> Npos:
+        if self.cur_player == Player.Black:
+            return G.LEAP_PAWN_HOP_BLACK[npos]
+        else:
+            return G.LEAP_PAWN_HOP_WHITE[npos]
+
+    # ========================================
 
     def get_moves_legal(self):
         raise NotImplementedError("board.get_moves_legal()")
@@ -111,9 +136,6 @@ class Board:
     def get_moves_pseudolegal(self, player=None):
         raise NotImplementedError("board.get_moves_pseudolegal()")
 
-    def get_moves_pseudolegal_from_npos(self, npos: Npos):
-        raise NotImplementedError("board.get_moves_pseudolegal_from_npos()")
-
     def get_moves_pseudolegal_leaper(self, npos: Npos, pt: PieceType):
         raise NotImplementedError("board.get_moves_pseudolegal_leaper()")
 
@@ -122,6 +144,8 @@ class Board:
 
     def get_moves_pseudolegal_slider(self, npos: Npos, pt: PieceType):
         raise NotImplementedError("board.get_moves_pseudolegal_slider()")
+
+    # ========================================
 
     def get_piece(self, npos: Npos):
         return self.pieces[npos]
@@ -140,6 +164,8 @@ class Board:
 
     def get_pieces_map(self):
         raise NotImplementedError("board.get_pieces_map()")
+
+    # ========================================
 
     def get_print_str(self, indent_board=8, indent_incr=2, item_width=4):
         result_rows = []
@@ -186,7 +212,7 @@ class Board:
         return '\n'.join(result_rows)
 
     # When moving a slider, check space in progression,
-    # until the piece moves off the board or contacts a piece.
+    # un jjjtil the piece moves off the board or contacts a piece.
     # Called by get_moves_pseudolegal_slider().
     # TODO: Pre-compute this, so rays can be found by lookup.
     def get_ray(p: HexPos, v: HexVec):
@@ -198,9 +224,6 @@ class Board:
                 result.append(cursor)
             else:
                 return result
-
-    def get_space_color(npos) -> BoardColor:
-        raise NotImplementedError("board.get_space_color()")
 
     # For each piece on the Board, there is a corresponding unique triple:
     #   (Board position ID, player ID, piece_type ID).
@@ -266,7 +289,38 @@ class Board:
         raise NotImplementedError("board.is_condition_stalemate()")
 
     # ========================================
+    # Tests on individual spaces or pieces
+    #
+    def is_empty(self, npos: Npos):
+        return self.pieces[npos] is None
 
+    def is_ep_target(self, npos: Npos):
+        return npos == self.ep_target
+
+    def is_in_court_zone(self, npos: Npos):
+        if self.cur_player == Player.Black:
+            return BB_COURT_BLACK[npos]
+        else:
+            return BB_COURT_WHITE[npos]
+
+    def is_in_pawn_home_zone(self, npos: Npos):
+        if self.cur_player == Player.Black:
+            return INIT_PAWN_HOME_BLACK[npos]
+        else:
+            return INIT_PAWN_HOME_WHITE[npos]
+
+    def is_in_pawn_promo_zone(self, npos: Npos):
+        if self.cur_player == Player.Black:
+            return PAWN_PROMO_BLACK[npos]
+        else:
+            return PAWN_PROMO_WHITE[npos]
+
+    # ========================================
+
+    def is_pos_on_board(self, pos: HexPos):
+        return G.is_pos_on_board(pos)
+
+    # ========================================
     # Called by is_condition_check() / is_condition_checkmate()
     # When player=None, player=self.cur_player is assumed.
     # In theory, player=self.cur_player.opponent() could be used
@@ -289,23 +343,29 @@ class Board:
         b.move_undo(m)
         return is_legal
 
-    def is_move_pseudolegal(m: Move):
+    def is_move_pseudolegal(self, m: Move):
         raise NotImplementedError("board.is_move_pseudolegal()")
 
-    def is_npos_empty(self, npos):
+    # ========================================
+
+    def is_empty(self, npos: Npos):
         raise NotImplementedError("board.is_npos_empty()")
 
-    def is_npos_ep_target(self, npos):
+    def is_ep_target(self, npos: Npos):
         raise NotImplementedError("board.is_npos_ep_target()")
 
-    def is_npos_pawn_home(self, npos: HexPos):
+    def is_in_pawn_home_zone(self, npos: Npos):
         raise NotImplementedError("board.is_npos_pawn_home()")
 
-    def is_npos_pawn_promo(self, npos: HexPos):
+    def is_in_pawn_promo_zone(self, npos: Npos):
         raise NotImplementedError("board.is_npos_pawn_promo()")
+
+    # ========================================
 
     def is_pos_on_board(self, pos: HexPos):
         return G.is_pos_on_board(pos)
+
+    # ========================================
 
     def move_make(self, m):
         raise NotImplementedError("board.move_make()")
@@ -362,6 +422,8 @@ class Board:
     def moves_undo(self, ms):
         raise NotImplementedError("board.moves_undo()")
 
+    # ========================================
+
     # Note that the piece addition is done via pos, but removal uses npos.
     def piece_add(self, pos: HexPos, player: Player, pt: PieceType):
         npos = G.pos_to_npos(pos)
@@ -370,6 +432,8 @@ class Board:
     # Note that the piece addition is done via pos, but removal uses npos.
     def piece_remove(self, npos: Npos, player: Player=None, pt: PieceType=None):
         self.pieces[npos] = None
+
+    # ========================================
 
     def print(self, indent_board=8, indent_incr=2, item_width=4):
         text = self.get_print_str(indent_board, indent_incr, item_width)
