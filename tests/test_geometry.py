@@ -2,6 +2,7 @@
 # by Jay M. Coskey, 2026
 
 from src.bitboard import BitBoard, BITBOARD_SPACES
+from src.board_color import BoardColor
 from src.geometry import Geometry as G
 from src.geometry import *
 from src.hex_pos import HexPos
@@ -30,6 +31,20 @@ class TestGeometry(unittest.TestCase):
 
         vec_wp = sum(G.VECS_PAWN_CAPT_WHITE, start=HexVec(0, 0))
         self.assertEqual(vec_wp, G.VECS_PAWN_ADV_WHITE)
+
+    def test_board_color(self):
+        def str_to_board_color(alg: str) -> BoardColor:
+            npos = G.alg_to_npos(alg)
+            return G.get_board_color(npos)
+
+        self.assertTrue(str_to_board_color("f6"), BoardColor.Medium)
+
+        self.assertTrue(str_to_board_color("a6"), BoardColor.Light)
+        self.assertTrue(str_to_board_color("a1"), BoardColor.Dark)
+        self.assertTrue(str_to_board_color("f6"), BoardColor.Dark)
+        self.assertTrue(str_to_board_color("f1"), BoardColor.Light)
+        self.assertTrue(str_to_board_color("l6"), BoardColor.Light)
+        self.assertTrue(str_to_board_color("l1"), BoardColor.Dark)
 
     def test_constants(self):
         self.assertEqual(G.SPACE_COUNT, 91)

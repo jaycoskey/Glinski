@@ -5,6 +5,7 @@ import re
 from typing import List
 
 from src.bitboard import *
+from src.board_color import BoardColor
 from src.hex_pos import HexPos
 from src.hex_vec import HexVec
 from src.piece_type import PieceType
@@ -369,7 +370,7 @@ class Geometry:
         def get_ray(pos: HexPos, vec: HexVec) -> List[Npos]:
             result = []
             cursor = pos
-            for k in range(0, 10):
+            for _ in range(11):
                 cursor = cursor + vec
                 if cls.is_pos_on_board(cursor):
                     result.append(cls.pos_to_npos(cursor))
@@ -416,6 +417,13 @@ class Geometry:
         hex1 = rank - 6 + max(0, hex0)
         return HexPos(hex0, hex1)
 
+    # get_space_color() would be a more specific name,
+    # but get_board_color() is more idiomatic.
+    @classmethod
+    def get_board_color(cls, npos: Npos) -> BoardColor:
+        pos = cls.npos_to_pos(npos)
+        return BoardColor((pos.hex0 + pos.hex1) % 3)
+
     @classmethod
     def is_pos_on_board(cls, pos: HexPos):
         # Board corner       hex1 - hex0
@@ -433,12 +441,19 @@ class Geometry:
         )
         return result
 
+    # ========================================
+    # Conversion routines
+    #
     @classmethod
-    def npos_to_alg(cls, n: int) -> str:
-        return cls.BOARD_SPACE_NAMES[n].lower()
+    def alg_to_npos(cls, alg: str) -> str:
+        return cls.pos_to_npos(cls.alg_to_pos(alg))
 
     @classmethod
-    def npos_to_pos(cls, npos: int) -> str:
+    def npos_to_alg(cls, npos: Npos) -> str:
+        return cls.BOARD_SPACE_NAMES[npos].lower()
+
+    @classmethod
+    def npos_to_pos(cls, npos: Npos) -> str:
         return HexPos(cls.COORD_HEX0[npos], cls.COORD_HEX1[npos])
 
     @classmethod

@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # by Jay M. Coskey, 2026
 
-from enum import auto, Enum
+from enum import Enum
 
 
 class BoardColor(Enum):
-    Light = auto()
-    Medium = auto()
-    Dark = auto()
+    Light  = 0
+    Medium = 1
+    Dark   = 2
