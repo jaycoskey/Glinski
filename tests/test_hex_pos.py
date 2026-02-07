@@ -8,7 +8,7 @@ from src.hex_pos import HexPos
 from src.hex_vec import HexVec
 
 
-class Test_HexPos(unittest.TestCase):
+class TestHexPos(unittest.TestCase):
     def test_hex_pos_clock(self):
         center = HexPos(0, 0)
 

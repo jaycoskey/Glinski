@@ -7,7 +7,7 @@ import unittest
 from src.hex_vec import HexVec
 
 
-class Test_HexVec(unittest.TestCase):
+class TestHexVec(unittest.TestCase):
     def test_hex_vec(self):
         va = HexVec(1, 2)
         self.assertEqual(va.hex0, 1)

@@ -9,7 +9,7 @@ from src.hex_vec import HexVec
 from src.piece_type import PieceType
 
 
-class Test_Board(unittest.TestCase):
+class TestBoard(unittest.TestCase):
     def test_board_contains_all_spaces(self):
         b = Board()
         for k in range(91):
