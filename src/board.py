@@ -201,10 +201,9 @@ class Board:
         for to_npos in leaps_npos:
             to_piece = self.pieces[to_npos]
             if to_piece is None:
-                yiedl Move(npos, to_npos, None)
+                yield Move(npos, to_npos, None)
             elif to_piece.player == self.cur_player.opponent():
                 move = Move(npos, to_npos, None)
-                to_pt = 
                 yield move
 
     # TODO: Allow for selection of promo_pt on Pawn promotion
@@ -217,7 +216,7 @@ class Board:
                 fwd2_npos = self.get_leap_pawn_hop(npos)
                 fwd2_piece = self.pieces[fwd2_npos]
                 if not fwd2_piece:
-                    yeild Move(npos, fwd2_npos, None)
+                    yield Move(npos, fwd2_npos, None)
         for capt_npos in self.get_leap_pawn_capt(npos):
             if capt_npos == self.ep_target:
                 move = Move(npos, capt_npos, None)
