@@ -6,6 +6,7 @@ from src.board import Board
 from src.geometry import Geometry as G
 from src.hex_pos import HexPos
 from src.hex_vec import HexVec
+from src.move import Move
 from src.piece_type import PieceType
 
 
@@ -59,6 +60,42 @@ class TestBoard(unittest.TestCase):
     def test_detect_repetition5x(self):
         pass
 
+    @unittest.expectedFailure  # Board's compute_board_state has not yet been implemented
+    def test_fools_mate(self):
+        # 1. Move('Qe1c3')
+        w1 = Move(G.alg_to_npos('e1'), G.alg_to_npos('c3'), None)
+
+        # 1. ... Move('Qe10c6')
+        b1 = Move(G.alg_to_npos('e10'), G.alg_to_npos('c6'), None)
+        # --------------------
+        # 2. Move('b1b2')
+        w2 = Move(G.alg_to_npos('b1'), G.alg_to_npos('b2'), None)
+
+        # ... Move('b7b6')
+        b2 = Move(G.alg_to_npos('b7'), G.alg_to_npos('b6'), None)
+        # --------------------
+        # 3. Move('Bf3b1')
+        w3 = Move(G.alg_to_npos('f3'), G.alg_to_npos('b1'), None)
+
+        # ... Move('e7e6')
+        b3 = Move(G.alg_to_npos('e7'), G.alg_to_npos('e6'), None)
+        # --------------------
+        moves = [w1, b1, w2, b2, w3, b3]
+
+        b = Board()
+        self.assertFalse(b.is_checkmate)
+        for m in moves:
+            b.move_make(m)
+            self.assertFalse(b.is_checkmate)
+
+        # 4. Move('Qc3xBf9#')
+        w4 = Move(G.alg_to_npos('c3'), G.alg_to_npos('f9'), None)
+        w4.capt_pt = PieceType.Bishop
+
+        b.move_make(w4)
+        b.print()
+        self.assertTrue(b.is_checkmate)
+
     def test_get_moves_legal(self):
         pass
 
@@ -89,8 +126,6 @@ class TestBoard(unittest.TestCase):
                 continue
             actual_count = len(list(b.get_moves_pseudolegal_from(npos)))
             expected_count = INIT_PIECE_MOVE_COUNTS[npos]
-            if actual_count > expected_count:
-                for move in moves:
             self.assertEqual(actual_count, expected_count,
                     f'At {G.npos_to_alg(npos)}: {actual_count} != {expected_count}')
 

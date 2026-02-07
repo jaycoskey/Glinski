@@ -7,8 +7,10 @@ from typing import Dict, Iterator, List
 
 from src.bitboard import BB_COURT_BLACK, BB_COURT_WHITE
 from src.bitboard import BB_PAWN_HOME_BLACK, BB_PAWN_HOME_WHITE
+from src.board_state import BoardState
 from src.geometry import Geometry as G
 from src.hex_pos import HexPos
+from src.hex_vec import HexVec
 from src.move import Move
 from src.piece import Piece
 from src.piece_type import PieceType, PIECE_TYPE_COUNT
@@ -45,10 +47,13 @@ class Board:
         self.history_move = [None]  # The move that resulted in the current Board position
         self.history_nonprogress_halfmove_count = [0]
 
-        # Note: Other recomputation upon rewind & ffwd.
-        self.history_is_in_check = [False]
-        self.history_is_in_checkmate = [False]
-        self.history_zobrist_hash = self.get_zobrist_hash()
+        # Note: Track other computed values to avoid recomputation upon rewind & ffwd.
+        self.history_is_check = [False]
+        self.history_is_checkmate = [False]
+        self.history_is_repetition_3x = [False]
+        self.history_is_repetition_5x = [False]
+        self.history_is_stalemate = [False]
+        self.history_zobrist_hash = [self.get_zobrist_hash()]
 
     # ========================================
     # Access current values of history-tracked attributes using properties.
@@ -58,12 +63,24 @@ class Board:
         return self.history_ep_target[self.halfmove_count]
 
     @property
-    def is_in_check(self):
-        return self.history_is_in_check[self.halfmove_count]
+    def is_check(self):
+        return self.history_is_check[self.halfmove_count]
 
     @property
-    def is_in_checkmate(self):
-        return self.history_is_in_checkmate[self.halfmove_count]
+    def is_checkmate(self):
+        return self.history_is_checkmate[self.halfmove_count]
+
+    @property
+    def is_repetition_3x(self):
+        return self.history_is_repetition_3x[self.halfmove_count]
+
+    @property
+    def is_repetition_5x(self):
+        return self.history_is_repetition_5x[self.halfmove_count]
+
+    @property
+    def is_stalemate(self):
+        return self.history_is_stalemate[self.halfmove_count]
 
     @property
     def last_move(self):
@@ -76,6 +93,11 @@ class Board:
     @property
     def zobrist_hash(self):
         return self.history_zobrist_hash[self.halfmove_count]
+
+    # ========================================
+
+    def compute_board_state(self) -> BoardState:
+        return BoardState.Normal
 
     # ========================================
 
@@ -162,6 +184,15 @@ class Board:
             result = G.LEAP_PAWN_HOP_BLACK[npos]
         else:
             result = G.LEAP_PAWN_HOP_WHITE[npos]
+        return result
+
+    # This is used to obtain the location of a Pawn being
+    # captured by en passant, given the e.p. target space.
+    def get_vec_pawn_reverse(self) -> HexVec:
+        if self.cur_player == Player.Black:
+            result = G.VEC_PAWN_ADV_WHITE
+        else:
+            result = G.VEC_PAWN_ADV_BLACK
         return result
 
     # ========================================
@@ -363,12 +394,12 @@ class Board:
 
     # TODO: Fetch info cached at time move is made
     def is_condition_repetition_3x(self):
-        counter = Counter(self.history_zobrist_hashes[0:self.halfmove_count + 1])
+        counter = Counter(self.history_zobrist_hash[0:self.halfmove_count + 1])
         return max(counter.values()) >= 3
 
     # TODO: Fetch info cached at time move is made
     def is_condition_repetition_5x(self):
-        counter = Counter(self.history_zobrist_hashes[0:self.halfmove_count + 1])
+        counter = Counter(self.history_zobrist_hash[0:self.halfmove_count + 1])
         return max(counter.values()) >= 5
 
     # TODO: Fetch info cached at time move is made
@@ -435,46 +466,73 @@ class Board:
 
     # ========================================
 
-    def move_make(self, m):
-        raise NotImplementedError("board.move_make()")
-        # Phases of Move execution, not including checking for legality:
-        #   Capture. Remove destination piece (incl. en passant)
-        #   Move.
-        #     Move-piece1. Move piece.
-        #     Move-piece2. (If castling in a variant that supports it, move Rook.)
-        #     Promote. If promotion, swap Pawn for promotion piece.
-        #   Update history [designed to support Move undo]:
-        #     old_count = history_nonprogress_halfmove_counts[self.halfmove_count]
-        #     Update halfmove_count += 1
-        #     Update history stacks:
-        #       (a) history_checks
-        #       (b) history_checkmates  # Added to support move.redo(),
-        #                                 which advances a half-step forward
-        #       (c) history_ep_targets.append(ep_target if ep_target else None)
-        #       (d) history_moves.append(m)
-        #       (e) is_progress_move = m.is_progress_move (m.is_capture()
-        #                                  or m.pt == PieceType.Pawn)
-        #           history_nonprogress_halfmove_counts.append(
-        #               0 if is_progress_move else old_count + 1)
-        #       (f) history_zobrist_hashes.append(self.get_zobrist_hash())
-        #   Update conditions:
-        #     Set flags in board.game_conditions:GameConditions
-        #       is_check
-        #       is_checkmate
-        #       is_ep_target = bool(self.ep_target)
-        #       is nonprogress_halfmove_count_50 =
-        #           history_nonprogress_halfmove_count[self.halfmove_count] >= 100
-        #       is nonprogress_halfmove_count_75 =
-        #           history_nonprogress_halfmove_count[self.halfmove_count] >= 150
-        #       is_board_repetition_3x = max(Counter(history_zobrist_hashes).values()) >= 3
-        #       is_board_repetition_5x = max(Counter(history_zobrist_hashes).values()) >= 5
-        #   End of game
-        #     game_over = (checkmate | stalemate | 75-move-rule | 5x board repetition
-        #                     | offer & acceptance of end of game)
-        #     if game_over:
-        #       Update Termination info, including game_state = GameState.IsOver
-        #     if is_checkmate or is_check:
-        #       Notify opponent.
+    # Note: This method does not perform a check for move legality.
+    def move_make(self, move):
+        # Phase 1: Capture.
+        #
+        if move.ep_target:
+            self.pieces[move.ep_target] = None
+        else:
+            self.pieces[move.to_npos] = None
+
+        # Phase 2: Move piece
+        #
+        self.pieces[move.to_npos] = self.pieces[move.fr_npos]
+        self.pieces[move.fr_npos] = None
+
+        # Phase 3: Pawn promotion.
+        #
+        # TODO: Complete
+
+        # Phase 4: Check for end of Game
+        board_state = self.compute_board_state()
+        if board_state == BoardState.Check:
+            self.notify_player(self.cur_player.opponent(), 'Check')
+        next_zobrist_hash = self.get_zobrist_hash()
+
+        if board_state == BoardState.Checkmate:
+            if self.cur_player == Player.Black:
+                self.game_state = GameState.Over_Win_Black
+            else:
+                self.game_state = GameState.Over_Win_White
+        elif board_state == BoardState.Stalemate:
+            if self.cur_player == Player.Black:
+                self.game_state = GameState.Over_Stalemate_Black
+            else:
+                self.game_state = GameState.Over_Stalemate_White
+        is_pending_draw = (
+                # Check for 75-moves of non-progress and/or 5x board repetition
+                (not move.is_progress() and self.nonprogress_halfmove_count == 149)
+                or len([z for z in self.history_zobrist_hash
+                    if z == next_zobrist_hash]) == 4
+                )
+        if board_state in [BoardState.Checkmate, BoardState.Stalemate] or is_pending_draw:
+            assert(False)
+            # TODO: Bring the game to a close
+
+        # Phase 5: Update counters & history
+        self.history_zobrist_hash.append(next_zobrist_hash)
+        zobrist_counter = Counter(self.history_zobrist_hash)
+        next_is_board_repetition_3x = max(zobrist_counter.values()) >= 3
+        next_is_board_repetition_5x = max(zobrist_counter.values()) >= 5
+        next_nonprogress_count = (0 if move.is_progress()
+                else self.history_nonprogress_halfmove_count[-1] + 1)
+
+        self.history_ep_target.append(move.ep_target)
+        self.history_is_check.append(board_state == BoardState.Check)
+        self.history_is_checkmate.append(board_state == BoardState.Checkmate)
+        self.history_is_repetition_3x.append(next_is_board_repetition_3x)
+        self.history_is_repetition_5x.append(next_is_board_repetition_5x)
+        self.history_is_stalemate.append(board_state == BoardState.Stalemate)
+        self.history_move.append(move)
+        self.history_nonprogress_halfmove_count.append(next_nonprogress_count)
+        self.history_zobrist_hash.append(next_zobrist_hash)
+
+        # Phase 6: Move to the next halfmove & Player
+        #
+        self.halfmove_count += 1
+        self.cur_player = self.cur_player.opponent()
+        self.notify_player(self.cur_player, "Your move")
 
     def move_undo(self, m):
         raise NotImplementedError("board.move_undo()")
@@ -494,6 +552,12 @@ class Board:
 
     def moves_undo(self, moves):
         raise NotImplementedError("board.moves_undo()")
+
+    # ========================================
+    # TODO: Implement
+    # Notification should be done by Game & Player/Controller
+    def notify_player(self, player: Player, msg: str):
+        print(f'Attention {player}: {msg}')
 
     # ========================================
 

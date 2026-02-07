@@ -45,6 +45,7 @@ class Move:
         self.move_eval = move_eval
 
     # ========================================
+    # Properties
 
     @property
     def fr_npos(self):
@@ -87,6 +88,9 @@ class Move:
     # TODO: Ensure that other Move instance attributes are copied over.
     def copy(self):
         return Move(self._fr_npos, self._to_npos, self._promo_pt)
+
+    def is_progress(self):
+        return self.is_capture or self.pt == PieceType.Pawn
 
     def to_alg(self):
         movetext = self.to_movetext()
