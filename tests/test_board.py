@@ -32,9 +32,6 @@ class Test_Board(unittest.TestCase):
     def test_detect_mate_in_two(self):
         pass
 
-    def test_detect_mate_in_three(self):
-        pass
-
     def test_detect_stalemate(self):
         pass
 
@@ -68,6 +65,9 @@ class Test_Board(unittest.TestCase):
     def test_get_moves_pseudolegal(self):
         pass
 
+    # Moves per piece in their initial location. (Same for each player.)
+    #     K:2,Q:6,R:6(3+3),B:12(2+8+2),N:8(4+4),P:17(2*8+1).
+    #     Total: 51
     def test_init_piece_move_counts(self):
         INIT_PIECE_MOVE_COUNTS = list(map(int, """
                   0   0   0   0   0   0
@@ -81,8 +81,16 @@ class Test_Board(unittest.TestCase):
               3   2   0   0   0   0   2   3
                 2   0   0   0   0   0   2
                   0   0   0   0   0   0
-                  """.split()))  # Each player: K:2,Q:6,R:6(3+3),B:12(2+8+2),N:8(4+4),P:17(2*8+1). Total: 51
-        pass
+                  """.split()))
+        b = Board()
+        for npos in range(G.SPACE_COUNT):
+            piece = b.pieces[npos]
+            if piece and piece.player != b.cur_player:
+                continue
+            actual_count = len(b.get_moves_pseudolegal_from(npos))
+            expected_count = INIT_PIECE_MOVE_COUNTS[npos]
+            self.assertEqual(actual_count, expected_count,
+                    f'At {G.npos_to_alg(npos)}: {actual_count} != {expected_count}')
 
     @unittest.skip("b.get_moves_pseudolegal() not yet implemented")
     def test_init_piece_move_counts_total(self):

@@ -134,18 +134,91 @@ class Board:
         raise NotImplementedError("board.get_moves_legal_matching()")
 
     def get_moves_pseudolegal(self, player=None):
-        raise NotImplementedError("board.get_moves_pseudolegal()")
+        moves = []
+        for npos in range(G.SPACE_COUNT):
+            moves.extend(self.get_moves_pseudolegal_from(npos))
+        return moves
 
-    def get_moves_pseudolegal_leaper(self, npos: Npos, pt: PieceType):
-        raise NotImplementedError("board.get_moves_pseudolegal_leaper()")
+    def get_moves_pseudolegal_from(self, npos: Npos):
+        piece = self.pieces[npos]
+        if piece is None or piece != self.cur_player:
+            return []
+        pt = piece.pt
+        if pt in [PieceType.King, PieceType.KNIGHT]:
+            print(f'Calling get_moves_pseudolegal_leaper()')
+            moves = get_moves_pseudolegal_leaper(npos, pt)
+        elif pt in [PieceType.Bishop, PieceType.Queen, PieceType.Rook]:
+            print(f'Calling get_moves_pseudolegal_slider()')
+            moves = get_moves_pseudolegal_slider(npos, pt)
+        else:
+            print(f'Calling get_moves_pseudolegal_pawn()')
+            moves = get_moves_pseudolegal_pawn(npos)
+        return moves
 
-    def get_moves_pseudolegal_pawn(self, npos: Npos):
-        raise NotImplementedError("board.get_moves_pseudolegal_pawn()")
+    def get_moves_pseudolegal_leaper(self, fr_npos: Npos, pt: PieceType) -> Iterable[Move]:
+        fr_pos = G.npos_to_pos(npos)
+        vecs_leaper = G.VECS_KING if pt == PieceType.King else G.VECS_KNIGHT
+        for vec in vecs_leaper:
+            to_pos = pos + vec
+            to_npos = G.pos_to_npos(dest_pos)
+            to_piece = self.pieces[dest_npos]
+            if to_piece is None:
+                move = Move(fr_npos, to_npos, None)
+                # TODO: Set to non-capture
+                yield move
+            elif to_piece.player == self.cur_player.opponent():
+                move = Move(fr_npos, to_npos, None)
+                # TODO: Set to capture
+                yield move
+
+    # TODO: Allow for selection of promo_pt on Pawn promotion
+    def get_moves_pseudolegal_pawn(self, npos: Npos) -> Iterable[Move]:
+        pos = G.npos_to_pos(npos)
+        fwd1_pos = pos + VEC_PAWN_ADV
+        assert(self.is_pos_on_board(fwd1_pos))
+        fwd1_npos = G.pos_to_npos(fwd1_pos)
+        fwd1_piece = self.pieces[fwd1_npos]
+        if not fwd1_piece:
+            move = Move(npos, fwd1_npos, None)
+            yield move
+            if fwd1_npos in self.is_in_pawn_home(fwd1_npos):
+                fwd2_npos = self.get_leap_pawn_hop(npos)
+                fwd2_piece = self.pieces[fwd2_npos]
+                if not fwd2_piece:
+                    move = Move(npos, fwd2_npos, None)
+                    yield move
+        for capt_npos in get_leap_pawn_capt(npos):
+            if capt_npos == self.ep_target:
+                yield Move(npos, capt_npos, None)
+            else:
+                capt_piece = self.pieces[capt_npos]
+                if capt_piece and capt_piece.player == self.cur_player.opponent():
+                    move = Move(npos, capt_npos, None)
+                    yield Move
 
     def get_moves_pseudolegal_slider(self, npos: Npos, pt: PieceType):
-        raise NotImplementedError("board.get_moves_pseudolegal_slider()")
+        if pt == PieceType.Queen:
+            rays = RAYS_QUEEN
+        elif pt == PieceType.Rook:
+            rays = RAYS_ROOK
+        else:
+            rays = RAYS_BISHOP
 
-    # ========================================
+        for ray in rays:
+            for posn in ray:
+                dest_piece = self.pieces[posn]
+                if dest_piece is None:
+                    move = Move(fr_posn, to_posn)
+                    # Set to non-capture
+                    yield move
+                    continue
+                dest_player = dest_piece.player
+                if dest_player == self.cur_player.opponent():
+                    move = Move(fr_posn, to_posn)
+                    # Set to capture
+                    yield move
+                    break
+                break
 
     def get_piece(self, npos: Npos):
         return self.pieces[npos]
@@ -246,8 +319,8 @@ class Board:
         return result
 
     # ========================================
-
     # TODO: Fetch info cached at time move is made
+
     def is_condition_check(self):
         raise NotImplementedError("board.is_condition_check()")
 
@@ -316,6 +389,10 @@ class Board:
             return PAWN_PROMO_WHITE[npos]
 
     # ========================================
+
+    def is_move_pseudolegal(m: Move):
+        raise NotImplementedError("board.is_move_pseudolegal()")
+
     # Called by is_condition_check() / is_condition_checkmate()
     # When player=None, player=self.cur_player is assumed.
     # In theory, player=self.cur_player.opponent() could be used
@@ -337,9 +414,6 @@ class Board:
         is_legal = not b.is_king_attacked()
         b.move_undo(m)
         return is_legal
-
-    def is_move_pseudolegal(self, m: Move):
-        raise NotImplementedError("board.is_move_pseudolegal()")
 
     # ========================================
 
