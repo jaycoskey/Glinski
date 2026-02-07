@@ -1,14 +1,26 @@
 #!/usr/bin/env python
 # by Jay M. Coskey, 2026
-
-from src.bitboard import BitBoard, BITBOARD_SPACES
-from src.board_color import BoardColor
-from src.geometry import Geometry as G
-from src.geometry import *
-from src.hex_pos import HexPos
-from src.hex_vec import HexVec
+# pylint: disable=invalid-name, too-many-locals
 
 import unittest
+
+from src.bitboard import BitBoard, BITBOARD_SPACES
+from src.bitboard import BB_A1, BB_A6
+from src.bitboard import BB_B2, BB_B4, BB_B6
+from src.bitboard import BB_C3, BB_C4, BB_C5, BB_C6
+from src.bitboard import BB_D2, BB_D3, BB_D4, BB_D5, BB_D6, BB_D7, BB_D8
+from src.bitboard import BB_E3, BB_E4, BB_E5, BB_E6, BB_E7, BB_E8
+from src.bitboard import BB_F1, BB_F2, BB_F3, BB_F4, BB_F5, BB_F6
+from src.bitboard import BB_F7, BB_F8, BB_F9, BB_F10, BB_F11
+from src.bitboard import BB_G3, BB_G4, BB_G5, BB_G6, BB_G7, BB_G8
+from src.bitboard import BB_H2, BB_H3, BB_H4, BB_H5, BB_H6, BB_H7, BB_H8
+from src.bitboard import BB_I3, BB_I4, BB_I5, BB_I6
+from src.bitboard import BB_K2, BB_K4, BB_K6
+from src.bitboard import BB_L1, BB_L6
+from src.board_color import BoardColor
+from src.geometry import Geometry as G
+from src.hex_pos import HexPos
+from src.hex_vec import HexVec
 
 
 class TestGeometry(unittest.TestCase):
@@ -18,8 +30,7 @@ class TestGeometry(unittest.TestCase):
     def test_add_knights_vecs(self):
         center = HexPos(5, 5)
         pos = center
-        for k in range(len(G.VECS_KNIGHT)):
-            kvec = G.VECS_KNIGHT[k]
+        for k, kvec in enumerate(G.VECS_KNIGHT):
             pos = pos + kvec
             if k < 11:
                 self.assertNotEqual(pos, center)
@@ -84,7 +95,7 @@ class TestGeometry(unittest.TestCase):
         computed = BitBoard(G.SPACE_COUNT)
         pos = G.F6
         npos = G.pos_to_npos(pos)
-        for dest_npos in G.LEAP_KING[npos]:
+        for dest_npos in G.LEAPS_KING[npos]:
             computed |= BITBOARD_SPACES[dest_npos]
         expected = (BB_F7 | BB_G7 | BB_G6 | BB_H5 | BB_G5 | BB_G4
                 | BB_F5 | BB_E4 | BB_E5 | BB_D5 | BB_E6 | BB_E7)
@@ -94,7 +105,7 @@ class TestGeometry(unittest.TestCase):
         computed = BitBoard(G.SPACE_COUNT)
         pos = G.F6
         npos = G.pos_to_npos(pos)
-        for dest_npos in G.LEAP_KNIGHT[npos]:
+        for dest_npos in G.LEAPS_KNIGHT[npos]:
             computed |= BITBOARD_SPACES[dest_npos]
 
         expected = (BB_E8 | BB_G8
@@ -114,12 +125,10 @@ class TestGeometry(unittest.TestCase):
         # --------------------
 
         computed_adv_b = BITBOARD_SPACES[G.LEAP_PAWN_ADV_BLACK[npos_b]]
-        leap_adv_b = G.LEAP_PAWN_ADV_WHITE[npos_b]
         expected_adv_b = BB_F6
         self.assertEqual(computed_adv_b, expected_adv_b)
 
         computed_adv_w = BITBOARD_SPACES[G.LEAP_PAWN_ADV_WHITE[npos_w]]
-        leap_adv_w = G.LEAP_PAWN_ADV_WHITE[npos_w]
         expected_adv_w = BB_F6
         self.assertEqual(computed_adv_w, expected_adv_w)
 
@@ -155,7 +164,8 @@ class TestGeometry(unittest.TestCase):
         S  = HexPos( 0, -5)
         SW = HexPos(-5, -5)
         CORNERS = [NE, N, NW, SE, S, SW]
-        self.assertTrue(all([G.is_pos_on_board(p) for p in CORNERS]))
+        corner_tests = [G.is_pos_on_board(p) for p in CORNERS]
+        self.assertTrue(all(corner_tests))
 
         OFF_E  = HexPos( 6,  3)
         OFF_NE = HexPos( 3,  6)
@@ -164,7 +174,8 @@ class TestGeometry(unittest.TestCase):
         OFF_SW = HexPos(-3, -6)
         OFF_W  = HexPos(-6, -3)
         OFFS = [OFF_E, OFF_NE, OFF_NW, OFF_SE, OFF_SW, OFF_W]
-        self.assertTrue(all([not G.is_pos_on_board(p) for p in OFFS]))
+        off_tests = [not G.is_pos_on_board(p) for p in OFFS]
+        self.assertTrue(all(off_tests))
 
     def test_rays_bishop(self):
         computed = BitBoard(G.SPACE_COUNT)

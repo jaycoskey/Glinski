@@ -156,8 +156,8 @@ class Geometry:
         # Define initial placement of pieces,
         #   using multiple representations.
         #
-        INIT_PAWN_HOME_BLACK = [B7, C7, D7, E7, F7, G7, H7, I7, K7]
-        INIT_PAWN_HOME_WHITE = [B1, C2, D3, E4, F5, G4, H3, I2, K1]
+        PAWN_HOME_BLACK = [B7, C7, D7, E7, F7, G7, H7, I7, K7]
+        PAWN_HOME_WHITE = [B1, C2, D3, E4, F5, G4, H3, I2, K1]
         INIT_PIECES_DICT = {
                 Player.Black: {
                     PieceType.King:   [G10],
@@ -165,7 +165,7 @@ class Geometry:
                     PieceType.Rook:   [C8, I8],
                     PieceType.Bishop: [F11, F10, F9],
                     PieceType.Knight: [D9, H9],
-                    PieceType.Pawn:   INIT_PAWN_HOME_BLACK,
+                    PieceType.Pawn:   PAWN_HOME_BLACK,
                 },
                 Player.White: {
                     PieceType.King:   [G1],
@@ -173,7 +173,7 @@ class Geometry:
                     PieceType.Rook:   [C1, I1],
                     PieceType.Bishop: [F3, F2, F1],
                     PieceType.Knight: [D1, H1],
-                    PieceType.Pawn:   INIT_PAWN_HOME_WHITE,
+                    PieceType.Pawn:   PAWN_HOME_WHITE,
                 }
                 }
         setattr(cls, "INIT_PIECES_DICT", INIT_PIECES_DICT)
@@ -281,23 +281,23 @@ class Geometry:
         setattr(cls, "VECS_PAWN_HOP_WHITE",  VECS_PAWN_HOP_WHITE)
 
         # ========================================
-        LEAP_KING = {}
+        LEAPS_KING = {}
         for npos in range(SPACE_COUNT):
             pos = cls.npos_to_pos(npos)
             npos_leap = [cls.pos_to_npos(pos + vec)
                         for vec in VECS_12
                         if cls.is_pos_on_board(pos + vec)]
-            LEAP_KING[npos] = npos_leap
-        setattr(cls, "LEAP_KING", LEAP_KING)
+            LEAPS_KING[npos] = npos_leap
+        setattr(cls, "LEAPS_KING", LEAPS_KING)
 
-        LEAP_KNIGHT = {}
+        LEAPS_KNIGHT = {}
         for npos in range(SPACE_COUNT):
             pos = cls.npos_to_pos(npos)
             npos_leap = [cls.pos_to_npos(pos + vec)
                         for vec in VECS_KNIGHT
                         if cls.is_pos_on_board(pos + vec)]
-            LEAP_KNIGHT[npos] = npos_leap
-        setattr(cls, "LEAP_KNIGHT", LEAP_KNIGHT)
+            LEAPS_KNIGHT[npos] = npos_leap
+        setattr(cls, "LEAPS_KNIGHT", LEAPS_KNIGHT)
 
         # ========================================
         #
@@ -348,14 +348,14 @@ class Geometry:
         # --------------------
 
         LEAP_PAWN_HOP_BLACK = {}
-        for pos in INIT_PAWN_HOME_BLACK:
+        for pos in PAWN_HOME_BLACK:
             npos = cls.pos_to_npos(pos)
             pos_hop = cls.npos_to_pos(npos) + VECS_PAWN_HOP_BLACK
             LEAP_PAWN_HOP_BLACK[npos] = cls.pos_to_npos(pos_hop)
         setattr(cls, "LEAP_PAWN_HOP_BLACK", LEAP_PAWN_HOP_BLACK)
 
         LEAP_PAWN_HOP_WHITE = {}
-        for pos in INIT_PAWN_HOME_WHITE:
+        for pos in PAWN_HOME_WHITE:
             npos = cls.pos_to_npos(pos)
             pos_hop = cls.npos_to_pos(npos) + VECS_PAWN_HOP_WHITE
             LEAP_PAWN_HOP_WHITE[npos] = cls.pos_to_npos(pos_hop)
