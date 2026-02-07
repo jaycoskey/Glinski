@@ -14,7 +14,7 @@ class Test_Board(unittest.TestCase):
         b = Board()
         for k in range(91):
             pos = HexPos(G.COORD_HEX0[k], G.COORD_HEX1[k])
-            self.assertTrue(b.is_pos_on_board(pos))
+            self.assertTrue(G.is_pos_on_board(pos))
 
     def test_detect_check(self):
         pass
@@ -87,8 +87,10 @@ class Test_Board(unittest.TestCase):
             piece = b.pieces[npos]
             if piece and piece.player != b.cur_player:
                 continue
-            actual_count = len(b.get_moves_pseudolegal_from(npos))
+            actual_count = len(list(b.get_moves_pseudolegal_from(npos)))
             expected_count = INIT_PIECE_MOVE_COUNTS[npos]
+            if actual_count > expected_count:
+                for move in moves:
             self.assertEqual(actual_count, expected_count,
                     f'At {G.npos_to_alg(npos)}: {actual_count} != {expected_count}')
 
