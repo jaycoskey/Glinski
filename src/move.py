@@ -14,12 +14,12 @@ Npos = int
 
 # TODO: Integrate actions that can take besides Moves. (See class MoveOptionFlags.)
 # TODO: Moves are instantiated with only 3 arguments (from, to, promotion type),
-# TODO: but non-core attributes can be updated later.
+# TODO: but non-core attributes (e.g., move evaluation) can be updated later.
 class Move:
-    def __init__(self, fr_npos: Npos, to_npos: Npos, pt_promo: PieceType=None):
-        self._fr_npos: int
-        self._to_npos: int
-        self._pt_promo = None
+    def __init__(self, fr_npos: Npos, to_npos: Npos, promo_pt: PieceType=None):
+        self._fr_npos: int = fr_npos
+        self._to_npos: int = to_npos
+        self._promo_pt = None
 
         self.pt: PieceType = None
         self.is_capture: bool = None
@@ -55,8 +55,8 @@ class Move:
         return self._to_npos
 
     @property
-    def pt_promo(self):
-        return self._pt_promo
+    def promo_pt(self):
+        return self._promo_pt
 
     # ========================================
 
@@ -64,34 +64,33 @@ class Move:
         return (
             self.fr_npos == other.fr_npos
             and self.to_npos == other.to_npos
-            and self.pt_promo == other.pt_promo
+            and self.promo_pt == other.promo_pt
         )
 
-    # Guaranteed to be uniquely determined by fr_npos, to_npos, and pt_promo:PieceType,
+    # Guaranteed to be uniquely determined by fr_npos, to_npos, and promo_pt:PieceType,
     #   assuming that the values of PieceType remain (distinct) positive integers.
     def __hash__(self):
         SMALL_PRIME = 97
         LARGE_PRIME = 90 + 90 * 97 + 1
         return (self.fr_npos + SMALL_PRIME * self.to_npos
-                + LARGE_PRIME * self.pt_promo.value)
+                + LARGE_PRIME * self.promo_pt.value)
 
     def __str__(self):
-        return "{0}{1}{2}{3}".format(
-            PieceType.to_symbol(self.pt),
-            G.npos_to_alg[self.fr_npos],
-            G.npos_to_alg[self.to_npos],
-            self.post_str,
+        return "{0}{1}{2}".format(
+            PieceType.to_symbol(self.pt) if self.pt else "-",
+            G.npos_to_alg(self.fr_npos) if self.fr_npos else "-",
+            G.npos_to_alg(self.to_npos) if self.to_npos else "-"
         )
 
     # ========================================
 
     # TODO: Ensure that other Move instance attributes are copied over.
     def copy(self):
-        return Move(self._fr_npos, self._to_npos, self._pt_promo)
+        return Move(self._fr_npos, self._to_npos, self._promo_pt)
 
     def to_alg(self):
         movetext = self.to_movetext()
-        promo = str(self.pt_promo) if self.pt_promo else ''
+        promo = str(self.promo_pt) if self.promo_pt else ''
         check_checkmate = ('#' if self.is_checkmate
                 else ('+' if str(self.is_mate) else ''))
         move_eval = str(self.move_eval) if self.move_eval else ''
