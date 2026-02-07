@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # by Jay M. Coskey, 2026
+# pylint: disable=invalid-name
 
 import unittest
 
