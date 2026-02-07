@@ -7,13 +7,13 @@ from src.geometry import Geometry as G
 from src.piece_type import PIECE_TYPE_COUNT
 from src.player import PLAYER_COUNT
 
-from src.zobrist import ZOBRIST_HASH_TABLE
+from src.zobrist import ZOBRIST_TABLE
 
 
 class TestZobrist(unittest.TestCase):
     def test_zobrist_table_size(self):
         expected_size = G.SPACE_COUNT * PLAYER_COUNT * PIECE_TYPE_COUNT
-        self.assertEqual(len(ZOBRIST_HASH_TABLE), expected_size)
+        self.assertEqual(len(ZOBRIST_TABLE), expected_size)
 
     def test_zobrist_default_placement(self):
         b = Board()

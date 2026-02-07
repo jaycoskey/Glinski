@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-# Zobrist hashihng was invented by Albert L. Zobrist in 1970 in the
+# Zobrist hashing was invented by Albert L. Zobrist in 1970 in the
 # paper A New Hashing Method with Applications for Game Playing.
 #
-# This Zobrist hash table is a 1-dimensional array of 64-bit random
-# numbers, but it can be thought of as a 3-dimensionl table of size
+# This Zobrist table is a 1-dimensional array of 64-bit random
+# numbers. It can be imagined as a 3-dimensionl table of size
 #   PIECE_COUNT * PLAYER_COUNT * PIECE_TYPE_COUNT
 #     = 91 * 2 * 6 = 1092
 #
@@ -16,7 +16,7 @@
 #   * The PieceType value selects a column within that plane.
 # All such values are XORed together to form the final result.
 
-ZOBRIST_HASH_TABLE = [
+ZOBRIST_TABLE = [
     0x6C0271C745CE8842,
     0xCEF3BBA2E932D1FD,
     0x41E6F7F323C99027,

@@ -13,7 +13,7 @@ from src.move import Move
 from src.piece import Piece
 from src.piece_type import PieceType, PIECE_TYPE_COUNT
 from src.player import Player, PLAYER_COUNT
-from src.zobrist import ZOBRIST_HASH_TABLE
+from src.zobrist import ZOBRIST_TABLE
 
 Npos = int
 
@@ -332,7 +332,7 @@ class Board:
                 pt_val = piece.pt.value
                 zobrist_index = (npos * PLAYER_COUNT * PIECE_TYPE_COUNT
                     + p_val * PIECE_TYPE_COUNT + pt_val)
-                result ^= ZOBRIST_HASH_TABLE[zobrist_index]
+                result ^= ZOBRIST_TABLE[zobrist_index]
         return result
 
     # ========================================
