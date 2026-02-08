@@ -69,6 +69,21 @@ class Geometry:
             """.split()))
         setattr(cls, "COORD_HEX1", COORD_HEX1)
 
+        RANK = list(map(int, """
+                      6   5   4   3   2   1
+                    7   6   5   4   3   2   1
+                  8   7   6   5   4   3   2   1
+                9   8   7   6   5   4   3   2   1
+             10   9   8   7   6   5   4   3   2   1
+           11  10   9   8   7   6   5   4   3   2   1
+             10   9   8   7   6   5   4   3   2   1
+                9   8   7   6   5   4   3   2   1
+                  8   7   6   5   4   3   2   1
+                    7   6   5   4   3   2   1
+                      6   5   4   3   2   1
+            """.split()))
+        setattr(cls, "RANK", RANK)
+
         #
         # Define SPACE_COUNT
         #
