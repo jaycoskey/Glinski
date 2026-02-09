@@ -22,20 +22,18 @@ class Move:
         self._promo_pt = None
 
         self.pt: PieceType = None
-        self.is_capture: bool = None
         self.is_check: bool = None
         self.is_checkmate: bool = None
         self.ep_target: Npos = None
-        self.pt_capture: PieceType = None
+        self.capture_pt: PieceType = None
 
         # Subjective attributes
         self.move_eval = None
 
-    def set_dependent_attributes(self, pt: PieceType, pt_capture: PieceType, ep_target: Npos):
+    def set_dependent_attributes(self, pt: PieceType, capture_pt: PieceType, ep_target: Npos):
         self.pt: PieceType = pt
-        self.is_capture: bool = is_capture
         self.ep_target: Npos = ep_target
-        self.pt_capture: PieceType = pt_capture
+        self.capture_pt: PieceType = capture_pt
 
     def set_computed_attributes(self, is_check, is_checkmate):
         self.is_check: bool = is_check
@@ -76,6 +74,9 @@ class Move:
         return (self.fr_npos + SMALL_PRIME * self.to_npos
                 + LARGE_PRIME * self.promo_pt.value)
 
+    def __repr__(self):
+        return self.__str__()
+
     def __str__(self):
         return "{0}{1}{2}".format(
             PieceType.to_symbol(self.pt) if self.pt else "-",
@@ -90,7 +91,7 @@ class Move:
         return Move(self._fr_npos, self._to_npos, self._promo_pt)
 
     def is_progress(self):
-        return self.is_capture or self.pt == PieceType.Pawn
+        return self.capture_pt or self.pt == PieceType.Pawn
 
     def to_alg(self):
         movetext = self.to_movetext()
@@ -104,7 +105,7 @@ class Move:
     def to_movetext(self):
         piece = '' if self.pt == PieceType.Pawn else str(self.pt)
         fr_alg = G.npos_to_pos(self.fr_npos)
-        capt = 'x' if self.pt_capt else '',
+        capt = 'x' if self.capture_pt else '',
         to_alg = G.npos_to_pos(self.to_npos)
         movetext = '{1}{2}{3}{4}'.format(piece, fr_alg, capt, to_alg)
         return movetext
