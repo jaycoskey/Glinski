@@ -154,7 +154,29 @@ BB_PROMO_WHITE = (BB_A6 | BB_B7 | BB_C8 | BB_D9 | BB_E10
         | BB_G10 | BB_H9 | BB_I8 | BB_K7 | BB_L6)
 
 # ========================================
+BB_RANK1 = (BB_A1 | BB_B1 | BB_C1 | BB_D1 | BB_E1
+        | BB_F1 | BB_G1 | BB_H1 | BB_I1 | BB_K1 | BB_L1)
+BB_RANK2 = (BB_A2 | BB_B2 | BB_C2 | BB_D2 | BB_E2
+        | BB_F2 | BB_G2 | BB_H2 | BB_I2 | BB_K2 | BB_L2)
+BB_RANK3 = (BB_A3 | BB_B3 | BB_C3 | BB_D3 | BB_E3
+        | BB_F3 | BB_G3 | BB_H3 | BB_I3 | BB_K3 | BB_L3)
+BB_RANK4 = (BB_A4 | BB_B4 | BB_C4 | BB_D4 | BB_E4
+        | BB_F4 | BB_G4 | BB_H4 | BB_I4 | BB_K4 | BB_L4)
+BB_RANK5 = (BB_A5 | BB_B5 | BB_C5 | BB_D5 | BB_D5
+        | BB_F5 | BB_G5 | BB_H5 | BB_I5 | BB_K5 | BB_L5)
+BB_RANK6 = (BB_A6 | BB_B6 | BB_C6 | BB_D6 | BB_E6
+        | BB_F6 | BB_G6 | BB_H6 | BB_I6 | BB_K6 | BB_L6)
+BB_RANK7 = (BB_B7 | BB_C7 | BB_D7 | BB_E7
+        | BB_F7 | BB_G7 | BB_H7 | BB_I7 | BB_K7)
+BB_RANK8 = BB_C8 | BB_D8 | BB_E8 | BB_F8 | BB_G8 | BB_H8 | BB_I8
+BB_RANK9 = BB_D9 | BB_E9 | BB_F9 | BB_G9 | BB_H9
+BB_RANK10 = BB_E10 | BB_F10 | BB_G10
+BB_RANK11 = BB_F11
 
+BITBOARD_RANKS = [BB_RANK1, BB_RANK2, BB_RANK3, BB_RANK4, BB_RANK5,
+        BB_RANK6, BB_RANK7, BB_RANK8, BB_RANK9, BB_RANK10, BB_RANK11]
+
+# ========================================
 BB_RING0 = BB_F6
 
 BB_RING1 = BB_E6 | BB_E5 | BB_F7 | BB_F5 | BB_G6 | BB_G5
