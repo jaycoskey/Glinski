@@ -90,6 +90,9 @@ class Geometry:
         SPACE_COUNT = 91
         setattr(cls, "SPACE_COUNT", SPACE_COUNT)
 
+        RANK_COUNT_PER_FILE = [6, 7, 8, 9, 10, 11, 10, 9, 8, 7, 6]
+        setattr(cls, "RANK_COUNT_PER_FILE", RANK_COUNT_PER_FILE)
+
         COORDS_TO_NPOS = {
                 (COORD_HEX0[npos], COORD_HEX1[npos]): npos
                 for npos in range(SPACE_COUNT) }
@@ -194,6 +197,10 @@ class Geometry:
         setattr(cls, "INIT_PIECES_DICT", INIT_PIECES_DICT)
 
 
+        # Here is what FEN for an initial Board setup would look like
+        # if the Spaces were arranged in row order:
+        # b/qk/nbn/r2r/p1b1p/1p2p1/1p1p1/2pp2/2p2/6/5/6/2P2/2PP2/1P1P1/1P2P1/P1B1P/R2R/NBN/QK/B w - - 0 1
+        #
         INIT_PIECES_FEN = "6/p5P/rp4PR/n1p3P1N/q2p2P2Q/bbb1p1P1BBB/k2p2P2K/n1p3P1N/rp4PR/p5P/6 w - - 0 1"
         setattr(cls, "INIT_PIECES_FEN", INIT_PIECES_FEN)
 
