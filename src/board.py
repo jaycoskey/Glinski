@@ -8,6 +8,7 @@ from typing import Dict, Iterator, List
 from src.bitboard import BB_COURT_BLACK, BB_COURT_WHITE
 from src.bitboard import BB_PAWN_HOME_BLACK, BB_PAWN_HOME_WHITE
 from src.board_state import BoardState
+from src.game_state import GameState
 from src.geometry import Geometry as G
 from src.hex_pos import HexPos
 from src.hex_vec import HexVec
@@ -40,12 +41,14 @@ class Board:
                     self.piece_add(pos, player, pt)
 
         self.cur_player = Player.White
-        self.halfmove_count = 0  # TODO
+        self.halfmove_count = 0
+        self.game_state = GameState.Unstarted
 
         # Note: Support move_undo()
         self.history_ep_target = [None]
-        self.history_move = [None]  # The move that resulted in the current Board position
+        self.history_move = [None]  # The move resulting in the current Board position
         self.history_nonprogress_halfmove_count = [0]
+        self.history_zobrist_hash = [self.get_zobrist_hash()]
 
         # Note: Track other computed values to avoid recomputation upon rewind & ffwd.
         self.history_is_check = [False]
@@ -53,7 +56,6 @@ class Board:
         self.history_is_repetition_3x = [False]
         self.history_is_repetition_5x = [False]
         self.history_is_stalemate = [False]
-        self.history_zobrist_hash = [self.get_zobrist_hash()]
 
     # ========================================
     # Access current values of history-tracked attributes using properties.
@@ -97,7 +99,27 @@ class Board:
     # ========================================
 
     def compute_board_state(self) -> BoardState:
-        return BoardState.Normal
+        moves = self.get_moves_pseudolegal()
+        is_king_attacked = self.is_king_attacked()
+        if is_king_attacked:
+            is_escapable = False
+            for protect_move in self.get_moves_pseudolegal():
+                self.move_make(protect_move)
+                if not self.is_king_attacked():
+                    is_escapable = True
+                self.make_undo()
+                if is_escapable:
+                    break
+            if is_escapable:
+                result = BoardState.Check
+            else:
+                result = BoardState.Checkmate
+        else:
+            if len(moves) == 0:
+                result = BoardState.Stalemate
+            else:
+                result = BoardState.Normal
+        return result
 
     # ========================================
 
@@ -160,12 +182,50 @@ class Board:
     def get_ep_target(self):
         raise NotImplementedError("board.get_ep_target()")
 
+    # Return the FEN Board representation, plus 5 other strings:
+    #     Active color (w or b)
+    #     Castling ability: Always '-' for Glinski's Hexagonal Chess
+    #     En passant target space (in alg. notation), or '-'
+    #     Halfmove clock
+    #     Fullmove number (= floor(halfmove_count / 2))
     def get_fen(self):
         raise NotImplementedError("board.get_fen()")
+
+    def get_fen_board(self):
+        result = ''
+        blank_count = 0
+
+        npos = 0
+        file_count = len(G.RANK_COUNT_PER_FILE)
+        for file_num in range(file_count):
+            for _ in range(G.RANK_COUNT_PER_FILE[file_num]):
+                cur_piece = self.pieces[npos]
+                npos += 1
+                if cur_piece:
+                    if blank_count > 0:
+                        result += str(blank_count)
+                        blank_count = 0
+                    result += str(cur_piece)
+                else:
+                    blank_count += 1
+            if blank_count > 0:
+                result += str(blank_count)
+                blank_count = 0
+            if file_num < file_count - 1:
+                result += '/'
+        return result
+
+    def get_king_npos(self, player: Player):
+        for npos in range(G.SPACE_COUNT):
+            piece = self.pieces[npos]
+            if piece and piece.player == player and piece.pt == PieceType.King:
+                return npos
+        assert False, f'Error: The Board contains no King for player {player}.'
 
     # ========================================
 
     def get_leap_pawn_adv(self, npos: Npos) -> Npos:
+        # self.print(f'Board printed from board.get_leap_pawn_adv(npos=#{npos}={G.npos_to_alg(npos)})')
         if self.cur_player == Player.Black:
             result = G.LEAP_PAWN_ADV_BLACK[npos]
         else:
@@ -196,9 +256,20 @@ class Board:
         return result
 
     # ========================================
+    def get_max_repetition_count(self):
+        return max(Counter(self.history_zobrist_hash).values())
+
+    # ========================================
 
     def get_moves_legal(self):
-        raise NotImplementedError("board.get_moves_legal()")
+        result = []
+        for move in self.get_moves_pseudolegal():
+            player = self.cur_player
+            self.move_make(move)
+            if not self.is_king_attacked():
+                result.append(move)
+            self.move_undo()
+        return result
 
     def get_moves_legal_matching(self):
         raise NotImplementedError("board.get_moves_legal_matching()")
@@ -206,7 +277,9 @@ class Board:
     def get_moves_pseudolegal(self):
         moves = []
         for npos in range(G.SPACE_COUNT):
-            moves.extend(self.get_moves_pseudolegal_from(npos))
+            piece = self.pieces[npos]
+            if piece and piece.player == self.cur_player:
+                moves.extend(self.get_moves_pseudolegal_from(npos))
         return moves
 
     def get_moves_pseudolegal_from(self, npos: Npos) -> Iterator[Move]:
@@ -251,13 +324,13 @@ class Board:
         for capt_npos in self.get_leap_pawn_capt(npos):
             if capt_npos == self.ep_target:
                 move = Move(npos, capt_npos, None)
-                move.capt_pt = PieceType.Pawn
+                move.capture_pt = PieceType.Pawn
                 yield move
             else:
                 capt_piece = self.pieces[capt_npos]
                 if capt_piece and capt_piece.player == self.cur_player.opponent():
                     move = Move(npos, capt_npos, None)
-                    move.capt_pt = capt_piece.pt
+                    move.capture_pt = capt_piece.pt
                     yield move
 
     def get_moves_pseudolegal_slider(self, npos: Npos, pt: PieceType):
@@ -274,31 +347,48 @@ class Board:
                 if dest_piece is None:
                     yield Move(npos, to_npos)
                     continue
-                dest_player = dest_piece.player
-                if dest_player == self.cur_player.opponent():
-                    move = Move(npos, to_npos)
-                    move.pt = dest_player.pt
-                    yield move
-                    break
-                break
+                else:
+                    dest_player = dest_piece.player
+                    if dest_player == self.cur_player.opponent():
+                        # Capture opponent's piece
+                        move = Move(npos, to_npos)
+                        move.capture_pt = dest_piece.pt
+                        yield move
+                break # Can't slide past piece
 
     def get_piece(self, npos: Npos):
         return self.pieces[npos]
 
-    def get_pieces(self, player: Player):
-        raise NotImplementedError("board.get_pieces()")
+    def get_pieces_list(self, player: Player=None, pt: PieceType=None) -> List[Piece]:
+        result = []
+        for npos in range(G.PIECE_COUNT):
+            piece = self.pieces[npos]
+            if not piece:
+                continue
+            if ((player is None or piece.player == player)
+                    and (pt is None or piece.pt == pt)):
+                result.append(piece)
+        return result
 
-    def get_pieces_at_file(self, pt: PieceType, f: str):
-        raise NotImplementedError("board.get_pieces_at_file()")
+    def get_pieces_at_file(self, f: str, player: Player=None, pt: PieceType=None):
+        result = []
+        for npos in BITBOARD_FILES[G.FILE_CHAR_TO_HEX0[f]]:
+            piece = self.pieces[npos]
+            if piece:
+                if ((player is None or piece.player == player)
+                        and (pt is None or piece.pt == pt)):
+                    result.append(piece)
+        return result
 
-    def get_pieces_at_rank(self, pt: PieceType, r: int):
-        raise NotImplementedError("board.get_pieces_at_rank()")
-
-    def get_pieces_list(self, pt: PieceType, r: int):
-        raise NotImplementedError("board.get_pieces_list()")
-
-    def get_pieces_map(self):
-        raise NotImplementedError("board.get_pieces_map()")
+    def get_pieces_at_rank(self, r: int, player: Player=None, pt: PieceType=None):
+        result = []
+        for npos in G.BITBOARD_RANKS[r - 1].search(1):
+            piece = self.pieces[npos]
+            if piece:
+                if ((player is None or piece.player == player)
+                        and (pt is None or piece.pt == pt)):
+                    result.append(piece)
+        return result
 
     # ========================================
 
@@ -358,7 +448,7 @@ class Board:
         result = 0
         for npos in range(G.SPACE_COUNT):
             piece = self.get_piece(npos)
-            if piece:
+            if piece is not None:
                 p_val = piece.player.value
                 pt_val = piece.pt.value
                 zobrist_index = (npos * PLAYER_COUNT * PIECE_TYPE_COUNT
@@ -367,14 +457,6 @@ class Board:
         return result
 
     # ========================================
-    # TODO: Fetch info cached at time move is made
-
-    def is_condition_check(self):
-        raise NotImplementedError("board.is_condition_check()")
-
-    # TODO: Fetch info cached at time move is made
-    def is_condition_checkmate(self):
-        raise NotImplementedError("board.is_condition_checkmate()")
 
     # TODO: Fetch info cached at time move is made
     def is_condition_dead_position(self):
@@ -383,29 +465,6 @@ class Board:
     # TODO: Fetch info cached at time move is made
     def is_condition_insufficient_material(self):
         raise NotImplementedError("board.is_condition_insufficient_material()")
-
-    # Note: history_nonprogress_halfmove_count is updated at Move time
-    def is_condition_nonprogress_moves_50(self):
-        return self.nonprogress_halfmove_count >= 100
-
-    # Note: history_nonprogress_halfmove_counts is updated at Move time
-    def is_condition_nonprogress_moves_75(self):
-        return self.nonprogress_halfmove_count >= 150
-
-    # TODO: Fetch info cached at time move is made
-    def is_condition_repetition_3x(self):
-        counter = Counter(self.history_zobrist_hash[0:self.halfmove_count + 1])
-        return max(counter.values()) >= 3
-
-    # TODO: Fetch info cached at time move is made
-    def is_condition_repetition_5x(self):
-        counter = Counter(self.history_zobrist_hash[0:self.halfmove_count + 1])
-        return max(counter.values()) >= 5
-
-    # TODO: Fetch info cached at time move is made
-    def is_condition_stalemate(self):
-        # return len(self.get_legal_moves()) == 0
-        raise NotImplementedError("board.is_condition_stalemate()")
 
     # ========================================
     # Tests on individual spaces or pieces
@@ -447,8 +506,21 @@ class Board:
     # In theory, player=self.cur_player.opponent() could be used
     #   to detect the error condition in which the opponent of
     #   the player moving is already in "check".
-    def is_king_attacked(self, player=None):
-        raise NotImplementedError("board.is_king_attacked()")
+    # See FIDE rule 3.9.1: Psuedolegal attacks suffice to bring mate.
+    def is_king_attacked(self):
+        player = self.cur_player
+        opponent = player.opponent()
+        king_npos = self.get_king_npos(opponent)
+        for attacker_npos in range(G.SPACE_COUNT):
+            attacker_piece = self.pieces[attacker_npos]
+            if (attacker_piece
+                    and attacker_piece.pt == PieceType.Queen
+                    and attacker_piece.player == player):
+                attacks = [attack for attack in self.get_moves_pseudolegal_from(attacker_npos)
+                        if attack.to_npos == king_npos]
+                if attacks:
+                    return True
+        return False
 
     # Check whether cur_player's King is being attacked.
     # When do_check_pseudolegal=False, pseudolegality is presumed.
@@ -468,21 +540,31 @@ class Board:
 
     # Note: This method does not perform a check for move legality.
     def move_make(self, move):
+        # Phase 0:
+        assert(self.game_state in [GameState.Unstarted, GameState.InPlay])
+        if self.game_state == GameState.Unstarted:
+            self.game_state = GameState.InPlay
+
         # Phase 1: Capture.
         #
         if move.ep_target:
+            move.capture_pt = PieceType.Pawn
             self.pieces[move.ep_target] = None
         else:
-            self.pieces[move.to_npos] = None
+            to_piece = self.pieces[move.to_npos]
+            if to_piece:
+                move.capture_pt = to_piece.pt
+                self.pieces[move.to_npos] = None
 
         # Phase 2: Move piece
         #
+        move.pt = self.pieces[move.fr_npos].pt
         self.pieces[move.to_npos] = self.pieces[move.fr_npos]
         self.pieces[move.fr_npos] = None
 
         # Phase 3: Pawn promotion.
         #
-        # TODO: Complete
+        # TODO: Implement Pawn promotion
 
         # Phase 4: Check for end of Game
         board_state = self.compute_board_state()
@@ -511,13 +593,15 @@ class Board:
             # TODO: Bring the game to a close
 
         # Phase 5: Update counters & history
+        #
         self.history_zobrist_hash.append(next_zobrist_hash)
         zobrist_counter = Counter(self.history_zobrist_hash)
-        next_is_board_repetition_3x = max(zobrist_counter.values()) >= 3
-        next_is_board_repetition_5x = max(zobrist_counter.values()) >= 5
+        next_is_board_repetition_3x = self.get_max_repetition_count() >= 3
+        next_is_board_repetition_5x = self.get_max_repetition_count() >= 5
         next_nonprogress_count = (0 if move.is_progress()
                 else self.history_nonprogress_halfmove_count[-1] + 1)
 
+        # Already set above: history_zobirst_hash
         self.history_ep_target.append(move.ep_target)
         self.history_is_check.append(board_state == BoardState.Check)
         self.history_is_checkmate.append(board_state == BoardState.Checkmate)
@@ -526,7 +610,6 @@ class Board:
         self.history_is_stalemate.append(board_state == BoardState.Stalemate)
         self.history_move.append(move)
         self.history_nonprogress_halfmove_count.append(next_nonprogress_count)
-        self.history_zobrist_hash.append(next_zobrist_hash)
 
         # Phase 6: Move to the next halfmove & Player
         #
@@ -534,18 +617,52 @@ class Board:
         self.cur_player = self.cur_player.opponent()
         self.notify_player(self.cur_player, "Your move")
 
-    def move_undo(self, m):
-        raise NotImplementedError("board.move_undo()")
-        # Revert GameState. If GameState = GameState.Over,
-        #  then revert to GameState.InProgress. Clear any win/draw details.
-        # Truncate history. Call pop on history stacks:
-        #   (a) checks, (b) checkmates, (c) ep targets, (d) moves,
-        #   (e) nonprogress halfmove counts, (f) zobrish hashes()
-        # Reset BoardCondition states from the history stacks.
-        # Unpromote.      If promotion, swap promoted piece for original Pawn.
-        # Unmove-piece2.  If Move was castling, move Rook back.
-        # Unmove-piece1.  Move primary piece back to original space.
-        # Uncapture.      If move was capture, restore removed piece.
+    def move_undo(self):
+        assert(self.game_state != GameState.Unstarted)
+        move = self.history_move[-1]
+
+        # Restore Game state
+        self.game_state = GameState.InPlay
+
+        # Restore piece positions
+        mover = self.cur_player.opponent()
+        opponent = self.cur_player
+
+        self.pieces[move.to_npos] = None
+        self.pieces[move.fr_npos] = Piece(mover, move.pt)
+        assert move.pt is not None
+
+        # Restore captured piece, if any
+        if move.capture_pt:
+            if move.is_en_passant:
+                ep_targ = self.history_ep_target[-2]
+                self.pieces[ep_targ] = Piece(opponent, PieceType.Pawn)
+            else:
+                self.pieces[move.to_npos] = Piece(opponent, move.pt)
+
+        # Remove last value from each of the history stacks
+        self.history_ep_target.pop()
+        self.history_move.pop()
+        self.history_nonprogress_halfmove_count.pop()
+        self.history_zobrist_hash.pop()
+
+        self.history_is_check.pop()
+        self.history_is_checkmate.pop()
+        self.history_is_repetition_3x.pop()
+        self.history_is_repetition_5x.pop()
+        self.history_is_stalemate.pop()
+
+        self.halfmove_count -= 1
+        assert len(self.history_ep_target) == self.halfmove_count + 1
+        assert len(self.history_move) == self.halfmove_count + 1
+        assert len(self.history_nonprogress_halfmove_count) == self.halfmove_count + 1
+        assert len(self.history_zobrist_hash) == self.halfmove_count + 1
+        assert len(self.history_is_check) == self.halfmove_count + 1
+        assert len(self.history_is_checkmate) == self.halfmove_count + 1
+        assert len(self.history_is_repetition_3x) == self.halfmove_count + 1
+        assert len(self.history_is_repetition_5x) == self.halfmove_count + 1
+        assert len(self.history_is_stalemate) == self.halfmove_count + 1
+        self.cur_player = self.cur_player.opponent()
 
     def moves_make(self, moves):
         raise NotImplementedError("board.moves_make()")
@@ -557,7 +674,8 @@ class Board:
     # TODO: Implement
     # Notification should be done by Game & Player/Controller
     def notify_player(self, player: Player, msg: str):
-        print(f'Attention {player}: {msg}')
+        pass
+        # print(f'Attention {player}: {msg}')
 
     # ========================================
 
@@ -576,14 +694,8 @@ class Board:
 
     # ========================================
 
-    def print(self, indent_board=8, indent_incr=2, item_width=4):
+    def print(self, heading=None, indent_board=8, indent_incr=2, item_width=4):
         text = self.get_print_str(indent_board, indent_incr, item_width)
+        if heading:
+            print(heading + ':')
         print(text)
-
-    # For each move, info such as is_check() and is_repetition_3x()
-    # should be cached so it is not re-computed multiple times.
-    # This method stores and caches that info.
-    # Should there be a separate mode for find-mate-in-two puzzles,
-    #   ignoring certain end-game conditions?
-    def set_board_conditions(self):
-        raise NotImplementedError("board.set_board_conditions()")
