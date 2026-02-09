@@ -1,0 +1,299 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="-450 -450 900 900">
+  <!-- By Jay Coskey, 2026-Feb
+    NOTE: This SVG displays a customizable view of an empty hexagonal chess board.
+          It is customizable in a few ways:
+       (1) The colors can be changed. See SPACE_COLORS.
+       (2) Three types of labels can be enabled or disabled:
+             * File labels @ bottom of board    (DO_ADD_FILE_LABELS)
+             * Row labels at @ the sides & top  (DO_ADD_ROW_LABELS)
+             * Space labels, inside the "hexes" (DO_ADD_SPACE_LABELS)
+       (3) Other configuration values:
+             * FONT_COLOR, FONT_SIZE, FONT_WEIGHT, etc.
+
+    Higher priority:
+    TODO: Add Title above board, Footer below, and Game History to the right.
+    TODO: Add class defs & conversion functions for HexVec & HexPos classes.
+    TODO: Display chess pieces. (Data in JSON. Add algebraic notation vals: A1, F6, etc.)
+    TODO: Add style section for CSS.
+
+    Lower priority:
+    TODO: Low-pri: Add highlighting to indicate possible piece movement.
+    TODO: Low-pri: Add arrows to indicate pending movement.
+    TODO: Low-pri: Add animation via JavaScript.
+  -->
+
+  <defs>
+    <script type="application/ecmascript"><![CDATA[
+      // ========================================
+      // Feature constants
+      const DO_ADD_FILE_LABELS = true;
+      const DO_ADD_ROW_LABELS = true;
+      const DO_ADD_SPACE_LABELS = true;
+
+      const FILE_LABELS_TXT = "abcdefghikl".split("");
+      // ========================================
+      // Font constants
+      const FONT_COLOR       = "black";      // e.g., "red", "black", "white", etc.
+      const FONT_FAMILY      = "Comic Sans MS";  // "Times New Roman";
+      const FONT_SIZE        = 20;
+      const FONT_WEIGHT      = "bold";       // e.g., "normal", "bold", "400", "700", etc.
+
+      const SPACE_FONT_COLOR  = FONT_COLOR;
+      const SPACE_FONT_FAMILY = FONT_FAMILY;
+      const SPACE_FONT_SIZE   = "16";         // FONT_SIZE;
+      const SPACE_FONT_WEIGHT = FONT_WEIGHT;
+
+      // Define font constants used by column and row labels
+      const EXT_FONT_COLOR   = FONT_COLOR;
+      const EXT_FONT_FAMILY  = FONT_FAMILY;
+      const EXT_FONT_SIZE    = FONT_SIZE;
+      const EXT_FONT_WEIGHT  = FONT_WEIGHT;
+
+      // ========================================
+      // SVG constants
+      const SVG_NS = "http://www.w3.org/2000/svg";
+
+      // ========================================
+      // Layout constants
+      const BOARD_SIDE_HEX_COUNT = 6;  // For Glinski's hexagonal chess boards
+
+      // Note: Board units are spaces
+      const BOARD_RADIUS = BOARD_SIDE_HEX_COUNT - 1;  // Units = hexes
+
+      const HEX_WIDTH_HALF  = 40;  // Half-width (= dist from center to vertex)
+      const HEX_HEIGHT_HALF = (Math.sqrt(3) / 2) * HEX_WIDTH_HALF;
+
+      const HEX_WIDTH  = 2 * HEX_WIDTH_HALF;
+      const HEX_HEIGHT = 2 * HEX_HEIGHT_HALF;
+
+      // ========================================
+      // Color constants
+      const COLOR_BLACK = "#000000";
+      const SPACE_BORDER_COLOR = COLOR_BLACK;
+      const SPACE_BORDER_WIDTH = 2;  // Note: Borders lie within spaces, not between them.
+
+      const LIGHT_YELLOW = "#ffff55";
+      const MED_GREEN =    "#33ee33";
+      const DARK_PURPLE =  "#a922a9";
+
+      const DEFAULT_PALETTE = {
+        Light:  "#ffff77",  // Yellow
+        Medium: "#55ff55",  // Green
+        Dark:   "#dd77ff"   // Light purple
+      };
+
+      const BLUE_TONES_PALETTE = {
+        Light:  "#bfbfff",  // Light blue
+        Medium: "#8f8fff",  // Medium blue
+        Dark:   "#5f5fff"   // Dark blue
+      };
+      const BOLD_EARTH_PALETTE = {
+        Light:  "#ffcf9f",  // Light tan
+        Medium: "#d99d60",  // Medium tan
+        Dark:   "#b26c25"   // Brown
+      };
+      const COLORFUL_PALETTE = {
+        Light:  LIGHT_YELLOW,
+        Medium: MED_GREEN,
+        Dark:   DARK_PURPLE
+      };
+      const DULL_EARTH_PALETTE = {  // From Wikipedia art "Hexagonal chess"
+        Light:  "#ffcf9f",  // Light tan
+        Medium: "#e9ad70",  // Medium tan
+        Dark:   "#d28c45"   // Dark tan
+      };
+      const GRAY_PALETTE = {
+        Light:  "#cfcfcf",
+        Medium: "#9f9f9f",
+        Dark:   "#6f6f6f",
+      };
+      const YELLOW_BLUE_BOARD_PALETTE = {
+        Light:  "#ffffbf",  // Yellow
+        Medium: "#9f9f9f",  // Gray
+        Dark:   "#2f5faf"   // Blue
+      };
+
+      // ========================================
+      // Set color palette
+      // To switch: Copy a palette from below, replacing the next line, then uncomment it.
+      const SPACE_COLORS = DEFAULT_PALETTE;
+
+      // const SPACE_COLORS = BLUE_TONES_PALETTE;
+      // const SPACE_COLORS = BOLD_EARTH_PALETTE;
+      // const SPACE_COLORS = COLORFUL_PALETTE;
+      // const SPACE_COLORS = DEFAULT_PALETTE;
+      // const SPACE_COLORS = DULL_EARTH_PALETTE;
+      // const SPACE_COLORS = GRAY_PALETTE;
+      // const SPACE_COLORS = YELLOW_BLUE_BOARD_PALETTE;
+
+      // ========================================
+      /** Convert space coords (a, b) to pixel coords (x,y) for flat-topped hexes
+        In this implementation of HexVec (hexagonal vector) coords:
+          - the first axis is oriented 30 degrees clockwise from Right/East.
+          - the second axis is oriented Upward/Northward.
+      */
+      function spaceCoordsToPixelCoords(a, b) {
+        const x = HEX_WIDTH_HALF * (3/2 * a);
+        const y = HEX_HEIGHT * (a/2 - b);
+        return { x, y };
+      }
+
+      /** Compute vertex coords for a flat-topped hex space centered at (cx, cy) */
+      function hexVertices(cx, cy) {
+        let pts = [];
+        for (let i = 0; i < 6; i++) {
+          const angle = Math.PI / 180 * (60 * i);  // in radians
+          const x = cx + HEX_WIDTH_HALF * Math.cos(angle);
+          const y = cy + HEX_WIDTH_HALF * Math.sin(angle);
+          pts.push(x.toFixed(4) + "," + y.toFixed(4));
+        }
+        return pts.join(" ");
+      }
+
+      /** =========================
+         Coloring rule constraints:
+           - Center space has color Medium.
+           - Directly above any Medium-colored space is a Light-colored space.
+           - Directly below any Medium-colored space is a Dark-colored space.
+           - Neighbors of a space, iterating clockwise, alternate between the other 2 colors.
+         ========================= */
+      function setExternalLabelAttributes(label) {
+        label.setAttribute("fill", EXT_FONT_COLOR);
+        label.setAttribute("font-family", EXT_FONT_FAMILY);
+        label.setAttribute("font-size", EXT_FONT_SIZE.toString() + "px");
+        label.setAttribute("font-weight", EXT_FONT_WEIGHT);
+        label.setAttribute("text-anchor", "middle");
+      }
+
+      function setInternalLabelAttributes(label) {
+        label.setAttribute("fill", SPACE_FONT_COLOR);
+        label.setAttribute("font-family", SPACE_FONT_FAMILY);
+        label.setAttribute("font-size", SPACE_FONT_SIZE.toString() + "px");
+        label.setAttribute("font-weight", SPACE_FONT_WEIGHT);
+        label.setAttribute("text-anchor", "middle");
+      }
+
+      function spaceColor(a, b) {
+        let idx = (a - 2*b) % 3;
+        if (idx < 0) idx += 3;
+
+        if (idx === 0) { return SPACE_COLORS.Medium; }
+        else if (idx === 1) { return SPACE_COLORS.Light; }
+        else return SPACE_COLORS.Dark;
+      }
+
+      // ========================================
+      function generateBoard() {
+        const board = document.getElementById("HexagonalChessBoard");
+
+        for (let a = -BOARD_RADIUS; a <= BOARD_RADIUS; a++) {
+          for (let b = -BOARD_RADIUS; b <= BOARD_RADIUS; b++) {
+            const grid_dist = a - b;
+            if (Math.abs(grid_dist) <= BOARD_RADIUS) {
+              const { x, y } = spaceCoordsToPixelCoords(a, b);
+              const hex = document.createElementNS(SVG_NS, "polygon");
+              hex.setAttribute("points", hexVertices(x, y));
+              hex.setAttribute("fill", spaceColor(a, b));
+              hex.setAttribute("stroke", SPACE_BORDER_COLOR);
+              hex.setAttribute("stroke-width", SPACE_BORDER_WIDTH);
+              board.appendChild(hex);
+            }
+          }
+        }
+        if (DO_ADD_FILE_LABELS) {
+          generateLabelsFiles();
+        }
+        if (DO_ADD_ROW_LABELS) {
+          generateLabelsForRowsLeft();
+          generateLabelsForRowsRight();
+        }
+        if (DO_ADD_SPACE_LABELS) {
+          generateLabelsSpaces();
+        }
+      }
+      function generateLabelsSpaces() {
+        const board = document.getElementById("HexagonalChessBoard");
+
+        for (let a = -BOARD_RADIUS; a <= BOARD_RADIUS; a++) {
+          for (let b = -BOARD_RADIUS; b <= BOARD_RADIUS; b++) {
+            const grid_dist = a - b;
+            if (Math.abs(grid_dist) <= BOARD_RADIUS) {
+              const { x, y } = spaceCoordsToPixelCoords(a, b);
+              const label = document.createElementNS(SVG_NS, "text");
+              label.setAttribute("x", x);
+              label.setAttribute("y", y + EXT_FONT_SIZE/4);
+              colTxt = FILE_LABELS_TXT[a + 5];
+              rowTxt = (6 + b - (a >= 0 ? a : 0)).toString();
+              label.textContent = colTxt + rowTxt;
+              setInternalLabelAttributes(label);
+              board.appendChild(label);
+            }
+          }
+        }
+      }
+
+      function generateLabelsFiles() {
+        const board = document.getElementById("HexagonalChessBoard");
+        const FILE_LABELS_POS = [
+          [-5,-6], [-4, -6], [-3,-6], [-2, -6], [-1, -6],
+          [0, -6],
+          [1, -5], [2, -4], [3, -3], [4, -2], [5, -1]
+          ];
+        for (let k = 0; k < FILE_LABELS_TXT.length; k++) {
+          const label = document.createElementNS(SVG_NS, "text");
+          const [a, b] = FILE_LABELS_POS[k];
+          const {x, y} = spaceCoordsToPixelCoords(a, b);
+          label.setAttribute("x", x);
+          label.setAttribute("y", y - EXT_FONT_SIZE/2);
+          label.textContent = FILE_LABELS_TXT[k];
+          setExternalLabelAttributes(label);
+          board.appendChild(label);
+        }
+      }
+
+      function generateLabelsForRowsLeft() {
+        const board = document.getElementById("HexagonalChessBoard");
+        const ROW_LABELS_POS = [
+          [-5.7, -5.05], [-5.7, -4.05], [-5.7, -3.05], [-5.7, -2.05], [-5.7, -1.05],
+          [-5.7, -0.05],
+          [-4.7, 0.9], [-3.7, 1.9], [-2.7, 2.9], [-1.73, 3.95], [-0.73, 4.95]
+          ]
+        const ROW_LABELS_TXT = Array.from(Array(11), (_, i)=> ((i+1).toString()));
+        for (let k = 0; k < ROW_LABELS_TXT.length; k++) {
+          const label = document.createElementNS(SVG_NS, "text");
+          const [a, b] = ROW_LABELS_POS[k];
+          const {x, y} = spaceCoordsToPixelCoords(a, b);
+          label.setAttribute("x", x);
+          label.setAttribute("y", y);
+          label.textContent = ROW_LABELS_TXT[k];
+          setExternalLabelAttributes(label);
+          board.appendChild(label);
+        }
+      }
+
+      function generateLabelsForRowsRight() {
+        const board = document.getElementById("HexagonalChessBoard");
+        const ROW_LABELS_POS = [
+          [5.7, 0.65], [5.7, 1.65], [5.7, 2.65], [5.7, 3.65], [5.7, 4.65],
+          [5.7, 5.65],
+          [4.7, 5.6], [3.7, 5.6], [2.7, 5.6], [1.75, 5.7], [0.75, 5.7],
+          ]
+        const ROW_LABELS_TXT = Array.from(Array(11), (_, i)=> ((i+1).toString()));
+        for (let k = 0; k < ROW_LABELS_TXT.length; k++) {
+          const label = document.createElementNS(SVG_NS, "text");
+          const [a, b] = ROW_LABELS_POS[k];
+          const {x, y} = spaceCoordsToPixelCoords(a, b);
+          label.setAttribute("x", x);
+          label.setAttribute("y", y);
+          label.textContent = ROW_LABELS_TXT[k];
+          setExternalLabelAttributes(label);
+          board.appendChild(label);
+        }
+      }
+      document.addEventListener("DOMContentLoaded", generateBoard);
+    ]]></script>
+  </defs>
+
+  <!-- Here is the actual object representing the board -->
+  <g id="HexagonalChessBoard" />
+</svg>
