@@ -75,13 +75,13 @@
 7.Be4 Bxe4 8.Hxe4 Fe8 9.Hc5 d6 10.Hxe8 Vxe8 11.Be3 Vd9
 12.Fg2 Fc5 13.Be2 Fxf2 14.Kxf2 Kf10 15.Vd1 Vd7 16.Be4 c6
 17.i3 Vc5 18.Ve3 Vxe3 19.Kxe3 Fd5 20.Bf4 Bh9 21.Ha4 Fxf3
-22.Kxf3 b5 23.Hc3 Be8 24.Be4 Hd5 25.k3 Ha3  26.Kd2 Hb6
+22.Kxf3 b5 23.Hc3 Be8 24.Be4 Hd5 25.k3 Ha3 26.Kd2 Hb6
 27.Hf4 Hxf5 28.Kf3 Bxe4 29.dxe4 Hfe7 30.h4 Ke8 31.Fc1 Kf8
 32.Kg4 Hh6 33.Kh3 He6 34.Hg1 Hd5 35.c4 Hb6 36.b3 He8
 37.He3 Kg7 38.e5 Hc5 39.Hb2 Hxb2 40.Fxb2 Hg8 41.Kg4 Ke7
 42.Kf5 Hd7 43.h5 Hg7 44.Kd4 h6 45.Fk2 i6 46.i4 k5 47.k4 gxh5
-48.gxh5 f6 49.exf6 Kxf6 50.b4 Hf10 51.Fh3 He7 52.Kb3  Ke6
-53.Kc3 Hf5 54.Kd3 d5 55.cxd5 Kxd5  56.i5 kxi5 57.kxi5 hxi5
+48.gxh5 f6 49.exf6 Kxf6 50.b4 Hf10 51.Fh3 He7 52.Kb3 Ke6
+53.Kc3 Hf5 54.Kd3 d5 55.cxd5 Kxd5 56.i5 kxi5 57.kxi5 hxi5
 58.hxi5 Hc4 59.Kf4 Kf6 60.Kd3 Hd7 61.Kc3 Ke6 62.Ff1 Hf6
 63.Fe2 Hxi5 64.Fxb5 cxb5 65.Kc4 Hf6 66.Kxb5 Hd3 67.Kc4 Hxb4
 68.Kxb4  0-1
@@ -100,7 +100,7 @@
 12.Bf4 Hc6 13.Hb5 Ve10 14.b3 Bgf8 15.Fg3 Bef9 16.b4 Hcxe5
 17.Ve3 Hxg3 18.Vxg3 Vc6+ 19.Kg2 Vxb5 20.Bxe6 Hxf5+ 21.Ki1 Hh6
 22.Bee4 Vd6 23.Fg2 Fe5 24.Bxf8 Fxg2+ 25.Vxg2 Vxf8 26.Ve5 Be9
-27.Vd5+ Kh8 28.Vxb7+ Ki7 29.Bxe9 Vxe9   0-1
+27.Vd5+ Kh8 28.Vxb7+ Ki7 29.Bxe9 Vxe9  0-1
 
 [Variant "Glinski"]
 [Event "Bóly81"]
@@ -115,7 +115,7 @@
 7.f6 Bi7 8.fxg6 Fxg6 9.Fxg6 hxg6 10.Hxg6 Bi8 11.Bcf4 Bcf8
 12.Ve3 Big8 13.Big3 Fd6 14.Bxf8 Bxf8 15.Hh4 Fxk1 16.Fxk1 Vf10
 17.Bf3 Vi4 18.Bxf8 Hxf8 19.Fg2 Fxg2 20.Kxg2 He5 21.i3 Hh6
-22.He8+ Kf10 23.Hh7+ Kg8 24.Hxi4   1-0
+22.He8+ Kf10 23.Hh7+ Kg8 24.Hxi4  1-0
 
 [Variant "Glinski"]
 [Event "Bóly81"]
@@ -128,8 +128,8 @@
 
 1.f6 e6 2.g5 Hdf8 3.Fe2 Hhi6 4.Bg4 Fh6 5.g6 Fxe2 6.Vxe2 exf6
 7.gxf7 Hxf7 8.e6 e5ep. 9.Be3 g6 10.Bie4 Hxe4 11.Bxe4 d5
-12.d4 Be8 13.Hdf4 Fxk1  14.Hxg6 Bg8 15.Vg5 Hxg5 16.Hxe8+ Vxe8
-17.Fxk1 Hxi2+ 18.Kh2 Hk4 19.Bi5 Vxh3+   0-1
+12.d4 Be8 13.Hdf4 Fxk1 14.Hxg6 Bg8 15.Vg5 Hxg5 16.Hxe8+ Vxe8
+17.Fxk1 Hxi2+ 18.Kh2 Hk4 19.Bi5 Vxh3+  0-1
 
 [Variant "Glinski"]
 [Event "Bóly81"]
@@ -159,7 +159,7 @@
 12.Vd2? Bxg3+ 13.Fxg3 He5 14.Vf2 Fi3+ 15.Fh2 Fxk1 16.Fxk1 Vxk1
 17.Fh3 Be10 18.Bg4+ Kf11 19.b2 Hi6 20.i3 Vb1 21.He2 Vf9
 22.Kh2 Be7 23.f7 Hxf7 24.Fxf7 Hxg3 25.Hd4 Be1 26.Kxg3 Bxf2
-27.Kxf2 Vxi3   0-1
+27.Kxf2 Vxi3  0-1
 
 [Variant "Glinski"]
 [Event "Bóly81"]
@@ -176,7 +176,7 @@
 16.Fxg6 Fxg6 17.Bhxg6 Bxg6 18.Bxg6 Bg8 19.Bxg8 Fxg8
 20.Fk5 Fh6 21.Ff1 Ke9 22.Kh1 Kf8 23.Kh2 Hi6 24.Kh3 Fk5+
 25.Ki3 Fxf1 26.Kk2 Kf7 27.e5 Kxe5 28.Kl2 Kxf6 29.Kk4 Hg5+
-30.Ki5 Hxi2   0-1
+30.Ki5 Hxi2  0-1
 
 [Variant "Glinski"]
 [Event "Bóly81"]
@@ -200,9 +200,9 @@
 [White "Rudolf László"]
 [Black "Papp Károly"]
 
-1.g5 g6 2.Hg2 Hg9  3.Hhi3 Fxi3  4.Hxi3 c6 5.Fd4 b5?
+1.g5 g6 2.Hg2 Hg9 3.Hhi3 Fxi3 4.Hxi3 c6 5.Fd4 b5?
 6.Fxg9 Fxg9 7.Hk5 Bg8 8.Fxk7 i6 9.Hi3 Bk4? 10.Bxk4 Kf11
-11.Va5 Be9 12.Bd8 Bxd8 13.Vxd8 Vxd8 14.Fxd8 Fk2 15.ixk  1:0
+11.Va5 Be9 12.Bd8 Bxd8 13.Vxd8 Vxd8 14.Fxd8 Fk2 15.ixk  1-0
 
 [Variant "Glinski"]
 [Event "Bóly81"]
@@ -218,7 +218,7 @@
 12.e5 Fxg6 13.Hxg6 Bxg6 14.exf6 Bxg3 15.Ve3 Fd5+ 16.Kh1 Bxh2+
 17.Kxh2 Fxf6+ 18.Hg4 c6 19.Kh1 Fxg4 20.Vxg4 Fxd3 21.cxd3 Bf8
 22.Bif4 Vl5 23.Bce3 Vk4 24.Vxk4 g5 25.Vl2 gxf5 26.Vxb7 Ke10
-27.Ba4 Ke9 28.Vg6   1-0
+27.Ba4 Ke9 28.Vg6  1-0
 
 [Variant "Glinski"]
 [Event "Bóly81"]
@@ -233,7 +233,7 @@
 7.Hb2 Be5 8.Fd3 Bxb2 9.cxb2 Hxg5 10.h4 Hxf3 11.Vxf3 gxf6
 12.Fe3 Fe8 13.Bg3+ Hg7 14.h5 Kh9 15.Hg6 Hk6 16.Hxf9 Vxf9
 17.i4 Hxi4 18.Bk3 Vg8+ 19.Ke1 Hl5 20.Bl2 Hh6 21.Fk2 d5
-22.Vxf6 Fxb2 23.Vxb2 He6 24.Fxg8+ Bxg8   1-0
+22.Vxf6 Fxb2 23.Vxb2 He6 24.Fxg8+ Bxg8  1-0
 
 [Variant "Glinski"]
 [Event "Bóly81"]
@@ -247,7 +247,7 @@
 1.g5 g6 2.i3 Hdf8 3.Hg4 h5 4.Hf4 hxg5 5.fxg5 Hxg5 6.Fe3 Hxf3
 7.Vxf3 Bg8 8.e6 Hi6 9.d5 Hg5 10.Ve4 Hxe3+ 11.Vxe3 Fh7
 12.exf7 exf7 13.Vxe10+ Bxe10 14.Fd3 Fd6 15.Fxf7 Fxf7
-16.Hxf7 Bg7 17.Hh4 Bge8 18.Bg3 Bg9   0-1
+16.Hxf7 Bg7 17.Hh4 Bge8 18.Bg3 Bg9  0-1
 
 [Variant "Glinski"]
 [Event "Bóly81"]
@@ -262,7 +262,7 @@
 6.Fxf9+ Kxf9 7.Fg2 Bb4 8.Hc3 Bxi1 9.Fxi1 Hi6 10.Fg2 g5
 11.Fd6 Fh6 12.Ff4 f6 13.Hi3 Ff7 14.fxg5 fxg5 15.Be6 Bf8
 16.Fd6 Kg7 17.Fd4 c6 18.Fxf7 Hxf7? 19.Bxg5+ Ke7 20.Fxf8 Hxf8
-21.Be6+ Kg7 22.Hcf5+ Kg8 23.Be7 Hd4 24.Bxb7 Fb3 25.Bxb3   1-0
+21.Be6+ Kg7 22.Hcf5+ Kg8 23.Be7 Hd4 24.Bxb7 Fb3 25.Bxb3  1-0
 
 [Variant "Glinski"]
 [Event "Bóly81"]
@@ -274,7 +274,7 @@
 [Black "Rudolf László"]
 
 1.g5 g6 2.Fg2 Hg9 3.Hdf4 Fd6 4.Hfi3 Fxg2 5.Kxg2 i6 6.Hhf4 k5
-7.h5 Fe9 8.hxg6 Fxi3 9.Hxi3 Vxi3 10.Bh4 Vf9 11.gxf7 Fxh4   0-1
+7.h5 Fe9 8.hxg6 Fxi3 9.Hxi3 Vxi3 10.Bh4 Vf9 11.gxf7 Fxh4  0-1
 
 [Variant "Glinski"]
 [Event "Bóly81"]
@@ -290,7 +290,7 @@
 11.b2 Hd5 12.Bfi4 Fxi4 13.Bxi4 Hxc2 14.Vd1 Hd5 15.e5 Hxb2
 16.Vd2 Vf10 17.d4 Hg7 18.Bg4 Hc5 19.Vc3+ Kh9 20.Vxc5 Fxl4
 21.Hxl4 Hxf5 22.Bxf5 Bxl4 23.Fk6 Vxk6 24.Bxf7 Bd2+ 25.Kh2 Vk4+
-26.Kg2 Ve3+ 27Ki1 Bg1+ 28.Kk2 Vk4+   0-1
+26.Kg2 Ve3+ 27Ki1 Bg1+ 28.Kk2 Vk4+  0-1
 
 [Variant "Glinski"]
 [Event "Bóly81"]
@@ -315,7 +315,7 @@
 12.g6 fxg6 13.fxg6 Vd8 14.He6 Ve7 15.Hxf9 Kxf9 16.Fg4 Vc6
 17.Bh4 Bd6 18.Bf4+ Bif8 19.Bxd6 Vxd6 20.Vf3 Bxf4 21.Vxf4+ Ff8
 22.Hl4 Hl3 23.Vg3 Hk1 24.Vh2 Hi4 25.Fxi4 Kh8 26.Vl5+ Kf9
-27.Vxk7+ Ke9 28.Hi7 Fd7 29.Vd8+   1-0
+27.Vxk7+ Ke9 28.Hi7 Fd7 29.Vd8+  1-0
 
 [Variant "Glinski"]
 [Event "Bóly81"]
@@ -334,7 +334,7 @@
 27.g6? Bhxh4+ 28.Kf3 Bxi4 29.B4xe5 Bxe5 30.Bxe5 Kg7
 31.Be10 Bxg6 32.Bxb7 c5 33.Bb3+ Bf7+ 34.Bxf7+ Kxf7 35.Kg4 Kg6
 36.c4 h5 37.b3 i5 38.b4 cxb4 39.cxb4 k4 40.k3 i4 41.kxi4 kxi4
-42.Ki3 Kg5 43.b5 h4+ 44.Kh2 i3 45.Ki2 Kg4   0-1
+42.Ki3 Kg5 43.b5 h4+ 44.Kh2 i3 45.Ki2 Kg4  0-1
 
 [Variant "Glinski"]
 [Event "Hármas csapattalálkozó"]
@@ -349,7 +349,7 @@
 6.Hxi3 Hdf8 7.Hk5 Bg8 8.Fxk7 h5 9.h4 i5 10.Bg4 i4 11.Hl2 Bi8
 12.Fl5 Bl6 13.Fi3 Bl3 14.k2 ixh4 15.Fxh4 hxg5 16.fxg5 Hhi6
 17.Fh3 Fh6 18.Big3 Be8 19.Ff4 Fl1 20.B4h3 Hxh4 21.Hxh4 Bi5
-22.Hl2 Bl3 23.Fc3 1-0
+22.Hl2 Bl3 23.Fc3  1-0
 
 [Variant "Glinski"]
 [Event "I. Országos Bajnokság"]
@@ -360,12 +360,12 @@
 [White "Kovács Imre"]
 [Black "Rudolf László"]
 
-1.e5 g6 2.He4 Hi6 3.Fh2 Hk3 4.Fe2 Hxi1 5.Fxi1 Fxk1 6.Fxk1  Vxk1
+1.e5 g6 2.He4 Hi6 3.Fh2 Hk3 4.Fe2 Hxi1 5.Fxi1 Fxk1 6.Fxk1 Vxk1
 7.Hh4 Vxi2 8.Ve2 Fh6 9.Ve4 Fe9 10.Be3 Hc6 11.c3 Fi4
 12 .Bg2 Vl4 13.Bl2 Vk4 14.Bh2 Bh6 15.Ve2 Bg8 16.g5 f6
-17.exf6 gxf6 18.Hf3 fxg5 19.fxg5 Fxg5 20.Hxg5 Bhg7 21.h4  h5
-22.Ke1 hxg5 23.hxg5 Fg9 24.Bk2 Vi6 25.Kd2 Be6 26.Vi3  Vh8
-27.Kc1 Bl4 28.Hg4 Be1 29.Fd1 Bxk2 30.Fxk2 Bh4 31.Vi1  Bxg4  0-1
+17.exf6 gxf6 18.Hf3 fxg5 19.fxg5 Fxg5 20.Hxg5 Bhg7 21.h4 h5
+22.Ke1 hxg5 23.hxg5 Fg9 24.Bk2 Vi6 25.Kd2 Be6 26.Vi3 Vh8
+27.Kc1 Bl4 28.Hg4 Be1 29.Fd1 Bxk2 30.Fxk2 Bh4 31.Vi1 Bxg4  0-1
 
 [Variant "Glinski"]
 [Event "I. Országos Bajnokság"]
@@ -376,13 +376,13 @@
 [White "Rudolf László"]
 [Black "Ambrus Lajos"]
 
-1.g5 g6 2.Hg2 Hdf8 3.Hhi3 i6 4.Fd4 Hc6 5.e5 Hxd4 6.Bxd4  Hf8
-7.Bh2 h5 8.gxh5 Fxh5 9.Fxh5 Vxh5 10.Vxh5 Hxh5 11.Hl4  Hxl4
-12.Bxl4 k5 13.Bl5 Bk4 14.Fe2 Fh6 15.Kf3 Fxe2 16.Kxe2  Bh9
-17.Bf4 Bxf4 18.Kxf4 Kf9 19.Bi7 i5 20.Bi6 Bh7 21.Bxh7  Fxh7
+1.g5 g6 2.Hg2 Hdf8 3.Hhi3 i6 4.Fd4 Hc6 5.e5 Hxd4 6.Bxd4 Hf8
+7.Bh2 h5 8.gxh5 Fxh5 9.Fxh5 Vxh5 10.Vxh5 Hxh5 11.Hl4 Hxl4
+12.Bxl4 k5 13.Bl5 Bk4 14.Fe2 Fh6 15.Kf3 Fxe2 16.Kxe2 Bh9
+17.Bf4 Bxf4 18.Kxf4 Kf9 19.Bi7 i5 20.Bi6 Bh7 21.Bxh7 Fxh7
 22.Kg5 Kg8 23.Ki4 k4 24.Kk5 Kg7 25.i4 kxi4 26.Kxi4 b5
 27.Hh4 Kf8 28.d5 c5 29.c4 e6 30.dxc5 bxc5 31.Kh6 Ff11
-32.Hxf7 1-0
+32.Hxf7  1-0
 
 [Variant "Glinski"]
 [Event "I. Országos Bajnokság"]
@@ -403,7 +403,7 @@
 37.d4 k4 38.Kf3 i5 39.Fd3 Hc5 40.Ff4 fxg5 41.fxg5 hxg5
 42.hxg5 i4 43.Kg4 Hf7 44.Kf5 Hc6 45.Fd3 Fc8 46.Kf4 Fd7
 47.Ff2 Kh6 48.Kg4 Hf8 49.Fe5 Hi6 50.Fh1 Hg9 51.Fd6 Kg7
-52.Fe5 Hk7 53.Fg3 Hl4 54.Kh3 Kh6 55.Fh1 c6 56.Fxl4 1-0
+52.Fe5 Hk7 53.Fg3 Hl4 54.Kh3 Kh6 55.Fh1 c6 56.Fxl4  1-0
 
 [Variant "Glinski"]
 [Event "I. Országos Bajnokság"]
@@ -414,11 +414,11 @@
 [White "Rudolf László"]
 [Black "Dalos Endre"]
 
-1.g5 e5 2.Hi3 exf5 3.exf5 Vxe1 4.Fxe1 g6 5.Hk5 Bg8 6.Fc3  h5
-7.Fxf9 Kxf9 8.Hh4 Fi5 9.Hxf7 Fxf2 10.Kxf2 Bcf8 11.Hde4  Fe8
-12.Hg4 hxg5 13.He6 Kg7 14.Hxg8 Fxg8 15.Bk4 Fh6 16.Bxk7  Hk6
-17.Fg2 Fk5 18.Hd6 Kh8 19.Bxk6 ixk6 20.Hxg6 Ki6 21.Bf4  gxf5
-22.Hd5 Bf10 23.Bd4 Ki5 24.He8 He7 25.h5 Kxh5 26.Bg6  Kk4
+1.g5 e5 2.Hi3 exf5 3.exf5 Vxe1 4.Fxe1 g6 5.Hk5 Bg8 6.Fc3 h5
+7.Fxf9 Kxf9 8.Hh4 Fi5 9.Hxf7 Fxf2 10.Kxf2 Bcf8 11.Hde4 Fe8
+12.Hg4 hxg5 13.He6 Kg7 14.Hxg8 Fxg8 15.Bk4 Fh6 16.Bxk7 Hk6
+17.Fg2 Fk5 18.Hd6 Kh8 19.Bxk6 ixk6 20.Hxg6 Ki6 21.Bf4 gxf5
+22.Hd5 Bf10 23.Bd4 Ki5 24.He8 He7 25.h5 Kxh5 26.Bg6 Kk4
 27.Bxe7 dxe7 28.Hh7 Ki3 29.Hxf10 Fxg2 30.Kxg2 Kxk1
 31.Kh3 f4 32.Hxe7 f3 33.Hg5 f2 34.Kg2 Ki3  1-0
 
@@ -431,17 +431,17 @@
 [White "Vida László"]
 [Black "Rudolf László"]
 
-1.g5 g6 2.Fe2 Hg9 3.Hdf4 Hhi6 4.Fxi6 Hxi6 5.k2 Hk3 6.Bg3  Fg7
+1.g5 g6 2.Fe2 Hg9 3.Hdf4 Hhi6 4.Fxi6 Hxi6 5.k2 Hk3 6.Bg3 Fg7
 7.Bg2 Fi6 8.Vd2 Bk4 9.Hhi3 Fl5 10.Vk1 Fd6 11.Bh1 Fxf4
 12.Bxf4 Bif8 13.Fh4 Hi6 14.Bhe3 Hl3 15.Vi1 h5 16.Bg4 hxg5
 17.Fxg5 Hi6 18.Fe2 Bl3 19.Vg3 Fxi3 20.hxi3 Bfg7 21.Bg2 Vh8
-22.Vf3 Bh7 23.Bh1 Fe9 24.f6 Ke10 25.fxg6 Hxh4 26.Bgxh4  Fxg6
-27.B4h3 Blg7 28.Ke1 Kf9 29.B1h2 Kf8 30.Kd2 Vk4 31.Ff4  Bhg8
-32.Ke2 Fh7 33.e5 Bg1 34.Bf2 Bxf2 35.Kxf2 Vk6 36.Ke2  i6
-37.Vxb7 Bg3 38.Kd2 Bxf4 39.Kc3 Vf10 40.Vb3 Fe3 41.Bh4  Bxh4
-42.Vxh4 Fg6 43.Vk4 Vh6 44.Vxk7 Fxi2 45.Vd8 Kh7  46.Vxc7 Ff8
-47.Vc5 Vxk2 48.Ve3 Fg6 49.Vg4 i5 50.b3 Vf10  51.b4 Vc7
-52.Kb3 d6 53.c4 Fe9 54.Kb2 Vg8 55.Vh2 Ki7 56.Vf4  ...   1-0
+22.Vf3 Bh7 23.Bh1 Fe9 24.f6 Ke10 25.fxg6 Hxh4 26.Bgxh4 Fxg6
+27.B4h3 Blg7 28.Ke1 Kf9 29.B1h2 Kf8 30.Kd2 Vk4 31.Ff4 Bhg8
+32.Ke2 Fh7 33.e5 Bg1 34.Bf2 Bxf2 35.Kxf2 Vk6 36.Ke2 i6
+37.Vxb7 Bg3 38.Kd2 Bxf4 39.Kc3 Vf10 40.Vb3 Fe3 41.Bh4 Bxh4
+42.Vxh4 Fg6 43.Vk4 Vh6 44.Vxk7 Fxi2 45.Vd8 Kh7 46.Vxc7 Ff8
+47.Vc5 Vxk2 48.Ve3 Fg6 49.Vg4 i5 50.b3 Vf10 51.b4 Vc7
+52.Kb3 d6 53.c4 Fe9 54.Kb2 Vg8 55.Vh2 Ki7 56.Vf4 ... 1-0
 
 [Variant "Glinski"]
 [Event "I. Országos Bajnokság"]
@@ -452,10 +452,10 @@
 [White "Rudolf László"]
 [Black "Halas János"]
 
-1.g5 g6 2.Hg2 Fe8 3.Hhi3 Hg7 4.Hh6 Bh9 5.Fxk7 Fxk7 6.Hxk7  Hg9
-7.Hxg9 Fxg9 8.Bif4 Vf9 9.Bk4 Hi8 10.Hi3 Fg8 11.Bxc8  Fxc8
+1.g5 g6 2.Hg2 Fe8 3.Hhi3 Hg7 4.Hh6 Bh9 5.Fxk7 Fxk7 6.Hxk7 Hg9
+7.Hxg9 Fxg9 8.Bif4 Vf9 9.Bk4 Hi8 10.Hi3 Fg8 11.Bxc8 Fxc8
 12.Bk4 h6 13.Vi6 Vh8 14.Vxh8 Bxh8 15.Hk5 Hxk5 16.Bxk5 i6
-17.Bxi6 Kf9 18.k3 Kg7 19.Bk6 Bxk6 20.Fxk6 h5 21.gxh5  Kxh5
+17.Bxi6 Kf9 18.k3 Kg7 19.Bk6 Bxk6 20.Fxk6 h5 21.gxh5 Kxh5
 22.Kh2 Fg9 23.i3 Ki6 24.Fh4 Kh5 25.Fi2 f6 26.h4 Kk4
 27.i4 Kl2 28.k4 Kk2 29.k5 Fi5 30.h5 gxh5 31.ixh5 Fi4
 32.hxi5 Fxf1 33.k6 Ki4 34.k7V Kxi5 35.Bg7 Kk5 36.Fh4  1-0
@@ -471,9 +471,9 @@
 
 1.g6 fxg6 2.Hi3 i6 3.Hxg6 Fe9 4.Hk4 Fg9 5.Fi5 h6 6.Fl4 k6
 7.Vf2 i5 8.Hg5 Bg8 9.h5 k5 10.Fk3 Hdf8 11.hxi5 Hxg5
-12.fxg5 kxi5 13.Fi4 Bgf8 14.Bcf4 Bxf4 15.Hxf4 g6 16.Bh1  Hk6
-17.Fk2 Kf11 18.Fl4 Hh9 19.Fl3 Hf8 20.Fi4 He5 21.d4  Hxf3
-22.Vxf3 Bf8 23.Vd2 Fi3 24.Ke1 Fd6 25.He6 Vg7 26.Hxh6 Vi6 0-1
+12.fxg5 kxi5 13.Fi4 Bgf8 14.Bcf4 Bxf4 15.Hxf4 g6 16.Bh1 Hk6
+17.Fk2 Kf11 18.Fl4 Hh9 19.Fl3 Hf8 20.Fi4 He5 21.d4 Hxf3
+22.Vxf3 Bf8 23.Vd2 Fi3 24.Ke1 Fd6 25.He6 Vg7 26.Hxh6 Vi6  0-1
 
 [Variant "Glinski"]
 [Event "I. Országos Bajnokság"]
@@ -484,10 +484,10 @@
 [White "Rudolf László"]
 [Black "Bank László"]
 
-1.g5 g6 2.Hg2 i6 3.h5 gxh5 4.Fxh5 Fxh5 5.Vxh5 Vxh5 6.gxh5  Bg7
+1.g5 g6 2.Hg2 i6 3.h5 gxh5 4.Fxh5 Fxh5 5.Vxh5 Vxh5 6.gxh5 Bg7
 7.Bg4 Bxg4 8.Hxg4 Fi4 9.Hi3 Bg8 10.Kh2 Fxf1 11.Bxf1 Kh8
-12.Hi5 Ki7 13.Hxg8 Kxg8 14.Bg1 Kh8 15.h6 Hdf8 16.Fh4  Hd5
-17.Kf3 Fg9 18.hxi6 Hxi6 19.Fi5 Ha3 20.Kd2 Hb6 21.b3  Hd5
+12.Hi5 Ki7 13.Hxg8 Kxg8 14.Bg1 Kh8 15.h6 Hdf8 16.Fh4 Hd5
+17.Kf3 Fg9 18.hxi6 Hxi6 19.Fi5 Ha3 20.Kd2 Hb6 21.b3 Hd5
 22.c4 He8 23.Hh6 Ff8 24.Bg4 Hf6 25.Fl1 Ki7 26.Hl4 Kh8
 27.Bk4 Hg8 28.Hi3 Ki7 29.d5 b5 30.Kc3 c6 31.e5  1-0
 
@@ -501,17 +501,17 @@
 [Black "Rudolf László"]
 
 1.Fe2 g6 2.Fh4 Hg9 3.e6 Hhi6 4.Be3 Hxh4 5.gxh4 fxe6
-6.Bxe6  d6 7.Bg5 Fe9 8.Bg2 Fh6 9.Fg5 e6 10.Hhf4 He7
-11.Hfc3 c6  12.d5 Hxg5 13.fxg5 exd5 14.Be4 Kf11 15.Hf5 Fg8
-16.Fh2 Fe5  17.Bf3 Bif8 18.Hi3 Bxf3 19.Vxf3 Bf8 20.Bf5 Vh8
-21.Bxf8  Vxf8 22.Vxf8 Fxf8 23.Hh6 Fh8 24.Hb2 Fg8 25.Hi3 b6
+6.Bxe6 d6 7.Bg5 Fe9 8.Bg2 Fh6 9.Fg5 e6 10.Hhf4 He7
+11.Hfc3 c6 12.d5 Hxg5 13.fxg5 exd5 14.Be4 Kf11 15.Hf5 Fg8
+16.Fh2 Fe5 17.Bf3 Bif8 18.Hi3 Bxf3 19.Vxf3 Bf8 20.Bf5 Vh8
+21.Bxf8 Vxf8 22.Vxf8 Fxf8 23.Hh6 Fh8 24.Hb2 Fg8 25.Hi3 b6
 26.Hf4 Fd4 27.Hfd1 Fxh4 28.Hxd5 b5 29.Hg2 Fi5 30.Kf3 Fe5
-31.h5  gxh5 32.gxh5 Fi6 33.Fg4 Fe6 34.Hh4 Fg8 35.Hxi6 hxi6
-36.Ke4  c5 37.Hf4 Ff8 38.Kf6 Fh6 39.Hc3 d5 40.Kg7 Kg9
-41.Kxi6 Ff7   42.Kxk7 Kh7 43.Kl5 d4 44.He2 d3 45.cxd3 Fxd3
-46.Hh2 Fe5  47.Kk4 b4 48.Ki3 c4 49.Hf5 b3 50.Hd2 Fd3
-51.Kh2 Fd4 52.Kf3   c3 53.Ke4 c2 54.bxc2 Fxc2 55.Kxd3 Fd1
-56.Kb2 i5 57.hxi5  Kxi5 58.Hxb3 Kk3 59.He4 Fe3 60.Kd3 Fxi2
+31.h5 gxh5 32.gxh5 Fi6 33.Fg4 Fe6 34.Hh4 Fg8 35.Hxi6 hxi6
+36.Ke4 c5 37.Hf4 Ff8 38.Kf6 Fh6 39.Hc3 d5 40.Kg7 Kg9
+41.Kxi6 Ff7 42.Kxk7 Kh7 43.Kl5 d4 44.He2 d3 45.cxd3 Fxd3
+46.Hh2 Fe5 47.Kk4 b4 48.Ki3 c4 49.Hf5 b3 50.Hd2 Fd3
+51.Kh2 Fd4 52.Kf3 c3 53.Ke4 c2 54.bxc2 Fxc2 55.Kxd3 Fd1
+56.Kb2 i5 57.hxi5 Kxi5 58.Hxb3 Kk3 59.He4 Fe3 60.Kd3 Fxi2
 61.kxi2 Kxi2  remi
 
 [Variant "Glinski"]
@@ -544,7 +544,7 @@
 [White "Rudolf László"]
 [Black "Kovács János"]
 
-1.g5 g6 2.Hg2 k6 3.Hhi3 Fi4 4.Bxi4 Vf10 5.B1f4 Hg7 6.Bl4  Hf8
+1.g5 g6 2.Hg2 k6 3.Hhi3 Fi4 4.Bxi4 Vf10 5.B1f4 Hg7 6.Bl4 Hf8
 7.k2 f6 8.Hxg6 e6 9.gxf6 exf6 10.b2 Fe9 11.Hxf9 Vxf9
 12.Fb1 Hd5 13.Bfg4 c5 14.e5 Be8 15.Vd2 fxe5 16.fxe5 Bxe5
 17.c4 Bxg4 18.Bxg4 Kh9 19.cxd5  1-0
@@ -562,8 +562,8 @@
 7.c4 d5 8.cxd5 Fxd5 9.e5 Fxf3 10.Vxf3 Be8 11.Fb2 Bd7
 12.Be4 Ff10 13.Fxf10 Vxf10 14.b3 Bb4 15.Vc3 Bbe7 16.f6 Kh8
 17.Hgf5 Bg8 18.Hc4 Bdd6 19.fxe6 Fxe6 20.d5 Fd7 21.Hf6 Bgf8
-22.g6 Hhe9 23.Bl5 Kh9 24.Bxf10 Bxf10 25.gxf7 gxf7 26.Bg4  k5
-27.Fc5 Bf9 28.Fxd7 cxd7 29.e6 fxe6 30.dxe6 Bdf8 31.Vd3  Ki8
+22.g6 Hhe9 23.Bl5 Kh9 24.Bxf10 Bxf10 25.gxf7 gxf7 26.Bg4 k5
+27.Fc5 Bf9 28.Fxd7 cxd7 29.e6 fxe6 30.dxe6 Bdf8 31.Vd3 Ki8
 32.Bg10 Kk6 33.Hi4 Ki7 34.Hg6 Kh6 35.Hxf9 Bxf9 36.Vg5  1-0
 
 [Variant "Glinski"]
@@ -584,7 +584,7 @@
 31.Ff2 d6 32.Fi5 Fh9 33.Fk6 Kf9 34.Kd5 Kd8 35.d4 Ff8
 36.Kf6 Fg6 37.Hi3 He8 38.Kg4 Ke7 39.Ke4 h6 40.h5 Fe9
 41.Hf5 Kf9 42.Fe5 Fc8 43.Hi4 Ke7 44.Fh4 Fd7 45.Ff5 Hc5
-46.Kf4 Fxf5 47.Kxf5 k4 48.Hh7 Kg7 49.Hxk4 Kxh5  50.Hg5 f6
+46.Kf4 Fxf5 47.Kxf5 k4 48.Hh7 Kg7 49.Hxk4 Kxh5 50.Hg5 f6
 51.Hf8 Ki3 52.Fxh9 i5 53.Hxc6 Kxk1 54.i4 Ki3 55.Fk5 h5
 56.ixh5 ixh5 57.Fxd6 h4 58.Fk5 h3 59.Fxh3 Kxh3 60.d5 He8
 61.d6 Ki4 62.d7 Hc5 63.b4 Hd8 64.Kxf6 Kh6 65.Ke7 Hg9
@@ -604,7 +604,7 @@
 12.Kh1 Vxf10 13.Ve3 Bcg7 14.d4 Vd6 15.Bh2 Ve6 16.Ki1 Vg6
 17.Vxg6 Bxg6 18.Fd3 Bi8 19.Hf4 Bk3 20.i3 Bk4 21.Fxh9 Bxh9
 22.Fh5 Fxh5 23.Hxh5 Bc1 24.Bg3 Bxb1 25.Hf8 Bi8 26.Bgxg9 Bf1
-27.Kg2 Be1 28.Kf3 Bd1 29.Ke3 Bc1 30.Kd3 Bd1 31.Kb2  Bxf8
+27.Kg2 Be1 28.Kf3 Bd1 29.Ke3 Bc1 30.Kd3 Bd1 31.Kb2 Bxf8
 32.Be10 Kg10 33.Blg9  1-0
 
 [Variant "Glinski"]
@@ -680,7 +680,7 @@
 22.c3 Fxe5 23.He4 Be7 24.Hh4 Fg8 25.i3 Fe8 26.Be5 Bb4
 27.Be4 Bxe4 28.Hxe4 Kf8 29.h4 h6 30.h5 Ke6 31.Ke3 i5
 32.Hh4 k4 33.hxi5 hxi5 34.Hxg7 Kg6 35.Hf5 Kg5 36.Kg3 b5
-37.k3 c5 38.i4 kxi4 39.Hxi4 Fg8 40.Hf5 b4 41.Hg7  d5
+37.k3 c5 38.i4 kxi4 39.Hxi4 Fg8 40.Hf5 b4 41.Hg7 d5
 42.Hf5 c4 43.Hh2 Ke5 44.Ke3 d4 45.cxd4 cxd4 46.He2 d3
 47.Kd2 Kg5 48.Kc3 Kh4 49.Kxb4 Kxk3 50.Hg4 Kh4 51.Hxi5 Kxi5
 52.Kc3 Kh4 53.Kd2 Kf5 54.Kf3 Fe5 55.Kd2 Kf4 56.Ke1 Ke3  0-1
@@ -739,7 +739,7 @@
 12.Bxl1 Bxl1 13.Fxl1 Vd8 14.h5 gxh5 15.gxh5 Vc6 16.Fi2 Fh8
 17.Vg4 Kh9 18.Fe2 Fg8 19.Kf2 Fg9 20.c3 Vd6 21.Vf4 Vxb2
 22.Vc1 Vb6 23.Ve3 Vc6 24.Vh4 f6 25.Vl1 Vd6 26.Ff4 Vd5
-27.Vl6 Kf10 28.Hg4 Vg7 29.Fg6 h6 30.Fh4 Vxg4 0-1
+27.Vl6 Kf10 28.Hg4 Vg7 29.Fg6 h6 30.Fh4 Vxg4  0-1
 
 [Variant "Glinski"]
 [Event "I. Zsolnay kupa"]
@@ -756,7 +756,7 @@
 18.Vf5 Bl1 19.Ff2 Fxh1 20.Fxh1 Fxk221.Fxk2 Bxk2 22.exf7 exf7
 23.Vxf7 Fxi3 24.Hxi3 Ve4 25.Vf3 Vxi3 26.Vxi3 Bxi3 27.Ff5 g5
 28.Bg4 Bg9 29.Fe6 Bg7 30.h5 Be2 31.Kg2 Be1 32.Kh3 Kf9
-33.Ki4 Bl2 34.Ki3 Bgl3 35.Kk1 Bxh5 0-1
+33.Ki4 Bl2 34.Ki3 Bgl3 35.Kk1 Bxh5  0-1
 
 [Variant "Glinski"]
 [Event "I. Zsolnay kupa"]
@@ -775,7 +775,7 @@
 27.Vh4 Hf8 28.Fk4 Vi5 29.Vg4 Vf2 30.Kk1 Ff10 31.Fg2 Vi5
 32.Fi3 Vg5 33.Vf3 Vh4 34.Fe2 k5 35.e5 k4 36.Vxb7 h5
 37.Ve4 k3 38.Fg4 i5 39.Ff4 Vf2 40.Fe2 Hi6 41.Kl1 Fh6
-42.Fc1 Hg5 43.Vi1 Vh4 44.i3 Vg3? 45.Vxg3 1-0
+42.Fc1 Hg5 43.Vi1 Vh4 44.i3 Vg3? 45.Vxg3  1-0
 
 [Variant "Glinski"]
 [Event "I. Zsolnay kupa"]
@@ -814,7 +814,7 @@
 17.Bxg8 Kxg8 18.Bd6 Hhf8 19.Bxf6 Fe9 20.Hg4 Ki7 21.Fd4 b6
 22.k3 Bg10 23.Kh2 Hd5 24.Hhf7 Hxd4 25.Bxd4 He3 26.Ki3 Hxb1
 27.Bb4 He3 28.Bh8 Kk5 29.Bxh7 Bg6 30.Bxe9 Bf6 31.Hh4 Ki7
-32.Bxe3 1-0
+32.Bxe3  1-0
 
 [Variant "Glinski"]
 [Event "I. Zsolnay kupa"]
@@ -853,7 +853,7 @@
 17.Bg3 Kh6 18.He4 Fe9 19.Hd6 Fe7 20.Hxb7 Bl6 21.Bg4 Bl5
 22.Fe6 Kf7 23.Fg9 Fg6 24.Bi4 Kh6 25.Bg4 Bxf5 26.Bxf5 Fxf5
 27.Kg2 Hg7 28.Kf4 Fg6 29.Fd4 Kf7 30.Fc5 Fd8 31.h5 Fxb7
-32.hxg6 Kd6 33.Fxb7 Kxc5 0-1
+32.hxg6 Kd6 33.Fxb7 Kxc5  0-1
 
 [Variant "Glinski"]
 [Event "I. Zsolnay kupa"]
@@ -898,7 +898,7 @@
 23.Hd2 Fd7 24.Bf2 Bg7 25.Ve2 Fh6 26.Ff4 Vc6 27.Kf1 Be6
 28.He5 Fxf4 29.Bxf4 Vd5 30.Bd2 Vc4 31.Bd3 Ve8 32.Bh2 Fe9
 33.Vf3 Bb6 34.Fe3 Bb5 35.Be1 Vf9 36.Fg3 Bl6 37.Bed1 Bl2
-38.Bd9 Kf10 39.Ve2 Hg9 40.Vxi7 Bxe5 41.Bd8 Be1 42.Kg1 Blg2   0-1
+38.Bd9 Kf10 39.Ve2 Hg9 40.Vxi7 Bxe5 41.Bd8 Be1 42.Kg1 Blg2  0-1
 
 [Variant "Glinski"]
 [Event "I. Alisca kupa"]
@@ -1115,7 +1115,7 @@
 7.Fk1 Vc6 8.d4 Hh6 9.Bc3 Vg9 10.Hxh6 Fxh6 11.b2 Hg7
 12.h5 Vl5 13.Fh2 Vh8 14.i4 gxh5 15.Vxh5 k5 16.k3 Hd7
 17.Vf3 Bg7 18.Fg2 Vf8 19.e5 Bl6 20.Vxb7 Fi7 21.Bh1 Vi2
-22.Fxe7 Kh9 23.Fxg7 Hxg7 24.Bxh7 Ki8 25.Vh8 1-0
+22.Fxe7 Kh9 23.Fxg7 Hxg7 24.Bxh7 Ki8 25.Vh8  1-0
 
 [Variant "Glinski"]
 [Event "I. Tízek Bajnokság"]
@@ -1141,7 +1141,7 @@
 63.Fg8 b4 64.cxb4 cxb4 65.Kb2 b3 66.Ff10 Kc5 67.Fg8 Ke6
 68.Ff10 Kg6 69.Kd3 Kh4 70.Kb2 Ki2 71.Fg8 k2 72.Fxk2 Kxk2
 73.Kd3 Kh3 74.Kb2 Kf4 75.Kc4 Ke4 76.Kb2 Kd4 77.Kb1 Kc4
-78.Ka1 b2 79.Kb1 Kb3 80.Kc1 Kc3 81.Ke2 b1V 0-1
+78.Ka1 b2 79.Kb1 Kb3 80.Kc1 Kc3 81.Ke2 b1V  0-1
 
 [Variant "Glinski"]
 [Event "I. Tízek Bajnokság"]
@@ -1260,7 +1260,7 @@
 52.k4 d3 53.k5 d2 54.k6 d1V 55.k7V Ka4 56.Vc4 Kb6 57.Vb4 Kc8
 58.Ve10 Vd9 59.Vg9 Kb6 60.Ve6 c6 61.Vb3 Vb5 62.Ve9 Ka4
 63.Va1 Va3 64.Vc2 Kb5 65.Ve2 Vc4 66.Vh3 c5 67.Vd9 Kb4
-68.Ve10 Kb3 69.Kg4 Vd5 70.Kf4 Vb4 71.Vxb4 cxb4 0-1
+68.Ve10 Kb3 69.Kg4 Vd5 70.Kf4 Vb4 71.Vxb4 cxb4  0-1
 
 [Variant "Glinski"]
 [Event "III. Országos Bajnokság"]
@@ -1397,7 +1397,7 @@
 12.Fb6 Hxc1 13.Fxc8 Vxc8 14.Hxd6 Hxd6 15.Vxf6 Bf8 16.Vg4 Vb6
 17.Vxc1 Hxf5 18.Hxf5 Bxf5 19.h4 Kg10 20.k2 Vc5 21.Bf4 Bi2
 22.Bh2 Bk1 23.Ke1 Ve7 24.Ve2 Be5 25.Be4 Va5 26.Fd2 Bi2
-27.Kd1 Vd5 28.Fc3 Vf7 29.Fxf9 Vxf9 30.Bg3 Vxb1 31.Ke3 Be1 0-1
+27.Kd1 Vd5 28.Fc3 Vf7 29.Fxf9 Vxf9 30.Bg3 Vxb1 31.Ke3 Be1  0-1
 
 [Variant "Glinski"]
 [Event "III. Országos Bajnokság"]
@@ -1411,7 +1411,7 @@
 1.g5 g6 2.Hdf4 Hg9 3.h5 Fe9 4.i4 Fd6 5.Hc3 c6 6.Hxd6 cxd6
 7.k3 k5 8.k4 i6 9.Fg2 Hk6 10.Kf1 Hg8 11.Bh2 h6 12.hxg6 Fxg6
 13.f6 Fc5 14.Fd1 Bi7 15.d5 Fb6 16.e5 e6 17.Bb4 Bc7 18.Bxd6 Ve8
-19.dxe6 fxe6 20.Vb4 Vf10 21.Bxg8 1-0
+19.dxe6 fxe6 20.Vb4 Vf10 21.Bxg8  1-0
 
 [Variant "Glinski"]
 [Event "III. Országos Bajnokság"]
@@ -1448,7 +1448,7 @@
 6.Hxe6 d6 7.Hxf9 Vxf9 8.g5 h5 9.gxh5 Hxh5 10.Fd3 Fd7
 11.Bie4 Fxf5 12.Bg4 Bcf8 13.Fd1 Fxd1 14.Vxd1 Kf11 15.Bxg6 Hk6
 16.Beg3 Bg10 17.Bxg10 Hxg10 18.Ve1 Hg8 19.Kh2 Hf6 20.Bg2 Hxd3
-21.cxd3 k6 22.Fk7 Bf4 23.Bg3 Bf2 24.Ki1 Bf1 25.Kh2 Bxe1 0-1
+21.cxd3 k6 22.Fk7 Bf4 23.Bg3 Bf2 24.Ki1 Bf1 25.Kh2 Bxe1  0-1
 
 [Variant "Glinski"]
 [Event "III. Országos Bajnokság"]
@@ -1480,7 +1480,7 @@
 7.Fd3 Fg8 8.Hhi3 Hxf4 9.Hxf4 Hg9 10.Kf1 Hh6 11.Hxg6 Bf8
 12.Hxf9 Vxf9 13.Fh4 Bc8 14.Bg1 Kf10 15.Fh5 Ve8 16.Fb2 d6
 17.exd6 Vb5 18.Fd3 Vb6 19.dxe7 Fe8 20.Bg7 Hi8 21.Bf8 Kd9
-22.Ff2 Fe9 23.Bl4 Va4 24.Bxe9 1-0
+22.Ff2 Fe9 23.Bl4 Va4 24.Bxe9  1-0
 
 [Variant "Glinski"]
 [Event "II. Alisca Kupa"]
@@ -1516,7 +1516,7 @@
 42.h5 i4 43.He1 b4 44.Hg3 Fg8 45.i3 d5 46.Kf6 e6 47.Kf5 c4
 48.Hd2 e5 49.dxe5 dxe5 50.Kg5 Ke6 51.Kf4 Kd5 52.Kd3 e4
 53.Kc2 e3 54.Hg3 Ke4 55.h6 Fxh6 56.k3 ixk3 57.ixk3 e2
-58.Ka1 Kf3 59.He5 Ke3 60.Hc2 Kd2 61.He5 Kxc3 62.Hg3 b3 0-1
+58.Ka1 Kf3 59.He5 Ke3 60.Hc2 Kd2 61.He5 Kxc3 62.Hg3 b3  0-1
 
 [Variant "Glinski"]
 [Event "II. Alisca Kupa"]
@@ -1722,7 +1722,7 @@
 27.Fxh5 Bxh5 28.Bxf7 Kh8 29.Bxc7 bxc7 30.Bg5 Bl2 31.Kh2 k4
 32.Bd6 Kg7 33.Bxc5 Kh5 34.Bh8 Ki5 35.Fk2 Bl6 36.i3 Bg10
 37.Kg4 k3 38.Bh6 Kl4 39.Bl3 Kk6 40.Bxk3 Kh7 41.Kg5 c5
-42.Bk5 Ki7 43.Bi5 Kh7 44.Bh6 Ki7 45.Bxg6   1-0
+42.Bk5 Ki7 43.Bi5 Kh7 44.Bh6 Ki7 45.Bxg6  1-0
 
 [Variant "Glinski"]
 [Event "I. Erzsébet Kupa"]
@@ -1776,7 +1776,7 @@
 1.g5 g6 2.Hdf4 e6 3.Hg4 Hg9 4.d4 d5 5.Fd3 Hhi6 6.i3 Fd6
 7.k3 Fd7 8.Be3 e5 9.Hc3 exf5 10.exf5 Be8 11.Bie4 Bxe4
 12.Bxe4 Vd9 13.Fh1 f6 14.Hge6 Ff10 15.Hxf9 Vxf9 16.gxf6 Vxf6
-17.Fg4 Vc6 18.Hf4  Hif7 19.Fxf7 Hxf7 20.Fe7 Bxe7 21.Bxe7  1-0
+17.Fg4 Vc6 18.Hf4 Hif7 19.Fxf7 Hxf7 20.Fe7 Bxe7 21.Bxe7  1-0
 
 [Variant "Glinski"]
 [Event "I. Erzsébet Kupa"]
@@ -1865,7 +1865,7 @@
 17.Bg2 Kf10 18.Big3 Beh6 19.h4 Bxf6 20.Fd3 Bfh6 21.c4 Bk4
 22.k3 Bl4 23.Kf2 i5 24.Vg1 b5 25.b3 Fb7 26.Hd1 Bi6 27.Vf1 Bf6
 28.Ff4 Ff9 29.Vg1 Vf8 30.Hc3 Fh6 31.Ke2 Fxf4 32.Hxf4 Vh6
-33.Ke3 Vh7 34.Ke2 e5 35.Kd3 exd4 36.exd4 Vf5 37.Ve4 Bxd4 0-1
+33.Ke3 Vh7 34.Ke2 e5 35.Kd3 exd4 36.exd4 Vf5 37.Ve4 Bxd4  0-1
 
 [Variant "Glinski"]
 [Event "I. Bátaszék Kupa"]
@@ -1887,7 +1887,7 @@
 42.Ke6 Hc6 43.Kg6 Kg8 44.Fxi5 kxi5 45.Kxi5 Hf7 46.Kh5 Kh7
 47.k3 Hi6 48.k4 Hl3 49.Ki3 Hk6 50.Kk3 Hg7 51.i4 Kk6
 52.i5 Hi8 53.h5 Hl5 54.Kl3 Hh7 55.h6 Hg5 56.i6 Hxi6
-57.hxi6 Ki7 58.k5   1-0
+57.hxi6 Ki7 58.k5  1-0
 
 [Variant "Glinski"]
 [Event "I. Bátaszék Kupa"]
@@ -1959,7 +1959,7 @@
 72.Fb1 h4 73.Fd2 k1V 74.Kxk1 Kh3 75.Fb1 Kg2 76.Ki2 h3
 77.Ki3 h2 78.Fxh2 c3 79.Fg4 c2 80.Kh5 c1V  0-1
 
-; Nemz.csv,    1983-06-19
+; Nemz.csv, 1983-06-19
 
 [Variant "Glinski"]
 [Event "I. Erzsébet Kupa"]
@@ -2050,7 +2050,7 @@
 27.Fxh5 Bxh5 28.Bxf7 Kh8 29.Bxc7 bxc7 30.Bg5 Bl2 31.Kh2 k4
 32.Bd6 Kg7 33.Bxc5 Kh5 34.Bh8 Ki5 35.Fk2 Bl6 36.i3 Bg10
 37.Kg4 k3 38.Bh6 Kl4 39.Bl3 Kk6 40.Bxk3 Kh7 41.Kg5 c5
-42.Bk5 Ki7 43.Bi5 Kh7 44.Bh6 Ki7 45.Bxg6   1-0
+42.Bk5 Ki7 43.Bi5 Kh7 44.Bh6 Ki7 45.Bxg6  1-0
 
 [Variant "Glinski"]
 [Event "I. Erzsébet Kupa"]
@@ -2104,7 +2104,7 @@
 1.g5 g6 2.Hdf4 e6 3.Hg4 Hg9 4.d4 d5 5.Fd3 Hhi6 6.i3 Fd6
 7.k3 Fd7 8.Be3 e5 9.Hc3 exf5 10.exf5 Be8 11.Bie4 Bxe4
 12.Bxe4 Vd9 13.Fh1 f6 14.Hge6 Ff10 15.Hxf9 Vxf9 16.gxf6 Vxf6
-17.Fg4 Vc6 18.Hf4  Hif7 19.Fxf7 Hxf7 20.Fe7 Bxe7 21.Bxe7  1-0
+17.Fg4 Vc6 18.Hf4 Hif7 19.Fxf7 Hxf7 20.Fe7 Bxe7 21.Bxe7  1-0
 
 [Variant "Glinski"]
 [Event "I. Erzsébet Kupa"]
@@ -2157,7 +2157,7 @@
 7.Fg3 d6 8.exf7 exf7 9.f6 Bd8 10.fxg6 fxg6 11.Hxg6 Be9
 12.He8 Kf10 13.Fc8 Vl5 14.Kh1 Vxg5 15.Fxe9 Vf5 16.Bg3 Fxe9
 17.Bef4 Vi5 18.h5 Vh6 19.Bf6 Vg8 20.Hg6 Fxg6 21.Bgxg6 Hg9
-22.Fd3 Ve8 23.Fk2 h6 24.Vxe8 Kxe8 25.Fh3 Kf10 26.Bxg7 1-0
+22.Fd3 Ve8 23.Fk2 h6 24.Vxe8 Kxe8 25.Fh3 Kf10 26.Bxg7  1-0
 
 [Variant "Glinski"]
 [Event "I. Nemzetközi verseny"]
@@ -2182,7 +2182,7 @@
 
 1.d5 g5 2.Fd4 Hi6 3.fxg5 Hxg5 4.e6 Hxf3 5.Vxf3 Bg7 6.Hc3 b6
 7.Fb5 Hf8 8.exf7 exf7 9.Fxf8 Bixf8 10.Be3 Vc6 11.Hhf4 f5
-12.Be6 Bxe6 13.dxe6 fxg4 0-1
+12.Be6 Bxe6 13.dxe6 fxg4  0-1
 
 [Variant "Glinski"]
 [Event "I. Nemzetközi verseny"]
@@ -2220,7 +2220,7 @@
 22.Vf1 Vk2 23.Bg2 Vh3 24.ixh5 gxh5 25.Bh1 Vxf1 26.Bfxf1 h4
 27.Bxf7 Hk3 28.Bg1 Hg4 29.Kb2 Kh8 30.Bb3 b6 31.Hg2 h3
 32.Hf5 Bg8 33.Hi4 Fa4 34.Ba3 Bxa3 35.Kxa3 Fxc2 36.bxc2 Bf8
-37.Kb5 He6 38.Kc4 Bf7 39.Bi1 Hg4 40.Kd6 Be7 0-1
+37.Kb5 He6 38.Kc4 Bf7 39.Bi1 Hg4 40.Kd6 Be7  0-1
 
 [Variant "Glinski"]
 [Event "I. Nemzetközi verseny"]
@@ -2262,7 +2262,7 @@
 22.Fxh9 Kxh9 23.Bg5 Be9 24.Bgd6 Bxd6 25.Bxd6 Be7 26.Bxe7 Vxe7
 27.Vxe5 Kh8 28.Vxe7 Fxe7 29.Hf4 i5 30.i4 Ff8 31.h5 k5
 32.Kg2 h6 33.gxh6 gxh6 34.Kh3 Fi6 35.Kg5 Kh7 36.Hi3 k4
-37.Hxh6 kxi4 38.Kxi4 ixh5 39.Fxh5 Fl2 40.Ff3 1-0
+37.Hxh6 kxi4 38.Kxi4 ixh5 39.Fxh5 Fl2 40.Ff3  1-0
 
 [Variant "Glinski"]
 [Event "II. Tízek Bajnokság"]
@@ -2377,7 +2377,7 @@
 61.Kf2 d2 62.Hg1 d1H 63.Hxd1 Hxd1 64.Kxd1 hxi5 65.kxi6 kxi6
 66.hxi5 Kc5 67.Ke3 Ke6 68.Kg3 Kg6 69.Kh3 Kxi5 70.Ki3 Kh6
 71.Kh4 i5 72.Ki3 Kg5 73.Kk3 Kh5 74.Kl1 Kh4 75.Kk2 i4
-76.Kl1 Kh3 0-1
+76.Kl1 Kh3  0-1
 
 [Variant "Glinski"]
 [Event "II. Tízek Bajnokság"]
@@ -2479,7 +2479,7 @@
 1.Hdf4 g6 2.e6 Hg9 3.d5 d6 4.Fd3 Hg7 5.Be3 Be8 6.Hhi3 Fd7
 7.k2 i6 8.c4 dxe6 9.dxe6 Fc5 10.Be2 Fxf2 11.Kxf2 Ve9
 12.Hd5 Vc5 13.Kh1 Be10 14.exf7 exf7 15.Bxe10 Fxe10
-16.Be4 Be7 17.Hb2 Vd7 18.Bxe7 Vxe7 19.Fd5 1-0
+16.Be4 Be7 17.Hb2 Vd7 18.Bxe7 Vxe7 19.Fd5  1-0
 
 [Variant "Glinski"]
 [Event "IV. Országos Bajnokság"]
@@ -3023,7 +3023,7 @@
 1.Hdf4 g6 2.e6 Fg8 3.Hhi3 i6 4.Be3 Be8 5.d5 d6 6.Fc4 Fi7
 7.Fb2 Fd7 8.Fd1 Hg9 9.k2 Be9 10.g5 Hg7 11.Hc3 Hh6 12.Hxh6 Fxh6
 13.Bie4 dxe6 14.dxe6 f6 15.h5 fxg5 16.hxg6 Fk5 17.f7 Vl5
-18.Fh2 Vl1 19.Bh1 Vxi2 20.fxe7 Fxe7 21.Fxe7 1-0
+18.Fh2 Vl1 19.Bh1 Vxi2 20.fxe7 Fxe7 21.Fxe7  1-0
 
 [Variant "Glinski"]
 [Event "II. Bátaszék kupa"]
@@ -3418,7 +3418,7 @@
 37.Va5 b6 38.Vc3 Bi1 39.Ke1 Be8 40.Kf2 Bf4 41.Vc7 Kf8
 42.Vxd6 Kg6 43.Vxf4 f5 44.Vh4 Kg7 45.Vh5 Kg8 46.Vf7 Kg9
 47.Hg5 Ke9 48.Vg8 Bf9 49.Vc7 Kg9 50.Vxi7 Ke9 51.Hxh7 Bxh7
-52.Vxk6 Bxh3 53.Ve5 Kf8 54.Vf6 Ke9 55.Ve7 1-0
+52.Vxk6 Bxh3 53.Ve5 Kf8 54.Vf6 Ke9 55.Ve7  1-0
 
 ; 1985 0211-2.Nemz.V        Event=II. Nemzetközi verseny            @ https://sites.google.com/site/hexasakkversenyek/1985-0211-2-nemz-v
 ; 1985 0419-3.Nemz.V        Event=III. Nemzetközi verseny           @ https://sites.google.com/site/hexasakkversenyek/1985-0419-3-nemz-v
