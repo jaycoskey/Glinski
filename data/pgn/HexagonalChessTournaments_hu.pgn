@@ -3,8 +3,9 @@
 [Site "London, GBR"]
 [EventDate "1980.08.15"]
 [Source "https://sites.google.com/site/hexasakkversenyek/1980-0811-1-eb"]
-
-1 Rudolf László                           Brian Towers
+[GameID "1"]
+[White "Rudolf László"]
+[Black "Brian Towers"]
 
 1.e5 Hdf8 2.d5 g5 3.Hg2 h5 4.h4 Fh7 5.Hhi3 Hg7 6.Fe2 Fg8
 7.Fe4 Hd6 8.Ff3 f6 9.Fd3 fxe5 10.fxe5 Fxe5 11.Fxe5 Hb3
@@ -15,13 +16,27 @@
 32.Bxe10 Bxe10 33.Vf9 Be9 34.Vxb7 Kf10 35.Vxk7 Be3
 36.Vh8 Ke8 37.Ve10  1-0
 
-2 Marek Mackowiak                        Rudolf László
+[Variant "Glinski"]
+[Event "1.EB."]
+[Site "London, GBR"]
+[EventDate "1980.08.15"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1980-0811-1-eb"]
+[GameID "2"]
+[White "Marek Mackowiak"]
+[Black "Rudolf László"]
 
 1.g5 g6 2.Hdf4 Hdf8 3.Fd4 Hc6 4.h5 Hxd4 5.exd4 gxh5
 6.Fxh5 Fxh5 7.Hxh5 Vc6 8.Vf3 Vxf3 9.Kxf3 Hf8 10.Hhf4 Fg9
 11.Hxf8 Bcxf8 12.Hh5 Bh6 13.Bcf4 Fe8 14.Bih2 f6  remi
 
-3 Rudolf László                         David Woolley
+[Variant "Glinski"]
+[Event "1.EB."]
+[Site "London, GBR"]
+[EventDate "1980.08.15"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1980-0811-1-eb"]
+[GameID "3"]
+[White "Rudolf László"]
+[Black "David Woolley"]
 
 1.e5 e6 2.Hhf4 Fh6 3.Hi3 g6 4.Hxh6 Bxh6 5.He4 Bhf8 6.Hh4 Hg7
 7.Hxg7 Bxg7 8.Bcf4 Hg9 9.Bb4 Bgf8 10.Bxf8 Bxf8 11.g5 Fe9
@@ -29,7 +44,14 @@
 17.Kf1 Kf11 18.Fd4 Ff8 19.Vxe10 Kxe10 20.Fh5 Bg8 21.Be4 Kd8
 22.Fxf8 Bxf8 23.Fxf9 Kxf9  remi
 
-4 Rudolf László                          P. Shepperson
+[Variant "Glinski"]
+[Event "1.EB."]
+[Site "London, GBR"]
+[EventDate "1980.08.15"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1980-0811-1-eb"]
+[GameID "4"]
+[White "Rudolf László"]
+[Black "P. Shepperson"]
 
 1.g5 g6 2.Fg2 d6 3.Hc3 Fd7 4.Hhf4 Hg7 5.Hb5 Be8 6.Hd5 Be9
 7.Hd4 Fi4 8.Bif4 Fg8 9.Bk4 Hg9 10.Fg3 c5 11.Hb2 e5 12.He2 exf5
@@ -40,7 +62,14 @@
 33.Fxb7 f6 34.He3 He7 35.Fxk7 Kf7 36.Fd8 Hf5 37.Ff4 h5
 38.Fxi7 Fc5 39.Hb2 Fb6 40.Kf3 g5 41.Hd5 Fc5 42.He8  1-0
 
-5 Rudolf László                        Marek Mackowiak
+[Variant "Glinski"]
+[Event "1.EB."]
+[Site "London, GBR"]
+[EventDate "1980.08.15"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1980-0811-1-eb"]
+[GameID "5"]
+[White "Rudolf László"]
+[Black "Marek Mackowiak"]
 
 1.g5 g6 2.Hc3 Hdf8 3.Hhf4 e5 4.Fe2 Hg7 5.Hfd1 exf5 6.exf5 Be8
 7.Be4 Bxe4 8.Hxe4 Fe8 9.Hc5 d6 10.Hxe8 Vxe8 11.Be3 Vd9
@@ -62,8 +91,9 @@
 [Site "Bóly"]
 [EventDate "1981.03.07"]
 [Source "https://sites.google.com/site/hexasakkversenyek/1981-0307-boly81-1"]
-
-1 Kolozsvári Miklós - Póda Jenő
+[GameID "1"]
+[White "Kolozsvári Miklós"]
+[Black "Póda Jenő"]
 
 1.g5 g6 2.Hg2 i6 3.e5 Hc6 4.Fg4 Bg8 5.Vf3 Hg7 6.Hf4 e6
 7.Be1 Be8 8.Hc3 Fd8 9.He4 Fh9 10.Hxf7 Hxf7 11.Fxd8 Vxd8
@@ -72,7 +102,14 @@
 22.Bee4 Vd6 23.Fg2 Fe5 24.Bxf8 Fxg2+ 25.Vxg2 Vxf8 26.Ve5 Be9
 27.Vd5+ Kh8 28.Vxb7+ Ki7 29.Bxe9 Vxe9   0-1
 
-2 Dalos Endre - Széles Lajos
+[Variant "Glinski"]
+[Event "Bóly81"]
+[Site "Bóly"]
+[EventDate "1981.03.07"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1981-0307-boly81-1"]
+[GameID "2"]
+[White "Dalos Endre"]
+[Black "Széles Lajos"]
 
 1.g6 fxg6 2.Hi3 i6 3.Hxg6 h6 4.Hi3 g6 5.Hdg2 Hg9 6.Fe3 Fe9
 7.f6 Bi7 8.fxg6 Fxg6 9.Fxg6 hxg6 10.Hxg6 Bi8 11.Bcf4 Bcf8
@@ -80,21 +117,42 @@
 17.Bf3 Vi4 18.Bxf8 Hxf8 19.Fg2 Fxg2 20.Kxg2 He5 21.i3 Hh6
 22.He8+ Kf10 23.Hh7+ Kg8 24.Hxi4   1-0
 
-3 Falusi Mihály - Somogyi István
+[Variant "Glinski"]
+[Event "Bóly81"]
+[Site "Bóly"]
+[EventDate "1981.03.07"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1981-0307-boly81-1"]
+[GameID "3"]
+[White "Falusi Mihály"]
+[Black "Somogyi István"]
 
 1.f6 e6 2.g5 Hdf8 3.Fe2 Hhi6 4.Bg4 Fh6 5.g6 Fxe2 6.Vxe2 exf6
 7.gxf7 Hxf7 8.e6 e5ep. 9.Be3 g6 10.Bie4 Hxe4 11.Bxe4 d5
 12.d4 Be8 13.Hdf4 Fxk1  14.Hxg6 Bg8 15.Vg5 Hxg5 16.Hxe8+ Vxe8
 17.Fxk1 Hxi2+ 18.Kh2 Hk4 19.Bi5 Vxh3+   0-1
 
-4 Falusi Mihályné - Rudolf László
+[Variant "Glinski"]
+[Event "Bóly81"]
+[Site "Bóly"]
+[EventDate "1981.03.07"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1981-0307-boly81-1"]
+[GameID "4"]
+[White "Falusi Mihályné"]
+[Black "Rudolf László"]
 
 1.e5 g6 2.Hi3 Fxi3+ 3.hxi3 Vxi3+ 4.Fh2 Ve10 5.Fg2 Fe8
 6.Fh3 f6 7.Fxe8 Vxe8 8.Bh1 Hc6 9.Hf4 Fe9 10.exf6 gxf6
 11.Fe3 e6 12.Bg2 Hi6 13.c3 Bb4 14.Fa1 Bb2+ 15.Bf2 Bxf2+
 16.Vxf2 Vi1+ 17.Vh1 Vxc1 18.Hxe6 Ve2+ 19.Vf2 Vxe6 20.Fc2 Vd5+ 0-1
 
-5 Rottek Ferenc - Deme Lajos
+[Variant "Glinski"]
+[Event "Bóly81"]
+[Site "Bóly"]
+[EventDate "1981.03.07"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1981-0307-boly81-1"]
+[GameID "5"]
+[White "Rottek Ferenc"]
+[Black "Deme Lajos"]
 
 1.e5 g6 2.g5 e6 3.Hdf4 Hc6 4.h5 Fe9 5.hxg6 Fxg6 6.Hxg6 fxg6
 7.f6 exf6 8.exf6 Be8 9.Be3 gxf6 10.gxf6 k6 11.Bg3+ Bg8
@@ -103,7 +161,14 @@
 22.Kh2 Be7 23.f7 Hxf7 24.Fxf7 Hxg3 25.Hd4 Be1 26.Kxg3 Bxf2
 27.Kxf2 Vxi3   0-1
 
-6 Hermesz Antal - Ambrus Lajos
+[Variant "Glinski"]
+[Event "Bóly81"]
+[Site "Bóly"]
+[EventDate "1981.03.07"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1981-0307-boly81-1"]
+[GameID "6"]
+[White "Hermesz Antal"]
+[Black "Ambrus Lajos"]
 
 1.g6 Fe9 2.Hi3 fxg6 3.Hxg6 Fxg6 4.Bg3 Fe9 5.h5 Kf11
 6.Hf4 g6 7.hxg6 Fxk1 8.Fxk7 Hg9 9.Fh5 Fxh5 10.Hxh5 Hf8
@@ -113,19 +178,40 @@
 25.Ki3 Fxf1 26.Kk2 Kf7 27.e5 Kxe5 28.Kl2 Kxf6 29.Kk4 Hg5+
 30.Ki5 Hxi2   0-1
 
-7 Széles Lajos - Kolozsvári Miklós
+[Variant "Glinski"]
+[Event "Bóly81"]
+[Site "Bóly"]
+[EventDate "1981.03.07"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1981-0307-boly81-1"]
+[GameID "7"]
+[White "Széles Lajos"]
+[Black "Kolozsvári Miklós"]
 
 1.g5 e6 2.Hhf4 Hg9 3.e5 Hh6 4.f6 exf6 5.exf6 Be8 6.Fe3 d6
 7.g6 fxg6 8.fxg6 Hk3 9.Bg3 Fc5 10.h5 Fxe3 11.Bxk3 Fd4
 12.Vb4 Vxb4 13.c4 Ve10 14.Bi3 Be3 15.Bxe3 Vxe3 16.Hb2 Vf2+  0-1
 
-8 Rudolf László - Papp Károly
+[Variant "Glinski"]
+[Event "Bóly81"]
+[Site "Bóly"]
+[EventDate "1981.03.07"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1981-0307-boly81-1"]
+[GameID "8"]
+[White "Rudolf László"]
+[Black "Papp Károly"]
 
 1.g5 g6 2.Hg2 Hg9  3.Hhi3 Fxi3  4.Hxi3 c6 5.Fd4 b5?
 6.Fxg9 Fxg9 7.Hk5 Bg8 8.Fxk7 i6 9.Hi3 Bk4? 10.Bxk4 Kf11
 11.Va5 Be9 12.Bd8 Bxd8 13.Vxd8 Vxd8 14.Fxd8 Fk2 15.ixk  1:0
 
-9 Ambrus Lajos - Bánhelyi László
+[Variant "Glinski"]
+[Event "Bóly81"]
+[Site "Bóly"]
+[EventDate "1981.03.07"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1981-0307-boly81-1"]
+[GameID "9"]
+[White "Ambrus Lajos"]
+[Black "Bánhelyi László"]
 
 1.g5 d6 2.Hdf4 Fg8 3.Fg2 e6 4.Fg3 Be8 5.g6 f6 6.Hfi3 i6
 7.Hl4 Be7 8.Hli3 Vl5 9.Fh2 Ve10 10.Hg4 Fe9 11.Hd4 Bd7
@@ -134,7 +220,14 @@
 22.Bif4 Vl5 23.Bce3 Vk4 24.Vxk4 g5 25.Vl2 gxf5 26.Vxb7 Ke10
 27.Ba4 Ke9 28.Vg6   1-0
 
-10 Hortobágyi Imre - Hermesz Antal
+[Variant "Glinski"]
+[Event "Bóly81"]
+[Site "Bóly"]
+[EventDate "1981.03.07"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1981-0307-boly81-1"]
+[GameID "10"]
+[White "Hortobágyi Imre"]
+[Black "Hermesz Antal"]
 
 1.Hhf4 Hdf8 2.d5 g6 3.g5 d6 4.Fg3 c5 5.f6 Bc7 6.dxc5 Bxc5
 7.Hb2 Be5 8.Fd3 Bxb2 9.cxb2 Hxg5 10.h4 Hxf3 11.Vxf3 gxf6
@@ -142,14 +235,28 @@
 17.i4 Hxi4 18.Bk3 Vg8+ 19.Ke1 Hl5 20.Bl2 Hh6 21.Fk2 d5
 22.Vxf6 Fxb2 23.Vxb2 He6 24.Fxg8+ Bxg8   1-0
 
-11 Dalos Endre - Ambrus Lajos
+[Variant "Glinski"]
+[Event "Bóly81"]
+[Site "Bóly"]
+[EventDate "1981.03.07"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1981-0307-boly81-1"]
+[GameID "11"]
+[White "Dalos Endre"]
+[Black "Ambrus Lajos"]
 
 1.g5 g6 2.i3 Hdf8 3.Hg4 h5 4.Hf4 hxg5 5.fxg5 Hxg5 6.Fe3 Hxf3
 7.Vxf3 Bg8 8.e6 Hi6 9.d5 Hg5 10.Ve4 Hxe3+ 11.Vxe3 Fh7
 12.exf7 exf7 13.Vxe10+ Bxe10 14.Fd3 Fd6 15.Fxf7 Fxf7
 16.Hxf7 Bg7 17.Hh4 Bge8 18.Bg3 Bg9   0-1
 
-12 Kolozsvári Miklós - Falusi Mihály
+[Variant "Glinski"]
+[Event "Bóly81"]
+[Site "Bóly"]
+[EventDate "1981.03.07"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1981-0307-boly81-1"]
+[GameID "12"]
+[White "Kolozsvári Miklós"]
+[Black "Falusi Mihály"]
 
 1.e5 e6 2.Hdf4 d5 3.exd5 exd5 4.Fxd5 Vxe1+ 5.Bxe1 Bd6
 6.Fxf9+ Kxf9 7.Fg2 Bb4 8.Hc3 Bxi1 9.Fxi1 Hi6 10.Fg2 g5
@@ -157,12 +264,26 @@
 16.Fd6 Kg7 17.Fd4 c6 18.Fxf7 Hxf7? 19.Bxg5+ Ke7 20.Fxf8 Hxf8
 21.Be6+ Kg7 22.Hcf5+ Kg8 23.Be7 Hd4 24.Bxb7 Fb3 25.Bxb3   1-0
 
-13 Ambrus Lajos - Rudolf László
+[Variant "Glinski"]
+[Event "Bóly81"]
+[Site "Bóly"]
+[EventDate "1981.03.07"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1981-0307-boly81-1"]
+[GameID "13"]
+[White "Ambrus Lajos"]
+[Black "Rudolf László"]
 
 1.g5 g6 2.Fg2 Hg9 3.Hdf4 Fd6 4.Hfi3 Fxg2 5.Kxg2 i6 6.Hhf4 k5
 7.h5 Fe9 8.hxg6 Fxi3 9.Hxi3 Vxi3 10.Bh4 Vf9 11.gxf7 Fxh4   0-1
 
-14 Somogyi István - Kolozsvári Miklós
+[Variant "Glinski"]
+[Event "Bóly81"]
+[Site "Bóly"]
+[EventDate "1981.03.07"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1981-0307-boly81-1"]
+[GameID "14"]
+[White "Somogyi István"]
+[Black "Kolozsvári Miklós"]
 
 1.g5 e6 2.Hi3 Hdf8 3.Hk5 Bg8 4.Fxk7 i6 5.Fxf9+ Vxf9
 6.Hi3 Fg9 7.Hl4 Fi8 8.Hg2 Bh8 9.Hgi3 Bl5 10.Bif4 g6
@@ -171,7 +292,23 @@
 21.Hxl4 Hxf5 22.Bxf5 Bxl4 23.Fk6 Vxk6 24.Bxf7 Bd2+ 25.Kh2 Vk4+
 26.Kg2 Ve3+ 27Ki1 Bg1+ 28.Kk2 Vk4+   0-1
 
-15 Rudolf László - Hortobágyi Imre
+[Variant "Glinski"]
+[Event "Bóly81"]
+[Site "Bóly"]
+[EventDate "1981.03.07"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1981-0307-boly81-1"]
+[GameID "15"]
+[White "Rudolf László"]
+[Black "Hortobágyi Imre"]
+
+[Variant "Glinski"]
+[Event "Bóly81"]
+[Site "Bóly"]
+[EventDate "1981.03.07"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1981-0307-boly81-1"]
+[GameID "15"]
+[White "Rudolf László"]
+[Black "Hortobágyi Imre"]
 
 1.g5 Hdf8 2.Hi3 i6 3.Hdg2 e6 4.Fh4 Fe9 5.Fxf8 Bcxf8
 6.k2 d5 7.f6 e5 8.h5 Fe8 9.Hf4 Hk6 10.Hgi3 c5 11.Bh2 b6
@@ -180,7 +317,14 @@
 22.Hl4 Hl3 23.Vg3 Hk1 24.Vh2 Hi4 25.Fxi4 Kh8 26.Vl5+ Kf9
 27.Vxk7+ Ke9 28.Hi7 Fd7 29.Vd8+   1-0
 
-16 Kolozsvári Miklós - Rudolf László
+[Variant "Glinski"]
+[Event "Bóly81"]
+[Site "Bóly"]
+[EventDate "1981.03.07"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1981-0307-boly81-1"]
+[GameID "16"]
+[White "Kolozsvári Miklós"]
+[Black "Rudolf László"]
 
 1.g5 e6 2.Hg2 Hg9 3.Hhi3 i6 4.e5 k5 5.Fg3 Hh6 6.Hxh6 Fxh6
 7.Hi3 g6 8.Be3 Fxi3+ 9.hxi3 Vxi3+ 10.Vh2 Vxh2+ 11.Bxh2 Bif8
@@ -197,8 +341,9 @@
 [Site "Szekszárd, HUN"]
 [EventDate "1981.07.18"]
 [Source "https://sites.google.com/site/hexasakkversenyek/1981-3-csapatta"]
-
-12 Rudolf László                         Dalos Endre
+[GameID "12"]
+[White "Rudolf László"]
+[Black "Dalos Endre"]
 
 1.g5 e5 2.Hi3 exf5 3.exf5 Vxe1 4.Fxe1 g6 5.Hdg2 Fxi3
 6.Hxi3 Hdf8 7.Hk5 Bg8 8.Fxk7 h5 9.h4 i5 10.Bg4 i4 11.Hl2 Bi8
@@ -211,8 +356,9 @@
 [Site "Szekszárd, HUN"]
 [EventDate "1981.09.04"]
 [Source "https://sites.google.com/site/hexasakkversenyek/1981-0904-1-ob"]
-
-14 Kovács Imre Rudolf László
+[GameID "14"]
+[White "Kovács Imre"]
+[Black "Rudolf László"]
 
 1.e5 g6 2.He4 Hi6 3.Fh2 Hk3 4.Fe2 Hxi1 5.Fxi1 Fxk1 6.Fxk1  Vxk1
 7.Hh4 Vxi2 8.Ve2 Fh6 9.Ve4 Fe9 10.Be3 Hc6 11.c3 Fi4
@@ -221,7 +367,14 @@
 22.Ke1 hxg5 23.hxg5 Fg9 24.Bk2 Vi6 25.Kd2 Be6 26.Vi3  Vh8
 27.Kc1 Bl4 28.Hg4 Be1 29.Fd1 Bxk2 30.Fxk2 Bh4 31.Vi1  Bxg4  0-1
 
-15 Rudolf László Ambrus Lajos
+[Variant "Glinski"]
+[Event "I. Országos Bajnokság"]
+[Site "Szekszárd, HUN"]
+[EventDate "1981.09.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1981-0904-1-ob"]
+[GameID "15"]
+[White "Rudolf László"]
+[Black "Ambrus Lajos"]
 
 1.g5 g6 2.Hg2 Hdf8 3.Hhi3 i6 4.Fd4 Hc6 5.e5 Hxd4 6.Bxd4  Hf8
 7.Bh2 h5 8.gxh5 Fxh5 9.Fxh5 Vxh5 10.Vxh5 Hxh5 11.Hl4  Hxl4
@@ -231,7 +384,14 @@
 27.Hh4 Kf8 28.d5 c5 29.c4 e6 30.dxc5 bxc5 31.Kh6 Ff11
 32.Hxf7 1-0
 
-16 Kolozsvári M. Rudolf László
+[Variant "Glinski"]
+[Event "I. Országos Bajnokság"]
+[Site "Szekszárd, HUN"]
+[EventDate "1981.09.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1981-0904-1-ob"]
+[GameID "16"]
+[White "Kolozsvári M."]
+[Black "Rudolf László"]
 
 1.g5 g6 2.Hg2 Hg9 3.k2 Fd6 4.Hhi3 Fxg2 5.Fxg2 i6 6.Fd4 Hh6
 7.Hxh6 Bxh6 8.Fh2 Fg9 9.Ff2 k5 10.Bh4 Bxh4 11.Fxh4 Bl6
@@ -245,7 +405,14 @@
 47.Ff2 Kh6 48.Kg4 Hf8 49.Fe5 Hi6 50.Fh1 Hg9 51.Fd6 Kg7
 52.Fe5 Hk7 53.Fg3 Hl4 54.Kh3 Kh6 55.Fh1 c6 56.Fxl4 1-0
 
-17 Rudolf László Dalos Endre
+[Variant "Glinski"]
+[Event "I. Országos Bajnokság"]
+[Site "Szekszárd, HUN"]
+[EventDate "1981.09.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1981-0904-1-ob"]
+[GameID "17"]
+[White "Rudolf László"]
+[Black "Dalos Endre"]
 
 1.g5 e5 2.Hi3 exf5 3.exf5 Vxe1 4.Fxe1 g6 5.Hk5 Bg8 6.Fc3  h5
 7.Fxf9 Kxf9 8.Hh4 Fi5 9.Hxf7 Fxf2 10.Kxf2 Bcf8 11.Hde4  Fe8
@@ -255,7 +422,14 @@
 27.Bxe7 dxe7 28.Hh7 Ki3 29.Hxf10 Fxg2 30.Kxg2 Kxk1
 31.Kh3 f4 32.Hxe7 f3 33.Hg5 f2 34.Kg2 Ki3  1-0
 
-18 Vida László Rudolf László
+[Variant "Glinski"]
+[Event "I. Országos Bajnokság"]
+[Site "Szekszárd, HUN"]
+[EventDate "1981.09.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1981-0904-1-ob"]
+[GameID "18"]
+[White "Vida László"]
+[Black "Rudolf László"]
 
 1.g5 g6 2.Fe2 Hg9 3.Hdf4 Hhi6 4.Fxi6 Hxi6 5.k2 Hk3 6.Bg3  Fg7
 7.Bg2 Fi6 8.Vd2 Bk4 9.Hhi3 Fl5 10.Vk1 Fd6 11.Bh1 Fxf4
@@ -269,7 +443,14 @@
 47.Vc5 Vxk2 48.Ve3 Fg6 49.Vg4 i5 50.b3 Vf10  51.b4 Vc7
 52.Kb3 d6 53.c4 Fe9 54.Kb2 Vg8 55.Vh2 Ki7 56.Vf4  ...   1-0
 
-19 Rudolf László Halas János
+[Variant "Glinski"]
+[Event "I. Országos Bajnokság"]
+[Site "Szekszárd, HUN"]
+[EventDate "1981.09.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1981-0904-1-ob"]
+[GameID "19"]
+[White "Rudolf László"]
+[Black "Halas János"]
 
 1.g5 g6 2.Hg2 Fe8 3.Hhi3 Hg7 4.Hh6 Bh9 5.Fxk7 Fxk7 6.Hxk7  Hg9
 7.Hxg9 Fxg9 8.Bif4 Vf9 9.Bk4 Hi8 10.Hi3 Fg8 11.Bxc8  Fxc8
@@ -279,7 +460,14 @@
 27.i4 Kl2 28.k4 Kk2 29.k5 Fi5 30.h5 gxh5 31.ixh5 Fi4
 32.hxi5 Fxf1 33.k6 Ki4 34.k7V Kxi5 35.Bg7 Kk5 36.Fh4  1-0
 
-20 Vámosi Albert Rudolf László
+[Variant "Glinski"]
+[Event "I. Országos Bajnokság"]
+[Site "Szekszárd, HUN"]
+[EventDate "1981.09.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1981-0904-1-ob"]
+[GameID "20"]
+[White "Vámosi Albert"]
+[Black "Rudolf László"]
 
 1.g6 fxg6 2.Hi3 i6 3.Hxg6 Fe9 4.Hk4 Fg9 5.Fi5 h6 6.Fl4 k6
 7.Vf2 i5 8.Hg5 Bg8 9.h5 k5 10.Fk3 Hdf8 11.hxi5 Hxg5
@@ -287,7 +475,14 @@
 17.Fk2 Kf11 18.Fl4 Hh9 19.Fl3 Hf8 20.Fi4 He5 21.d4  Hxf3
 22.Vxf3 Bf8 23.Vd2 Fi3 24.Ke1 Fd6 25.He6 Vg7 26.Hxh6 Vi6 0-1
 
-21 Rudolf László Bank László
+[Variant "Glinski"]
+[Event "I. Országos Bajnokság"]
+[Site "Szekszárd, HUN"]
+[EventDate "1981.09.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1981-0904-1-ob"]
+[GameID "21"]
+[White "Rudolf László"]
+[Black "Bank László"]
 
 1.g5 g6 2.Hg2 i6 3.h5 gxh5 4.Fxh5 Fxh5 5.Vxh5 Vxh5 6.gxh5  Bg7
 7.Bg4 Bxg4 8.Hxg4 Fi4 9.Hi3 Bg8 10.Kh2 Fxf1 11.Bxf1 Kh8
@@ -296,7 +491,14 @@
 22.c4 He8 23.Hh6 Ff8 24.Bg4 Hf6 25.Fl1 Ki7 26.Hl4 Kh8
 27.Bk4 Hg8 28.Hi3 Ki7 29.d5 b5 30.Kc3 c6 31.e5  1-0
 
-22 Sziráki László Rudolf László
+[Variant "Glinski"]
+[Event "I. Országos Bajnokság"]
+[Site "Szekszárd, HUN"]
+[EventDate "1981.09.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1981-0904-1-ob"]
+[GameID "22"]
+[White "Sziráki László"]
+[Black "Rudolf László"]
 
 1.Fe2 g6 2.Fh4 Hg9 3.e6 Hhi6 4.Be3 Hxh4 5.gxh4 fxe6
 6.Bxe6  d6 7.Bg5 Fe9 8.Bg2 Fh6 9.Fg5 e6 10.Hhf4 He7
@@ -313,12 +515,13 @@
 61.kxi2 Kxi2  remi
 
 [Variant "Glinski"]
-[Event "Területi Csapatbajnokság"
+[Event "Területi Csapatbajnokság"]
 [Site "Pécs-Bátaszék, HUN"]
 [EventDate "1982.03.21"]
 [Source "https://sites.google.com/site/hexasakkversenyek/1982-0321-terueleti-csb"]
-
-32 Rudolf László                        Hermesz Antal
+[GameID "32"]
+[White "Rudolf László"]
+[Black "Hermesz Antal"]
 
 1.g5 g6 2.Hg2 Hdf8 3.Hgi3 Hg7 4.k2 Hd6 5.Hk5 Bh9 6.c3 Vd8
 7.b3 Hg7 8.Hxg7 Fxg7 9.Hg4 Fi6 10.e6 Fxg4 11.Fxg4 Ve8
@@ -332,14 +535,28 @@
 47.Va4 Kd6 48.Bxc5 Fxc5 49.Vc4 Kd7 50.b4 Fa1 51.Kf3 c5
 52.Vb5 Ke7 53.bxc5  1-0
 
-33 Rudolf László                          Kovács János
+[Variant "Glinski"]
+[Event "Területi Csapatbajnokság"]
+[Site "Pécs-Bátaszék, HUN"]
+[EventDate "1982.03.21"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1982-0321-terueleti-csb"]
+[GameID "33"]
+[White "Rudolf László"]
+[Black "Kovács János"]
 
 1.g5 g6 2.Hg2 k6 3.Hhi3 Fi4 4.Bxi4 Vf10 5.B1f4 Hg7 6.Bl4  Hf8
 7.k2 f6 8.Hxg6 e6 9.gxf6 exf6 10.b2 Fe9 11.Hxf9 Vxf9
 12.Fb1 Hd5 13.Bfg4 c5 14.e5 Be8 15.Vd2 fxe5 16.fxe5 Bxe5
 17.c4 Bxg4 18.Bxg4 Kh9 19.cxd5  1-0
 
-53 Rudolf László                          Szabó Miklós
+[Variant "Glinski"]
+[Event "Területi Csapatbajnokság"]
+[Site "Pécs-Bátaszék, HUN"]
+[EventDate "1982.03.21"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1982-0321-terueleti-csb"]
+[GameID "53"]
+[White "Rudolf László"]
+[Black "Szabó Miklós"]
 
 1.g5 e6 2.Hi3 i6 3.Hdg2 Hdf8 4.k2 Fg9 5.d4 Fg8 6.Fd3 Hc6
 7.c4 d5 8.cxd5 Fxd5 9.e5 Fxf3 10.Vxf3 Be8 11.Fb2 Bd7
@@ -354,8 +571,9 @@
 [Site "Miskolc, HUN"]
 [EventDate "1982.04.05"]
 [Source "https://sites.google.com/site/hexasakkversenyek/1982-1405-2-ob-"]
-
-23 Rudolf László Bank László
+[GameID "23"]
+[White "Rudolf László"]
+[Black "Bank László"]
 
 1.g5 g6 2.Hg2 Hg9 3.Hhi3 i6 4.Fd4 e6 5.e5 Hh6 6.Hxh6 Fxh6
 7.Fe2 c6 8.Be3 Be7 9.Fg4 Bee8 10.Fc3 Hg7 11.Hi3 Fg8
@@ -372,7 +590,14 @@
 61.d6 Ki4 62.d7 Hc5 63.b4 Hd8 64.Kxf6 Kh6 65.Ke7 Hg9
 66.Ke8 Kg6 67.Hd4 Ke6 68.Hxb5 Kd5 69.Hd8  1-0
 
-24 Vámosi Albert Rudolf László
+[Variant "Glinski"]
+[Event "II. Országos Bajnokság"]
+[Site "Miskolc, HUN"]
+[EventDate "1982.04.05"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1982-1405-2-ob-"]
+[GameID "24"]
+[White "Vámosi Albert"]
+[Black "Rudolf László"]
 
 1.g6 fxg6 2.Hi3 i6 3.Hxg6 Fe9 4.Hk4 Fg9 5.Fi5 h6 6.Fxg9 Hxg9
 7.Hh7 Kf11 8.Bl4 k5 9.Bl5 g6 10.f6 Bg8 11.Hxf10 gxf6
@@ -382,7 +607,14 @@
 27.Kg2 Be1 28.Kf3 Bd1 29.Ke3 Bc1 30.Kd3 Bd1 31.Kb2  Bxf8
 32.Be10 Kg10 33.Blg9  1-0
 
-25 Rudolf László Ambrus Lajos
+[Variant "Glinski"]
+[Event "II. Országos Bajnokság"]
+[Site "Miskolc, HUN"]
+[EventDate "1982.04.05"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1982-1405-2-ob-"]
+[GameID "25"]
+[White "Rudolf László"]
+[Black "Ambrus Lajos"]
 
 1.g6 Fe9 2.Hi3 i6 3.f6 Hdf8 4.Fd4 He5 5.Fg2 Hxf3 6.Vxf3 Ff8
 7.Fxf8 Bcxf8 8.Bcf4 Fd6 9.Bf5 Fxg2 10.Hxg2 He9 11.e6 fxe6
@@ -396,7 +628,14 @@
 47.ixh5 ixh5 48.Hi3 k4 49.Hg6 Kh6 50.Hxk4 Fe10 51.Hi2 Fg7
 52.Hxh5  1-0
 
-26 Kolozsvári M. Rudolf László
+[Variant "Glinski"]
+[Event "II. Országos Bajnokság"]
+[Site "Miskolc, HUN"]
+[EventDate "1982.04.05"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1982-1405-2-ob-"]
+[GameID "26"]
+[White "Kolozsvári M."]
+[Black "Rudolf László"]
 
 1.k2 g6 2.g5 Hg9 3.Hg2 k6 4.Fe2 Bl6 5.b2 Bcl3 6.Bcf4 Fd6
 7.e5 Hh6 8.Fe3 Hk3 9.Big3 h6 10.i3 Hki6 11.Bi1 f6 12.Fxi6 Hxi6
@@ -407,7 +646,14 @@
 33.c4 Fe8 34.g6 Fd2 35.Kf5 Fe1 36.Bl2 Bf8 37.Kd4 Fxg4
 38.gxh6 Bf6 39.Kb3 Bf3 40.Kc5 Bxe2 41.Bl6 Fxl6  0-1
 
-27 Rudolf László Putzer András
+[Variant "Glinski"]
+[Event "II. Országos Bajnokság"]
+[Site "Miskolc, HUN"]
+[EventDate "1982.04.05"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1982-1405-2-ob-"]
+[GameID "27"]
+[White "Rudolf László"]
+[Black "Putzer András"]
 
 1.g6 fxg6 2.Hi3 Fe9 3.Hk5 Bg8 4.Fxk7 Fxk7 5.Vxk7 Fd6
 6.Hi3 Hg9 7.Vxi7 Bh8 8.Ve2 Ff8 9.Fh4 e5 10.Hc3 Fh6 11.Vg3 exf5
@@ -418,7 +664,14 @@
 32.Fe2 He1 33.Kf2 Hxd3 34.Bxd3 Bf8 35.Bxf8 Hxf8 36.Fxg5 Kk5
 37.Fxc5  1-0
 
-28 Deme Lajos Rudolf László
+[Variant "Glinski"]
+[Event "II. Országos Bajnokság"]
+[Site "Miskolc, HUN"]
+[EventDate "1982.04.05"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1982-1405-2-ob-"]
+[GameID "28"]
+[White "Deme Lajos"]
+[Black "Rudolf László"]
 
 1.d5 Fg9 2.Fd3 e6 3.dxe6 Fxe6 4.Hg2 Hg9 5.Hhi3 i6 6.f6 Ff8
 7.g6 fxg6 8.fxg6 k5 9.Fxh9 Fxh9 10.Bd1 Ve9 11.Fd4 Fxg6
@@ -432,7 +685,14 @@
 47.Kd2 Kg5 48.Kc3 Kh4 49.Kxb4 Kxk3 50.Hg4 Kh4 51.Hxi5 Kxi5
 52.Kc3 Kh4 53.Kd2 Kf5 54.Kf3 Fe5 55.Kd2 Kf4 56.Ke1 Ke3  0-1
 
-29 Hámori András Rudolf László
+[Variant "Glinski"]
+[Event "II. Országos Bajnokság"]
+[Site "Miskolc, HUN"]
+[EventDate "1982.04.05"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1982-1405-2-ob-"]
+[GameID "29"]
+[White "Hámori András"]
+[Black "Rudolf László"]
 
 1.g5 g6 2.Hdf4 Hg9 3.Hg4 Hgi6 4.k2 k6 5.Fg3 Fg9 6.Fg2 Fd6
 7.Hc3 Fxg2 8.Vxg2 Bg8 9.i3 f6 10.h4 fxg5 11.hxg5 Bl3
@@ -441,7 +701,14 @@
 22.Hi5 Bg7 23.k3 Hxh4 24.Hk7 Hxi1 25.Vxi1 Bxe3 26.Kxe3 Be6
 27.Kd2 Vg7 28.Kc1 Be1 29.Kb2 Bxb1 30.Ka3 Vb3  0-1
 
-30 Rudolf László Szabó Miklós
+[Variant "Glinski"]
+[Event "II. Országos Bajnokság"]
+[Site "Miskolc, HUN"]
+[EventDate "1982.04.05"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1982-1405-2-ob-"]
+[GameID "30"]
+[White "Rudolf László"]
+[Black "Szabó Miklós"]
 
 1.g5 g6 2.Hg2 Fe9 3.Hhi3 i6 4.k2 Hdf8 5.Bl1 Fg9 6.Fd4 e6
 7.Hh4 Hc6 8.Ff2 Bcf8 9.e5 Ff11 10.Fxc6 Vxc6 11.Vf3 Vd8
@@ -458,7 +725,14 @@
 62.Hg6 i5 63.b4 b5 64.Ke6 Fh5 65.i4 Fe10 66.k4 Kh4 67.k5 Kxi4
 68.k6 Fd8 69.Kxd5 Kh6  remi
 
-31 Sziráki László Rudolf László
+[Variant "Glinski"]
+[Event "II. Országos Bajnokság"]
+[Site "Miskolc, HUN"]
+[EventDate "1982.04.05"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1982-1405-2-ob-"]
+[GameID "31"]
+[White "Sziráki László"]
+[Black "Rudolf László"]
 
 1.i4 g6 2.Fh4 Hi6 3.g5 Hdg9 4.Fxi6 Hxi6 5.Hg2 Bl3 6.k3 Bl5
 7.b2 k6 8.Fi2 Bl2 9.Hh4 Hxh4 10.Bxh4 Bil6 11.Bhl1 Bxl1
@@ -472,8 +746,9 @@
 [Site "Pécs, HUN"]
 [EventDate "1982.07.24"]
 [Source "https://sites.google.com/site/hexasakkversenyek/zsolnayk"]
-
-35 Jan Kudelski Rudolf László
+[GameID "35"]
+[White "Jan Kudelski"]
+[Black "Rudolf László"]
 
 1.g5 g6 2.e5 Hg9 3.Hg2 Hgi6 4.i3 k6 5.Fxi6 Hxi6 6.d5 Fg8
 7.Fd3 Fk7 8.Ve2 h5 9.h4 Bh9 10.Fd4 Fl5 11.Vf3 hxg5 12.fxg5Vh8
@@ -483,7 +758,14 @@
 28.Bg4 Bg9 29.Fe6 Bg7 30.h5 Be2 31.Kg2 Be1 32.Kh3 Kf9
 33.Ki4 Bl2 34.Ki3 Bgl3 35.Kk1 Bxh5 0-1
 
-36 Rudolf László Simon Triggs
+[Variant "Glinski"]
+[Event "I. Zsolnay kupa"]
+[Site "Pécs, HUN"]
+[EventDate "1982.07.24"]
+[Source "https://sites.google.com/site/hexasakkversenyek/zsolnayk"]
+[GameID "36"]
+[White "Rudolf László"]
+[Black "Simon Triggs"]
 
 1.g5 g6 2.Hg2 Hg9 3.Hgi3 Fxi3 4.Hxi3 i6 5.k2 Hh6 6.Fk1 Ve9
 7.Hxh6 Bxh6 8.Fe2 Fg9 9.Bif4 Fd6 10.Bk4 Bxk4 11.Bxk4 h6
@@ -495,7 +777,14 @@
 37.Ve4 k3 38.Fg4 i5 39.Ff4 Vf2 40.Fe2 Hi6 41.Kl1 Fh6
 42.Fc1 Hg5 43.Vi1 Vh4 44.i3 Vg3? 45.Vxg3 1-0
 
-37 Deme Lajos Rudolf László
+[Variant "Glinski"]
+[Event "I. Zsolnay kupa"]
+[Site "Pécs, HUN"]
+[EventDate "1982.07.24"]
+[Source "https://sites.google.com/site/hexasakkversenyek/zsolnayk"]
+[GameID "37"]
+[White "Deme Lajos"]
+[Black "Rudolf László"]
 
 1.i4 g6 2.g5 Hg9 3.h5 gxh5 4.ixh5 Fe8 5.Fh3 f6 6.Bg3 fxg5
 7.Fxg5 Fxg5 8.fxg5 d6 9.Hhf4 Fd7 10.e6 Hh6 11.d5 Bg8
@@ -510,7 +799,14 @@
 52.Be5 Kd6 53.Bf6 Ke8 54.Ff3 Kg8 55.Kh3 Be7 56.Kg5 Be3
 57.Bf4 Bxf4 58.Kxf4 Fxg6 59.Kg5 remi
 
-38 Rudolf László Szabó Miklós
+[Variant "Glinski"]
+[Event "I. Zsolnay kupa"]
+[Site "Pécs, HUN"]
+[EventDate "1982.07.24"]
+[Source "https://sites.google.com/site/hexasakkversenyek/zsolnayk"]
+[GameID "38"]
+[White "Rudolf László"]
+[Black "Szabó Miklós"]
 
 1.g5 g6 2.Hg2 Hdf8 3.Hgi3 e5 4.Hk5 Bg8 5.Fxk7 i6 6.Fxf9 Vxf9
 7.Hh4 Fd6 8.Fg2 Hc6 9.Vc3 Vxc3 10.dxc3 exf5 11.exf5 Bk4
@@ -520,7 +816,14 @@
 27.Bb4 He3 28.Bh8 Kk5 29.Bxh7 Bg6 30.Bxe9 Bf6 31.Hh4 Ki7
 32.Bxe3 1-0
 
-39 Rudolf László Bank László
+[Variant "Glinski"]
+[Event "I. Zsolnay kupa"]
+[Site "Pécs, HUN"]
+[EventDate "1982.07.24"]
+[Source "https://sites.google.com/site/hexasakkversenyek/zsolnayk"]
+[GameID "39"]
+[White "Rudolf László"]
+[Black "Bank László"]
 
 1.g5 g6 2.Hg2 Hg9 3.Hgi3 i6 4.k2 Hh6 5.Hxh6 Fxh6 6.Hf4 d6
 7.h5 gxh5 8.Fxh5 Hf8 9.Fxf9 Vxf9 10.Fh4 Hi7 11.i4 k5
@@ -535,7 +838,14 @@
 53.He6 Kf8 54.Hh4 Hf5 55.Kc2 Be7 56.Be4 c5 57.bxc5 Bxc5
 58.Kd3 Kf7 59.Hd5 remi
 
-40 Hámori András Rudolf László
+[Variant "Glinski"]
+[Event "I. Zsolnay kupa"]
+[Site "Pécs, HUN"]
+[EventDate "1982.07.24"]
+[Source "https://sites.google.com/site/hexasakkversenyek/zsolnayk"]
+[GameID "40"]
+[White "Hámori András"]
+[Black "Rudolf László"]
 
 1.g5 g6 2.Hg4 Hg9 3.Fd4 Hgi6 4.Hg2 k6 5.Fe2 Fd6 6.Ff4 Fxf4
 7.Bcxf4 Bl3 8.e6 Be8 9.exf7 Hxf7 10.Hxf7 exf7 11.Be4 Kf10
@@ -545,20 +855,41 @@
 27.Kg2 Hg7 28.Kf4 Fg6 29.Fd4 Kf7 30.Fc5 Fd8 31.h5 Fxb7
 32.hxg6 Kd6 33.Fxb7 Kxc5 0-1
 
-41 Rudolf László Szokodi László
+[Variant "Glinski"]
+[Event "I. Zsolnay kupa"]
+[Site "Pécs, HUN"]
+[EventDate "1982.07.24"]
+[Source "https://sites.google.com/site/hexasakkversenyek/zsolnayk"]
+[GameID "41"]
+[White "Rudolf László"]
+[Black "Szokodi László"]
 
 1.g5 g6 2.Hg2 Hc6 3.Hgi3 Fxi3 4.Hxi3 i6 5.k2 Hg7 6.Fk1 b6
 7.Bk4 k5 8.Fl2 Fh9 9.h5 Bif8 10.h6 Hi8 11.Bif4 Hxh6
 12.Fxk5 Hxi3 13.Fxi3 Vd9 14.Fxh9 Vxh9 15.Bk6 Bi8 16.Bl4 Bcf8
 17.Fe10  1-0
 
-42 Slawomir Bitner                       Rudolf László
+[Variant "Glinski"]
+[Event "I. Zsolnay kupa"]
+[Site "Pécs, HUN"]
+[EventDate "1982.07.24"]
+[Source "https://sites.google.com/site/hexasakkversenyek/zsolnayk"]
+[GameID "42"]
+[White "Slawomir Bitner"]
+[Black "Rudolf László"]
 
 1.g5 g6 2.d5 Hg9 3.Hg2 Hgi6 4.Fxi6 Hxi6 5.i3 k6 6.Fd3 Fk7
 7.Ve2 Fg9 8.Hh4 Hxh4 9.Fxh4 Bk4 10.k3 Fl5 11.Bf1 Bxh4
 12.Ke1 Vb4 13.Kf2 Bd2  0-1
 
-43 Gyarmati Tihamér                      Rudolf László
+[Variant "Glinski"]
+[Event "I. Zsolnay kupa"]
+[Site "Pécs, HUN"]
+[EventDate "1982.07.24"]
+[Source "https://sites.google.com/site/hexasakkversenyek/zsolnayk"]
+[GameID "43"]
+[White "Gyarmati Tihamér"]
+[Black "Rudolf László"]
 
 1.g5 g6 2.d5 Hg9 3.Fd3 k6 4.Fd4 Hgi6 5.Fxi6 Hxi6 6.i3 Fk7
 7.Vf2 Bl3 8.Hg4 Vg7 9.k3 Bl5 10.e6 f6 11.gxf6 gxf6 12.Fe3 Ke10
@@ -574,8 +905,9 @@
 [Site "Szekszárd, HUN"]
 [EventDate "1982.09.16"]
 [Source "https://sites.google.com/site/hexasakkversenyek/1982-0916-1-aliscak-1"]
-
-44 Vámosi Albert                         Rudolf László
+[GameID "44"]
+[White "Vámosi Albert"]
+[Black "Rudolf László"]
 
 1.g6 Hg9 2.Hi3 i6 3.Fi5 h6 4.Fxg9 Fxg9 5.f6 e6 6.e5 Be8
 7.Be4 b6 8.Hdf4 k6 9.Hh5 Fh7 10.Bg4 Kf11 11.Fg2 Fd8
@@ -586,7 +918,14 @@
 32.Bg3 Kf9 33.d5 Bh4 34.Ff3 Ff4 35.i3 Bl4 36.h4 Bl2
 37.Kh1 Bxg2 38.Bxg2 Fxg2 39.Kxg2 Bf5  0-1
 
-45 Rudolf László                        Csupor Katalin
+[Variant "Glinski"]
+[Event "I. Alisca kupa"]
+[Site "Szekszárd, HUN"]
+[EventDate "1982.09.16"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1982-0916-1-aliscak-1"]
+[GameID "45"]
+[White "Rudolf László"]
+[Black "Csupor Katalin"]
 
 1.g5 e6 2.Hi3 Hhf8 3.Hdg2 Hg9 4.k2 Fe9 5.Fh4 e5 6.Fxf8 Fxf8
 7.Be3 Be8 8.fxe5 Bxe5 9.Hd2 Be9 10.Fg2 He7 11.h4 Hc4
@@ -594,7 +933,14 @@
 17.Bfe2 Fg7 18.Hk5 Big8 19.Vk7 Kf10 20.Fxg7 Bxg7 21.Vh8 Fg9
 22.Hxg7 hxg7 23.Fi4 Kd9 24.Vxb7  1-0
 
-46 Szabó Miklós                          Rudolf László
+[Variant "Glinski"]
+[Event "I. Alisca kupa"]
+[Site "Szekszárd, HUN"]
+[EventDate "1982.09.16"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1982-0916-1-aliscak-1"]
+[GameID "46"]
+[White "Szabó Miklós"]
+[Black "Rudolf László"]
 
 1.g5 g6 2.d5 Hg9 3.Hg2 Hhi6 4.i3 k6 5.Fd4 Fg8 6.Fd3 Hh6
 7.Hg4 Hxg4 8.Fxg4 Fk7 9.Be3 Fg9 10.Fxg9 Hxg9 11.Fxk7 Bxk7
@@ -603,7 +949,14 @@
 22.Vk6 Vxb1 23.h4 Vxc2 24.Kh2 Bl2 25.k2 Bxk2 26.Fxk2 Vxe4
 27.Kk1 Vf3 28.Kl1 Fxk2 29.Vxk2  1-0
 
-47 Rudolf László                       Hortobágyi Imre
+[Variant "Glinski"]
+[Event "I. Alisca kupa"]
+[Site "Szekszárd, HUN"]
+[EventDate "1982.09.16"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1982-0916-1-aliscak-1"]
+[GameID "47"]
+[White "Rudolf László"]
+[Black "Hortobágyi Imre"]
 
 1.g5 g6 2.Hg2 Hg9 3.Hhi3 i6 4.k2 Fe9 5.Fe3 Hh6 6.Hxh6 Fxh6
 7.Fe2 Fg8 8.f6 k5 9.e5 Vl5 10.Fh2 Ve10 11.Bl1 Bl6 12.Bxl6 Fxl6
@@ -614,7 +967,14 @@
 34.Bf1 Hd7 35.e6 Hc4 36.Fd6 He7 37.Bf8 Hh6 38.Bxg8 Kh9
 39.Bxh7 Kg10 40.Vxi6  1-0
 
-48 Sziráki László                       Rudolf László
+[Variant "Glinski"]
+[Event "I. Alisca kupa"]
+[Site "Szekszárd, HUN"]
+[EventDate "1982.09.16"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1982-0916-1-aliscak-1"]
+[GameID "48"]
+[White "Sziráki László"]
+[Black "Rudolf László"]
 
 1.i4 i5 2.d5 g6 3.Fd4 Fg9 4.e6 Fg8 5.Fd3 Be8 6.Be3 Hc6
 7.k3 Hi6 8.g5 Hxk3 9.Vl2 Hi6 10.Fxi6 Bxi6 11.Hg2 Fh8
@@ -630,7 +990,14 @@
 57.Bf5 Kg6 58.Bf9 d3 59.Ke2 Bc2 60.Kd1 c5 61.Bi6 Kf5
 62.Bf9 Kg3 63.Bg8 Kf3 64.Bxg5 Bb1  0-1
 
-49 Rudolf László                          Juhász János
+[Variant "Glinski"]
+[Event "I. Alisca kupa"]
+[Site "Szekszárd, HUN"]
+[EventDate "1982.09.16"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1982-0916-1-aliscak-1"]
+[GameID "49"]
+[White "Rudolf László"]
+[Black "Juhász János"]
 
 1.g5 k6 2.Hg2 Fh8 3.Hgi3 Fi6 4.Hk5 Bk7 5.Hhi3 Fh6 6.Hh4 Fe9
 7.Hxi6 hxi6 8.Fh5 Bi8 9.Bk4 Hg9 10.Fi5 Hk7 11.Fl1 Fg9
@@ -640,7 +1007,14 @@
 27.Vl6 Ke10 28.Hg6 Va2 29.Hxi7 Vxb1 30.Hf8 Kd8 31.Hd5 Vxk1
 32.Kf2 Vd2 33.Be2 Vh4 34.Kd1 Vxf6 35.Hb2 Vd5? 36.Hxd5  1-0
 
-50 Vályi Nagy Tamás                      Rudolf László
+[Variant "Glinski"]
+[Event "I. Alisca kupa"]
+[Site "Szekszárd, HUN"]
+[EventDate "1982.09.16"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1982-0916-1-aliscak-1"]
+[GameID "50"]
+[White "Vályi Nagy Tamás"]
+[Black "Rudolf László"]
 
 1.g5 g6 2.Hg2 Hg9 3.Fd4 Hgi6 4.Hgi3 k6 5.k2 e5 6.Ff2 exf5
 7.exf5 Be8 8.Be3 Bie7 9.Bie4 Bxe4 10.Bxe4 Bxe4 11.Vxe4 Vxe4
@@ -651,7 +1025,14 @@
 32.gxf6 Ff8 33.i3 Ff10 34.k3 Kf9 35.Fxf7 Fe9 36.Fb5 c6
 37.Fa6 i6  0-1
 
-51 Rudolf László                         Hámori András
+[Variant "Glinski"]
+[Event "I. Alisca kupa"]
+[Site "Szekszárd, HUN"]
+[EventDate "1982.09.16"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1982-0916-1-aliscak-1"]
+[GameID "51"]
+[White "Rudolf László"]
+[Black "Hámori András"]
 
 1.g5 g6 2.Hg2 Fd6 3.Hgi3 Fxi3 4.Hxi3 k6 5.k2 Hg9 6.Fk1 Vf10
 7.Hk5 Bif8 8.Fd4 e6 9.Vc3 He7 10.f6 Vh6 11.h4 gxf6 12.Fi4 Vk4
@@ -664,7 +1045,14 @@
 43.exd5 d6 44.Kf6 c6 45.c4 b6 46.b3 Fg8 47.k5 ixk5 48.ixk5 Fe8
 49.Fxi7  1-0
 
-52 Bruckner Istvánné                     Rudolf László
+[Variant "Glinski"]
+[Event "I. Alisca kupa"]
+[Site "Szekszárd, HUN"]
+[EventDate "1982.09.16"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1982-0916-1-aliscak-1"]
+[GameID "52"]
+[White "Bruckner Istvánné"]
+[Black "Rudolf László"]
 
 1.i4 i5 2.Fh4 Fe9 3.Fxe9 Vxe9 4.Fe2 Fg8 5.Vi2 Vf10 6.g5 Hdf8
 7.Vf2 Be10 8.h5 ixh5 9.ixh5 Bxi1 10.Fxi1 Kf11 11.Bl4 Hhi6
@@ -681,8 +1069,9 @@
 [Site "Mázaszászvár, HUN"]
 [EventDate "1983.03.09"]
 [Source "https://sites.google.com/site/hexasakkversenyek/1983-0309-1-tizekb-1"]
-
-54 Rudolf László Sziráki László
+[GameID "54"]
+[White "Rudolf László"]
+[Black "Sziráki László"]
 
 1.g5 Hg9 2.Hg2 Fh6 3.Hhi3 e5 4.Be3 d5 5.c3 Bb4 6.d4 Hf8
 7.b3 g6 8.Fh2 Be8 9.dxe5 dxe5 10.Hxh6 Hxh6 11.Fk4 Fh8
@@ -698,7 +1087,14 @@
 57.Ff10 Hkg4 58.Ke3 Kg5 59.Bd9 Hh1 60.Bxi6 Heg4 61.Fd9 Kh4
 62.Fxc7 Hi3 63.Bxf6 Kxi4 64.Fe5 Kh3  remi
 
-55 Deme Lajos Rudolf László
+[Variant "Glinski"]
+[Event "I. Tízek Bajnokság"]
+[Site "Mázaszászvár, HUN"]
+[EventDate "1983.03.09"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-0309-1-tizekb-1"]
+[GameID "55"]
+[White "Deme Lajos"]
+[Black "Rudolf László"]
 
 1.g5 g6 2.Hg2 Hg9 3.Hhi3 Hhi6 4.Fd4 e6 5.e5 k6 6.Fe2 Fe9
 7.f6 Fg8 8.Hk5 Bl6 9.Hkh4 Hxh4 10.Hxh4 gxf6 11.exf6 exf6
@@ -706,7 +1102,14 @@
 17.Bb4 Vf5 18.Bbf4 Vi5 19.Kd1 Kg9 20.Bfe4 Vc5 21.Bb4 Vf5
 22.Bbf4 Vh1 23.Kc1 Bg3 24.Fxb7 Bxf4 25.Fxf4 Vxk1 remi
 
-56 Rudolf László Vámosi Albert
+[Variant "Glinski"]
+[Event "I. Tízek Bajnokság"]
+[Site "Mázaszászvár, HUN"]
+[EventDate "1983.03.09"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-0309-1-tizekb-1"]
+[GameID "56"]
+[White "Rudolf László"]
+[Black "Vámosi Albert"]
 
 1.g5 g6 2.Hg2 Fe9 3.Hhi3 i6 4.Be3 Fxi3 5.Hxi3 d6 6.k2 Hg9
 7.Fk1 Vc6 8.d4 Hh6 9.Bc3 Vg9 10.Hxh6 Fxh6 11.b2 Hg7
@@ -714,7 +1117,14 @@
 17.Vf3 Bg7 18.Fg2 Vf8 19.e5 Bl6 20.Vxb7 Fi7 21.Bh1 Vi2
 22.Fxe7 Kh9 23.Fxg7 Hxg7 24.Bxh7 Ki8 25.Vh8 1-0
 
-57 Hámori András Rudolf László
+[Variant "Glinski"]
+[Event "I. Tízek Bajnokság"]
+[Site "Mázaszászvár, HUN"]
+[EventDate "1983.03.09"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-0309-1-tizekb-1"]
+[GameID "57"]
+[White "Hámori András"]
+[Black "Rudolf László"]
 
 1.g5 g6 2.Fg2 Hg9 3.Fd4 Hgi6 4.Fxi6 Hxi6 5.k2 k6 6.Hc3 c6
 7.Fe5 d5 8.Ff4 e5 9.Ff2 b5 10.Fg3 Be8 11.Hce2 h5 12.h4 hxg5
@@ -733,7 +1143,14 @@
 73.Kd3 Kh3 74.Kb2 Kf4 75.Kc4 Ke4 76.Kb2 Kd4 77.Kb1 Kc4
 78.Ka1 b2 79.Kb1 Kb3 80.Kc1 Kc3 81.Ke2 b1V 0-1
 
-58 Rudolf László Szokodi László
+[Variant "Glinski"]
+[Event "I. Tízek Bajnokság"]
+[Site "Mázaszászvár, HUN"]
+[EventDate "1983.03.09"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-0309-1-tizekb-1"]
+[GameID "58"]
+[White "Rudolf László"]
+[Black "Szokodi László"]
 
 1.g5 g6 2.Hg2 d5 3.Hhi3 e6 4.Hk5 Bg8 5.Fxk7 i6 6.Fxf9 Vxf9
 7.Hki3 Fd6 8.Hd1 Fd7 9.Fg2 e5 10.Hc3 Hc6 11.k2 Be10
@@ -744,14 +1161,28 @@
 32.Bi3 Kh5 33.Bl2 Kg7 34.Ff2 Bg9 35.Fxe5 Ke7 36.Kh2 Bg6
 37.Bd6  1-0
 
-59 Bank László Rudolf László
+[Variant "Glinski"]
+[Event "I. Tízek Bajnokság"]
+[Site "Mázaszászvár, HUN"]
+[EventDate "1983.03.09"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-0309-1-tizekb-1"]
+[GameID "59"]
+[White "Bank László"]
+[Black "Rudolf László"]
 
 1.Be3 d6 2.d5 g6 3.i3 Hg9 4.Fd3 Hhi6 5.Be2 Fh6 6.Ff4 Fxf4
 7.Hdxf4 e6 8.e5 Be8 9.Hk2 Vf10 10.Hg3 Vh6 11.Kg2 He7
 12.Hg1 Fd7 13.dxe6 Fxe6 14.Fd5 Hb5 15.Fxf9 Bxf9 16.Be4 Bc6
 17.Ve2 Vxe2 18.Kxe2 Bih9 19.Hd2 Fc5  remi
 
-60 Rudolf László Kolozsvári M.
+[Variant "Glinski"]
+[Event "I. Tízek Bajnokság"]
+[Site "Mázaszászvár, HUN"]
+[EventDate "1983.03.09"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-0309-1-tizekb-1"]
+[GameID "60"]
+[White "Rudolf László"]
+[Black "Kolozsvári M."]
 
 1.g5 e6 2.Hi3 i6 3.Hdg2 Fe9 4.k2 Hg9 5.Fg3 Ff8 6.Fe2 k5
 7.Bl1 He7 8.Fh2 Fg9 9.Hh4 Fe9 10.b2 Fxh4 11.Fxh4 g6
@@ -768,7 +1199,14 @@
 62.cxd6 Bxd6 63.Bk4 Bd5 64.Kf4 Fd6 65.Ke3 b5 66.Bh4 Kc5
 67.Bh8 c6 68.Bg9 Kb4 69.Kc2 c5 70.Bg3 Fe5 71.Bg4 Bd3  0-1
 
-61 Rudolf László Botkó Imre
+[Variant "Glinski"]
+[Event "I. Tízek Bajnokság"]
+[Site "Mázaszászvár, HUN"]
+[EventDate "1983.03.09"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-0309-1-tizekb-1"]
+[GameID "61"]
+[White "Rudolf László"]
+[Black "Botkó Imre"]
 
 1.g5 g6 2.Hg2 Hg9 3.Hgi3 Hg7 4.k2 d5 5.h5 gxh5 6.Fxh5 e6
 7.Fg3 Fd7 8.d4 i6 9.Fd3 Fd6 10.f6 Be8 11.Be3 e5 12.Fxg7 Fxg7
@@ -776,7 +1214,14 @@
 18.Bh2 He7 19.Vg4 Vk6 20.Vh4 Bh8 21.Hg4 Hxg5 22.Hxf7 Hxh2
 23.Hxh8 Vxh8 24.Vxh2  remi
 
-62 Szabó Miklós Rudolf László
+[Variant "Glinski"]
+[Event "I. Tízek Bajnokság"]
+[Site "Mázaszászvár, HUN"]
+[EventDate "1983.03.09"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-0309-1-tizekb-1"]
+[GameID "62"]
+[White "Szabó Miklós"]
+[Black "Rudolf László"]
 
 1.d4 g6 2.g5 Hg9 3.Fd3 Hhi6 4.i3 k6 5.Hg2 Fg8 6.Hf4 Fe9
 7.Hc3 c6 8.Be3 e6 9.e5 b5 10.Hf4 d6 11.d5 Bl6 12.dxe6 dxe6
@@ -798,8 +1243,9 @@
 [Site "Varsó, POL"]
 [EventDate "1983.04.24"]
 [Source "https://sites.google.com/site/hexasakkversenyek/1983-0424-lengyel-magyar"]
-
-63 Marek Mackowiak                           Rudolf László
+[GameID "63"]
+[White "Marek Mackowiak"]
+[Black "Rudolf László"]
 
 1.g5 g6 2.Hdf4 Hg9 3.h5 gxh5 4.Fxh5 i5 5.Fxf9 Vxf9 6.k2 Fd6
 7.Hc3 Hg7 8.Fd4 Hi6 9.Bh2 e5 10.Ff2 exf5 11.exf5 Be10
@@ -821,8 +1267,9 @@
 [Site "Gárdony, HUN"]
 [EventDate "1983.05.05"]
 [Source "https://sites.google.com/site/hexasakkversenyek/1983-0505-3-ob"]
-
-64 Rudolf László Botkó Imre
+[GameID "64"]
+[White "Rudolf László"]
+[Black "Botkó Imre"]
 
 1.g5 g6 2.Hdf4 Hg9 3.h5 Fe9 4.Fd4 e6 5.hxg6 Fxg6 6.Hxg6 fxg6
 7.Hf4 e5 8.Fxg9 Kxg9 9.Hxg6 Be7 10.Hxf9 Vxf9 11.Fxk7 Vi3
@@ -836,7 +1283,14 @@
 48.g6 hxg6 49.fxg6 Ke8 50.Kf6 Hc7 51.Kg7 Hf8 52.Ff6 He10
 53.Kh8 Hg8 54.Fh2 Hi5 55.Kg9 Hg8 56.Fl5 Hi5 remi
 
-65 Hámori András Rudolf László
+[Variant "Glinski"]
+[Event "III. Országos Bajnokság"]
+[Site "Gárdony, HUN"]
+[EventDate "1983.05.05"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-0505-3-ob"]
+[GameID "65"]
+[White "Hámori András"]
+[Black "Rudolf László"]
 
 1.g5 g6 2.Hdf4 Fd6 3.h5 Fxf4 4.Hxf4 gxh5 5.gxh5 Bg7 6.Kh1 Hi6
 7.Hi3 Hk3 8.Bif4 i6 9.Bk4 Bxk4 10.Bxk4 h6 11.Vg1 Vg9
@@ -852,7 +1306,14 @@
 58.Ke3 Kf6 59.Hh5  0-1
 
 { Első királycsel ?! (BoSa) }
-66 Szegi Antal Rudolf László
+[Variant "Glinski"]
+[Event "III. Országos Bajnokság"]
+[Site "Gárdony, HUN"]
+[EventDate "1983.05.05"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-0505-3-ob"]
+[GameID "66"]
+[White "Szegi Antal"]
+[Black "Rudolf László"]
 
 1.g6 fxg6 2.Hi3 h6 3.Fe3 e6 4.f6 exf6 5.h5 Fh7 6.hxg6 hxg6
 7.Hxg6 Fxg6 8.Fxg6 Be7 9.Hf4 Fh6 10.Ff5 g5 11.Fg3 f5
@@ -863,7 +1324,14 @@
 30.Vxd9 Bf3 31.Ke1 Bg2 32.Ke2 Bf3 33.Kc1 Be3 34.Kb2 Bb3
 35.Kc1 Be3 36.Kb2 Bb3  remi
 
-67 Rudolf László Ábrahám Tibor
+[Variant "Glinski"]
+[Event "III. Országos Bajnokság"]
+[Site "Gárdony, HUN"]
+[EventDate "1983.05.05"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-0505-3-ob"]
+[GameID "67"]
+[White "Rudolf László"]
+[Black "Ábrahám Tibor"]
 
 1.g5 Hdf8 2.Hi3 e5 3.Hk5 Bg8 4.Fxk7 i6 5.Fxf9 Vxf9 6.Hi3 exf5
 7.exf5 Hc6 8.Vc3 Be7 9.Be4 Bce8 10.Bce3 Ve10 11.f6 h6
@@ -871,7 +1339,14 @@
 17.i3 Hg7 18.Ve1 Hd6 19.Fl1 Kg8 20.Vxi6 Kf10 21.Vxh6 Kd9
 22.Vh9 Vf10 23.Bxe8  1-0
 
-68 Szabó Miklós Rudolf László
+[Variant "Glinski"]
+[Event "III. Országos Bajnokság"]
+[Site "Gárdony, HUN"]
+[EventDate "1983.05.05"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-0505-3-ob"]
+[GameID "68"]
+[White "Szabó Miklós"]
+[Black "Rudolf László"]
 
 1.g5 g6 2.Hg2 Hdf8 3.Hf4 e5 4.Hfi3 i6 5.k2 Be8 6.Be3 Hd5
 7.Be2 exf5 8.exf5 Bxe2 9.Fxe2 Be7 10.Be4 Bxe4 11.Fxe4 Hg7
@@ -887,7 +1362,14 @@
 58.Hd2 i2 59.Hf5 Kh3 60.Hg7 Hxg7 61.fxg7 i1V 62.Kf7 Ki4
 63.Kf8 Kh6 64.Kxd7 Kxg7  0-1
 
-69 Rudolf László Sziráki László
+[Variant "Glinski"]
+[Event "III. Országos Bajnokság"]
+[Site "Gárdony, HUN"]
+[EventDate "1983.05.05"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-0505-3-ob"]
+[GameID "69"]
+[White "Rudolf László"]
+[Black "Sziráki László"]
 
 1.g5 e5 2.Hi3 i6 3.Fg2 exf5 4.exf5 Vxe1 5.Fxe1 Fd5 6.Ff3 Fxf3
 7.Kxf3 Kf9 8.Be4 Be8 9.Bce3 Bie7 10.h5 Fe9 11.Hc3 c6
@@ -901,7 +1383,14 @@
 48.Kg7 Ke5 49.h8 Kxd3 50.Fxf7 Kc3 51.Fxd9 Kxb3 52.h9V Kc3
 53.Fc1  1-0
 
-70 Buzási József Rudolf László
+[Variant "Glinski"]
+[Event "III. Országos Bajnokság"]
+[Site "Gárdony, HUN"]
+[EventDate "1983.05.05"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-0505-3-ob"]
+[GameID "70"]
+[White "Buzási József"]
+[Black "Rudolf László"]
 
 1.g5 g6 2.i3 Hdf8 3.Hdf4 Fd6 4.e5 Hg7 5.Fd4 Hc6 6.Fe3 Fg9
 7.Hc3 e6 8.Hhe2 f6 9.exf6 exf6 10.Vl2 Kf11 11.Vxg6 Hb3
@@ -910,14 +1399,28 @@
 22.Bh2 Bk1 23.Ke1 Ve7 24.Ve2 Be5 25.Be4 Va5 26.Fd2 Bi2
 27.Kd1 Vd5 28.Fc3 Vf7 29.Fxf9 Vxf9 30.Bg3 Vxb1 31.Ke3 Be1 0-1
 
-71 Rudolf László Vályi Nagy T.
+[Variant "Glinski"]
+[Event "III. Országos Bajnokság"]
+[Site "Gárdony, HUN"]
+[EventDate "1983.05.05"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-0505-3-ob"]
+[GameID "71"]
+[White "Rudolf László"]
+[Black "Vályi Nagy T."]
 
 1.g5 g6 2.Hdf4 Hg9 3.h5 Fe9 4.i4 Fd6 5.Hc3 c6 6.Hxd6 cxd6
 7.k3 k5 8.k4 i6 9.Fg2 Hk6 10.Kf1 Hg8 11.Bh2 h6 12.hxg6 Fxg6
 13.f6 Fc5 14.Fd1 Bi7 15.d5 Fb6 16.e5 e6 17.Bb4 Bc7 18.Bxd6 Ve8
 19.dxe6 fxe6 20.Vb4 Vf10 21.Bxg8 1-0
 
-72 Lénárt Győző Rudolf László
+[Variant "Glinski"]
+[Event "III. Országos Bajnokság"]
+[Site "Gárdony, HUN"]
+[EventDate "1983.05.05"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-0505-3-ob"]
+[GameID "72"]
+[White "Lénárt Győző"]
+[Black "Rudolf László"]
 
 1.g5 g6 2.Hhf4 Hg9 3.h5 gxh5 4.Hxh5 i5 5.Hhf4 Hgi6 6.i3 Fk2
 7.Bi2 Fxf4 8.Hxf4 Fe9 9.Bi1 Bg7 10.Fh2 e6 11.e5 Fd8
@@ -932,7 +1435,14 @@
 52.fxe6 Kxe6 53.Kf4 Kd4 54.Ke2 Kc2 55.Fd3 b4 56.Kf4 b3
 57.Ke4 d4  0-1
 
-73 Hortobágyi Imre Rudolf László
+[Variant "Glinski"]
+[Event "III. Országos Bajnokság"]
+[Site "Gárdony, HUN"]
+[EventDate "1983.05.05"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-0505-3-ob"]
+[GameID "73"]
+[White "Hortobágyi Imre"]
+[Black "Rudolf László"]
 
 1.Hhf4 g6 2.e6 Fh6 3.d5 Fxf4 4.Hxf4 Hhf8 5.Be3 fxe6
 6.Hxe6 d6 7.Hxf9 Vxf9 8.g5 h5 9.gxh5 Hxh5 10.Fd3 Fd7
@@ -940,7 +1450,14 @@
 16.Beg3 Bg10 17.Bxg10 Hxg10 18.Ve1 Hg8 19.Kh2 Hf6 20.Bg2 Hxd3
 21.cxd3 k6 22.Fk7 Bf4 23.Bg3 Bf2 24.Ki1 Bf1 25.Kh2 Bxe1 0-1
 
-74 Rudolf László Szabó Gyula
+[Variant "Glinski"]
+[Event "III. Országos Bajnokság"]
+[Site "Gárdony, HUN"]
+[EventDate "1983.05.05"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-0505-3-ob"]
+[GameID "74"]
+[White "Rudolf László"]
+[Black "Szabó Gyula"]
 
 1.g5 g6 2.Hg2 Hg9 3.Hgi3 i6 4.Fd4 e6 5.k2 Hf8 6.Hg4 k5
 7.Fg2 Fe8 8.Kf1 He7 9.e5 h5 10.gxh5 gxh5 11.f6 h4 12.Fxh4 Bi7
@@ -955,8 +1472,9 @@
 [Site "Szekszárd, HUN"]
 [EventDate "1983.06.14"]
 [Source "https://sites.google.com/site/hexasakkversenyek/1983-0614-2-aliscak"]
-
-75 Rudolf László                            Botkó Imre
+[GameID "75"]
+[White "Rudolf László"]
+[Black "Botkó Imre"]
 
 1.g5 g6 2.Hdf4 Hhf8 3.e6 Bh9 4.Be3 Be8 5.d5 h5 6.gxh5 Hxh5
 7.Fd3 Fg8 8.Hhi3 Hxf4 9.Hxf4 Hg9 10.Kf1 Hh6 11.Hxg6 Bf8
@@ -964,14 +1482,28 @@
 17.exd6 Vb5 18.Fd3 Vb6 19.dxe7 Fe8 20.Bg7 Hi8 21.Bf8 Kd9
 22.Ff2 Fe9 23.Bl4 Va4 24.Bxe9 1-0
 
-76 Rudolf László Marek Mackowiak
+[Variant "Glinski"]
+[Event "II. Alisca Kupa"]
+[Site "Szekszárd, HUN"]
+[EventDate "1983.06.14"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-0614-2-aliscak"]
+[GameID "76"]
+[White "Rudolf László"]
+[Black "Marek Mackowiak"]
 
 1.g5 g6 2.Hdf4 Hdf8 3.e6 Hg7 4.Fg3 Hi4 5.k3 Hl5 6.i3 k6
 7.Be3 Be8 8.Hg4 Fg8 9.d5 h5 10.Fc4 Be9 11.Fe5 hxg5 12.Fxg5 Bh9
 13.Bh1 Hh5 14.Hxh5 Fxh5 15.exf7 Fxg4 16.Fxg4 exf7 17.Bxe9 Vxe9
 18.Be3 Be8 19.Bxe8 Vxe8 20.Vxe8 Fxe8 21.Fk7 b5  remi
 
-77 Sziráki László Rudolf László
+[Variant "Glinski"]
+[Event "II. Alisca Kupa"]
+[Site "Szekszárd, HUN"]
+[EventDate "1983.06.14"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-0614-2-aliscak"]
+[GameID "77"]
+[White "Sziráki László"]
+[Black "Rudolf László"]
 
 1.g6 fxg6 2.Hi3 h6 3.d5 k6 4.Bi4 h5 5.Bl4 Fk3 6.Bk4 Fh7
 7.Fd3 Fh8 8.Bl4 i6 9.Fxh9 Fxh9 10.Fe3 Hf8 11.Hdf4 Hi7
@@ -986,7 +1518,14 @@
 53.Kc2 e3 54.Hg3 Ke4 55.h6 Fxh6 56.k3 ixk3 57.ixk3 e2
 58.Ka1 Kf3 59.He5 Ke3 60.Hc2 Kd2 61.He5 Kxc3 62.Hg3 b3 0-1
 
-78 Szegi Antal Rudolf László
+[Variant "Glinski"]
+[Event "II. Alisca Kupa"]
+[Site "Szekszárd, HUN"]
+[EventDate "1983.06.14"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-0614-2-aliscak"]
+[GameID "78"]
+[White "Szegi Antal"]
+[Black "Rudolf László"]
 
 1.g5 g6 2.i4 i5 3.Bcf4 Fd6 4.Bfg3 Fg9 5.h5 h6 6.Fg2 Ff10
 7.Hdf4 Hg7 8.Bgi3 k5 9.k3 Fk7 10.Kf1 e5 11.Fg3 exf5
@@ -997,7 +1536,14 @@
 32.Kf2 Fk7 33.Vi2 Vf3 34.Kd1 Ba2 35.Vg6 Ve1 36.Ke3 Vxg2
 37.Kd2 Ve1 38.Ke3 Be6 39.Kf4 Vf1 40.Ff2 Vxe2  0-1
 
-79 Rudolf László Ábrahám Tibor
+[Variant "Glinski"]
+[Event "II. Alisca Kupa"]
+[Site "Szekszárd, HUN"]
+[EventDate "1983.06.14"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-0614-2-aliscak"]
+[GameID "79"]
+[White "Rudolf László"]
+[Black "Ábrahám Tibor"]
 
 1.g5 g6 2.Hdf4 Fg9 3.e6 Bg7 4.Hhi3 i6 5.d5 Fg8 6.Fd3 Ff8
 7.Be3 fxe6 8.Fe4 Bk4 9.Fxg8 Bxg8 10.Hxe6 Bxe3 11.Vxe3 Fxe6
@@ -1011,14 +1557,28 @@
 49.Kg6 Fc3 50.Fd4 bxc4 51.bxc4 Ke8 52.Fxc5 Fg10 53.Kg7 Kc7
 54.Ff11 Kb5 55.c5  1-0
 
-80 Hámori András Rudolf László
+[Variant "Glinski"]
+[Event "II. Alisca Kupa"]
+[Site "Szekszárd, HUN"]
+[EventDate "1983.06.14"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-0614-2-aliscak"]
+[GameID "80"]
+[White "Hámori András"]
+[Black "Rudolf László"]
 
 1.g5 g6 2.Hdf4 d6 3.h5 gxh5 4.Fxh5 i5 5.Fxf9 Vxf9 6.Hg4 Fg9
 7.Bd1 h6 8.Bh1 Bif8 9.Bk3 Bg7 10.Bk5 Bh7 11.Bxh7 Fxh7
 12.Fk5 Fxf5 13.Fxh9 Fxh1 14.Fxh1 Vxk1 15.Fxf10 Kxf10
 16.Vh2 Vxh2 17.Kxh2 Bg7 18.Kh3 c5 19.Hi3 Kg8 20.Hf5  remi
 
-81 Rudolf László Vályi Nagy T.
+[Variant "Glinski"]
+[Event "II. Alisca Kupa"]
+[Site "Szekszárd, HUN"]
+[EventDate "1983.06.14"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-0614-2-aliscak"]
+[GameID "81"]
+[White "Rudolf László"]
+[Black "Vályi Nagy T."]
 
 1.g5 g6 2.Hdf4 Fd6 3.e6 Fxf4 4.Hxf4 Fg9 5.d5 b6 6.Fd3 He9
 7.Be3 h6 8.exf7 exf7 9.Fxf7 Hdc6 10.Fi6 Kf11 11.Fd3 Hf8
@@ -1029,7 +1589,14 @@
 32.Fb1 Kf10 33.Fc3 Vd8 34.Ba6 Ve8 35.Fd1 Vxe3 36.Fxe3 i5
 37.f6 gxf6 38.gxf6 Fk4 39.Kg2 Fxf6 40.Fxh6 Kh9  1-0
 
-82 Jan Borawski Rudolf László
+[Variant "Glinski"]
+[Event "II. Alisca Kupa"]
+[Site "Szekszárd, HUN"]
+[EventDate "1983.06.14"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-0614-2-aliscak"]
+[GameID "82"]
+[White "Jan Borawski"]
+[Black "Rudolf László"]
 
 1.h5 Hdf8 2.g6 Fd9 3.Bg3 fxg6 4.hxg6 Fg9 5.Hi3 i6 6.Fh3 k5
 7.Bh2 Fk7 8.Hxk5 Fl5 9.Hxi8 Fxh2 10.Fxh2 Fxi8 11.Fk2 Ff10
@@ -1045,7 +1612,14 @@
 57.k4 ixk4 58.ixk4 Hh7 59.Fg2 Hxk4 60.Kxf6 Kd7 61.Ke5 Hg6
 62.Kd4 Hxd6 63.Fxd6 Kxd6  0-1
 
-83 Szabó Miklós Rudolf László
+[Variant "Glinski"]
+[Event "II. Alisca Kupa"]
+[Site "Szekszárd, HUN"]
+[EventDate "1983.06.14"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-0614-2-aliscak"]
+[GameID "83"]
+[White "Szabó Miklós"]
+[Black "Rudolf László"]
 
 1.g5 g6 2.Hg2 Hdf8 3.Hhi3 i6 4.Hf4 e5 5.Hh4 Fd9 6.Fg2 exf5
 7.exf5 Be8 8.Fe4 Be9 9.Vf3 b6 10.i3 Hg7 11.Hxg7 Fxg7
@@ -1064,8 +1638,9 @@
 [Site "Budapest, HUN"]
 [EventDate "1983.11.04"]
 [Source "https://sites.google.com/site/hexasakkversenyek/1983-1104-1-erzsebetk"]
-
-87 Botkó Imre Rudolf László
+[GameID "87"]
+[White "Botkó Imre"]
+[Black "Rudolf László"]
 
 1.d5 g5 2.Hg2 Hi6 3.Hhi3 Hdf8 4.e5 Bh9 5.Fd3 Fg8 6.e6 Bg9
 7.exf7 Hxf7 8.Hg6 Fk2 9.Hxf9 Fxi1 10.Hxc8 Fxg2 11.Kxg2 Vxc8
@@ -1082,7 +1657,14 @@
 63.Kxh6 Kxd5 64.f7 Hd6 65.Kg8 Ke6 66.f8 Kd7 67.f9 Hxf9
 68.Kxf9  remi
 
-88 Rudolf László Lénárt Győző
+[Variant "Glinski"]
+[Event "I. Erzsébet Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1983.11.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-1104-1-erzsebetk"]
+[GameID "88"]
+[White "Rudolf László"]
+[Black "Lénárt Győző"]
 
 1.g5 g6 2.Hdf4 Hdf8 3.e6 d6 4.exf7 exf7 5.Hg4 Hhi6 6.Be3 Be8
 7.Bxe8 Vxe8 8.Vxe8 Fxe8 9.Hh6 Bh9 10.Hxf9 Kxf9 11.Fxb7 Kg8
@@ -1094,13 +1676,27 @@
 37.k3 Be6 38.Bxe6 dxe6 39.Fxk6 c5 40.Fg3 Ke8 41.k4 Kg8
 42.k5 Ki7 43.Kk4 Fd7 44.Kl5  1-0
 
-89 Kolozsvári M. Rudolf László
+[Variant "Glinski"]
+[Event "I. Erzsébet Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1983.11.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-1104-1-erzsebetk"]
+[GameID "89"]
+[White "Kolozsvári M."]
+[Black "Rudolf László"]
 
 1.g5 g6 2.d5 Hdf8 3.e6 Hfi6 4.Hg2 Fg9 5.Fd3 Be8 6.Fd4 k6
 7.Be3 Be9 8.Hg4 fxe6 9.Fxh9 Bxh9 10.Fxe6 Fxe6 11.Bxe6 Bg9
 12.Bie4 Bg7 13.Bd4 Bee8 14.Fd2 Bg9 15.Bee5 h6  remi
 
-90 Szabó Miklós Rudolf László
+[Variant "Glinski"]
+[Event "I. Erzsébet Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1983.11.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-1104-1-erzsebetk"]
+[GameID "90"]
+[White "Szabó Miklós"]
+[Black "Rudolf László"]
 
 1.g5 g6 2.d4 Fg9 3.Fd3 Hdf8 4.Hhf4 Hfi6 5.Hg2 k6 6.k2 Fd6
 7.e5 Hg7 8.Hfi3 Ff10 9.d5 Kf11 10.Kf1 Fk7 11.Bif4 Vf9
@@ -1109,7 +1705,14 @@
 22.Hxg6 Hd6 23.Hxd6 Fxd6 24.Be4 exd5 25.Vxd5 Bg7 26.Vc3 Bb3
 27.Ve1 Vf9 28.Fi3 Vf10 29.Fc5 Bxd3 30.cxd3 Hf7 31.Ff2 remi
 
-91 Rudolf László Sziráki László
+[Variant "Glinski"]
+[Event "I. Erzsébet Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1983.11.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-1104-1-erzsebetk"]
+[GameID "91"]
+[White "Rudolf László"]
+[Black "Sziráki László"]
 
 1.g5 d5 2.Hdf4 c5 3.Hfi3 i6 4.d4 Fd7 5.Fd3 Fd6 6.k2 g6
 7.Hg4 Fxi3 8.kxi3 e5 9.dxe5 dxe5 10.fxe5 Fxe5 11.Vc3 Ve7
@@ -1121,7 +1724,14 @@
 37.Kg4 k3 38.Bh6 Kl4 39.Bl3 Kk6 40.Bxk3 Kh7 41.Kg5 c5
 42.Bk5 Ki7 43.Bi5 Kh7 44.Bh6 Ki7 45.Bxg6   1-0
 
-92 Szegi Antal Rudolf László
+[Variant "Glinski"]
+[Event "I. Erzsébet Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1983.11.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-1104-1-erzsebetk"]
+[GameID "92"]
+[White "Szegi Antal"]
+[Black "Rudolf László"]
 
 1.Fe2 g6 2.Ff4 Hi6 3.He2 Hdg9 4.Hg2 k6 5.g5 Hh6 6.Fxi6 kxi6
 7.d4 Bk7 8.Vf3 Fg9 9.c3 Fg8 10.Fd3 He6 11.k2 Bf8 12.f6 gxf6
@@ -1140,21 +1750,42 @@
 74.Hxc5 i5 75.kxi5 hxi5 76.hxi5 k4 77.ixk4 Kh5 78.Hf7 Kxk4
 79.Kg5 Kl5 80.Kh6 Kk7 81.c5  1-0
 
-93 Rudolf László Molnár József
+[Variant "Glinski"]
+[Event "I. Erzsébet Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1983.11.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-1104-1-erzsebetk"]
+[GameID "93"]
+[White "Rudolf László"]
+[Black "Molnár József"]
 
 1.g5 g6 2.Hdf4 k6 3.e6 Hg9 4.Hg4 Hh6 5.Hxh6 Fxh6 6.d5 Hg7
 7.Fg3 Fg8 8.Fd3 Be8 9.Be3 f6 10.Hxg6 Bf8 11.Hxf9 Vxf9
 12.gxf6 Bxf6 13.Fh5 Bf8 14.Fh4 Bd8 15.Bg3 Fxd3 16.Bxd3 Vg9
 17.f7 exf7 18.exf7 i5 19.fxg7 ixh5 20.gxh7 Bg7 21.Bxg7  1-0
 
-94 Rudolf László Deme Lajos
+[Variant "Glinski"]
+[Event "I. Erzsébet Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1983.11.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-1104-1-erzsebetk"]
+[GameID "94"]
+[White "Rudolf László"]
+[Black "Deme Lajos"]
 
 1.g5 g6 2.Hdf4 e6 3.Hg4 Hg9 4.d4 d5 5.Fd3 Hhi6 6.i3 Fd6
 7.k3 Fd7 8.Be3 e5 9.Hc3 exf5 10.exf5 Be8 11.Bie4 Bxe4
 12.Bxe4 Vd9 13.Fh1 f6 14.Hge6 Ff10 15.Hxf9 Vxf9 16.gxf6 Vxf6
 17.Fg4 Vc6 18.Hf4  Hif7 19.Fxf7 Hxf7 20.Fe7 Bxe7 21.Bxe7  1-0
 
-95 Rudolf László Bolgár Péter
+[Variant "Glinski"]
+[Event "I. Erzsébet Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1983.11.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-1104-1-erzsebetk"]
+[GameID "95"]
+[White "Rudolf László"]
+[Black "Bolgár Péter"]
 
 1.g5 g6 2.Hdf4 Hdf8 3.e6 Be8 4.Be3 Hg7 5.Fg3 Fh8 6.Hg4 Fg8
 7.Hi5 Fi6 8.Fxi6 Hxi6 9.Hxg8 Bxg8 10.exf7 Hi4 11.Hd5 Bk4
@@ -1165,14 +1796,14 @@
 32.Hf6 Vf10 33.Bk4 Vf9 34.Vh6 Kg10 35.He8 Ke10 36.Hg6 Vg10
 37.Vg7 Kd9 38.Ve8  1-0
 
-
 [Variant "Glinski"]
 [Event "I. Bátaszék Kupa"]
 [Site "Bátaszék, HUN"]
 [EventDate "1984.01.13"]
 [Source "https://sites.google.com/site/hexasakkversenyek/1984-0113-1-bataszekk-1"]
-
-96 Botkó Imre Rudolf László
+[GameID "96"]
+[White "Botkó Imre"]
+[Black "Rudolf László"]
 
 1.Hdf4 e6 2.g6 f6 3.Hhi3 i6 4.Bh1 d6 5.Fg3 Fd7 6.h5 c5
 7.d4 Fg8 8.Bd1 He7 9.e5 fxe5 10.dxe5 d5 11.Hc3 He9 12.Fh3 b5
@@ -1182,7 +1813,14 @@
 28.Bef4 Bh8 29.Bd2 Ve4 30.Vf2 Bf8 31.Bde3 Bxf3 32.Bxf3 Hf5
 33.Kh1 Fe8 34.Vd1 Vh2  0-1
 
-97 Kolozsvári M. Rudolf László
+[Variant "Glinski"]
+[Event "I. Bátaszék Kupa"]
+[Site "Bátaszék, HUN"]
+[EventDate "1984.01.13"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0113-1-bataszekk-1"]
+[GameID "97"]
+[White "Kolozsvári M."]
+[Black "Rudolf László"]
 
 1.g5 g6 2.d5 Hdf8 3.e6 Hg7 4.Hg2 Be8 5.Fd3 Fg8 6.Fd4 Fg9
 7.Be3 Hc6 8.Hg4 Hxd4 9.Hxd4 fxe6 10.dxe6 i6 11.Fxg8 Bxg8
@@ -1191,7 +1829,14 @@
 22.Ke1 i5 23.Bg1 Vi6 24.Hf3 Fxe6 25.Bg2 Vc3 26.Kg1 Vi3
 27.Ke1 Be4  0-1
 
-98 Rudolf László Vályi Nagy T.
+[Variant "Glinski"]
+[Event "I. Bátaszék Kupa"]
+[Site "Bátaszék, HUN"]
+[EventDate "1984.01.13"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0113-1-bataszekk-1"]
+[GameID "98"]
+[White "Rudolf László"]
+[Black "Vályi Nagy T."]
 
 1.g5 g6 2.Hdf4 d6 3.d5 Fd7 4.e6 dxe6 5.dxe6 Hg7 6.Hhi3 Hg9
 7.Fd3 k6 8.Be3 Vd9 9.k2 Fk7 10.Fxk7 Hxk7 11.Vc3 Kg9
@@ -1205,7 +1850,14 @@
 47.Hf5 Fe8 48.Bxg7 Bxg7 49.Bxg7 Kf9 50.Bk4 Kd8 51.Bxk6 c5
 52.b3 b5 53.b4  1-0
 
-99 Szokodi László Rudolf László
+[Variant "Glinski"]
+[Event "I. Bátaszék Kupa"]
+[Site "Bátaszék, HUN"]
+[EventDate "1984.01.13"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0113-1-bataszekk-1"]
+[GameID "99"]
+[White "Szokodi László"]
+[Black "Rudolf László"]
 
 1.g5 g6 2.d4 Hdf8 3.Hdf4 Hhi6 4.Hg4 d6 5.i3 c5 6.Fh1 Fd7
 7.Hk3 Hxk3 8.Fxk3 k6 9.Fi2 Fg8 10.Be3 Be8 11.Fg3 Vc8
@@ -1215,7 +1867,14 @@
 28.Ff4 Ff9 29.Vg1 Vf8 30.Hc3 Fh6 31.Ke2 Fxf4 32.Hxf4 Vh6
 33.Ke3 Vh7 34.Ke2 e5 35.Kd3 exd4 36.exd4 Vf5 37.Ve4 Bxd4 0-1
 
-100 Rudolf László Czékus András
+[Variant "Glinski"]
+[Event "I. Bátaszék Kupa"]
+[Site "Bátaszék, HUN"]
+[EventDate "1984.01.13"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0113-1-bataszekk-1"]
+[GameID "100"]
+[White "Rudolf László"]
+[Black "Czékus András"]
 
 1.g5 g6 2.Hdf4 d6 3.Hhi3 i6 4.k2 Fd7 5.d5 Hg7 6.Be3 Be8
 7.e6 dxe6 8.dxe6 Hg9 9.Fd3 Fh6 10.exf7 Fxf5 11.Hxf5 Hxf5
@@ -1230,7 +1889,14 @@
 52.i5 Hi8 53.h5 Hl5 54.Kl3 Hh7 55.h6 Hg5 56.i6 Hxi6
 57.hxi6 Ki7 58.k5   1-0
 
-101 Rudolf László Nagy József
+[Variant "Glinski"]
+[Event "I. Bátaszék Kupa"]
+[Site "Bátaszék, HUN"]
+[EventDate "1984.01.13"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0113-1-bataszekk-1"]
+[GameID "101"]
+[White "Rudolf László"]
+[Black "Nagy József"]
 
 1.g5 e6 2.Hi3 i6 3.Hdg2 d5 4.Be3 Fc5 5.d4 Fd7 6.Fd3 Fd6
 7.e5 dxe5 8.fxe5 He7 9.g6 Bg8 10.Bg4 Fd8 11.gxf7 Fxf7
@@ -1240,12 +1906,26 @@
 27.Vxf5 Hd6 28.Ve6 Vxe6 29.Bxe6 Kg10 30.Fg4 Kg9 31.Fd4 Ki8
 32.Be10 Fd9 33.e6 Hc8 34.Fxg8  1-0
 
-102 Hámori András Rudolf László
+[Variant "Glinski"]
+[Event "I. Bátaszék Kupa"]
+[Site "Bátaszék, HUN"]
+[EventDate "1984.01.13"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0113-1-bataszekk-1"]
+[GameID "102"]
+[White "Hámori András"]
+[Black "Rudolf László"]
 
 1.g5 g6 2.Fg2 Hdf8 3.Fd4 e5 4.Fxf8 Hxf8 5.Fxe5 Hxe5
 6.fxe5 Vxe5  remi
 
-103 Rudolf László Bodrogi István
+[Variant "Glinski"]
+[Event "I. Bátaszék Kupa"]
+[Site "Bátaszék, HUN"]
+[EventDate "1984.01.13"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0113-1-bataszekk-1"]
+[GameID "103"]
+[White "Rudolf László"]
+[Black "Bodrogi István"]
 
 1.g5 Hdf8 2.Hi3 i6 3.Hdf4 e5 4.Be3 Be8 5.Fh4 exf5 6.Fxf5 Hxg5
 7.Be2 Hxf3 8.Vxf3 k5 9.Bg3 Fg9 10.Fg2 d5 11.Hfh1 c5
@@ -1253,7 +1933,14 @@
 17.Hxh1 d4 18.Bgf2 dxe4 19.dxe4 Fb7 20.Vh5 Be9 21.Vh4 Bfe7
 22.Vk6 Bh8 23.Vl6 Bh9 24.Vk6 Bxe4 remi
 
-104 Bolgár Péter Rudolf László
+[Variant "Glinski"]
+[Event "I. Bátaszék Kupa"]
+[Site "Bátaszék, HUN"]
+[EventDate "1984.01.13"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0113-1-bataszekk-1"]
+[GameID "104"]
+[White "Bolgár Péter"]
+[Black "Rudolf László"]
 
 1.g5 g6 2.e6 fxe6 3.Hhf4 Fe9 4.Hxe6 Ff8 5.Hxf9 Vxf9
 6.Fg3 Be8 7.Fg2 Hg7 8.b2 Kf11 9.Hc3 c6 10.k2 Ve9 11.Fxk7 b5
@@ -1272,15 +1959,16 @@
 72.Fb1 h4 73.Fd2 k1V 74.Kxk1 Kh3 75.Fb1 Kg2 76.Ki2 h3
 77.Ki3 h2 78.Fxh2 c3 79.Fg4 c2 80.Kh5 c1V  0-1
 
-;     Nemz.csv,    1983-06-19
+; Nemz.csv,    1983-06-19
 
 [Variant "Glinski"]
 [Event "I. Erzsébet Kupa"]
 [Site "Budapest, HUN"]
 [EventDate "1983.11.04"]
 [Source "https://sites.google.com/site/hexasakkversenyek/1983-1104-1-erzsebetk"]
-
-87 Botkó Imre Rudolf László
+[GameID "87"]
+[White "Botkó Imre"]
+[Black "Rudolf László"]
 
 1.d5 g5 2.Hg2 Hi6 3.Hhi3 Hdf8 4.e5 Bh9 5.Fd3 Fg8 6.e6 Bg9
 7.exf7 Hxf7 8.Hg6 Fk2 9.Hxf9 Fxi1 10.Hxc8 Fxg2 11.Kxg2 Vxc8
@@ -1297,7 +1985,14 @@
 63.Kxh6 Kxd5 64.f7 Hd6 65.Kg8 Ke6 66.f8 Kd7 67.f9 Hxf9
 68.Kxf9  remi
 
-88 Rudolf László Lénárt Győző
+[Variant "Glinski"]
+[Event "I. Erzsébet Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1983.11.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-1104-1-erzsebetk"]
+[GameID "88"]
+[White "Rudolf László"]
+[Black "Lénárt Győző"]
 
 1.g5 g6 2.Hdf4 Hdf8 3.e6 d6 4.exf7 exf7 5.Hg4 Hhi6 6.Be3 Be8
 7.Bxe8 Vxe8 8.Vxe8 Fxe8 9.Hh6 Bh9 10.Hxf9 Kxf9 11.Fxb7 Kg8
@@ -1309,13 +2004,27 @@
 37.k3 Be6 38.Bxe6 dxe6 39.Fxk6 c5 40.Fg3 Ke8 41.k4 Kg8
 42.k5 Ki7 43.Kk4 Fd7 44.Kl5  1-0
 
-89 Kolozsvári M. Rudolf László
+[Variant "Glinski"]
+[Event "I. Erzsébet Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1983.11.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-1104-1-erzsebetk"]
+[GameID "89"]
+[White "Kolozsvári M."]
+[Black "Rudolf László"]
 
 1.g5 g6 2.d5 Hdf8 3.e6 Hfi6 4.Hg2 Fg9 5.Fd3 Be8 6.Fd4 k6
 7.Be3 Be9 8.Hg4 fxe6 9.Fxh9 Bxh9 10.Fxe6 Fxe6 11.Bxe6 Bg9
 12.Bie4 Bg7 13.Bd4 Bee8 14.Fd2 Bg9 15.Bee5 h6  remi
 
-90 Szabó Miklós Rudolf László
+[Variant "Glinski"]
+[Event "I. Erzsébet Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1983.11.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-1104-1-erzsebetk"]
+[GameID "90"]
+[White "Szabó Miklós"]
+[Black "Rudolf László"]
 
 1.g5 g6 2.d4 Fg9 3.Fd3 Hdf8 4.Hhf4 Hfi6 5.Hg2 k6 6.k2 Fd6
 7.e5 Hg7 8.Hfi3 Ff10 9.d5 Kf11 10.Kf1 Fk7 11.Bif4 Vf9
@@ -1324,7 +2033,14 @@
 22.Hxg6 Hd6 23.Hxd6 Fxd6 24.Be4 exd5 25.Vxd5 Bg7 26.Vc3 Bb3
 27.Ve1 Vf9 28.Fi3 Vf10 29.Fc5 Bxd3 30.cxd3 Hf7 31.Ff2 remi
 
-91 Rudolf László Sziráki László
+[Variant "Glinski"]
+[Event "I. Erzsébet Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1983.11.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-1104-1-erzsebetk"]
+[GameID "91"]
+[White "Rudolf László"]
+[Black "Sziráki László"]
 
 1.g5 d5 2.Hdf4 c5 3.Hfi3 i6 4.d4 Fd7 5.Fd3 Fd6 6.k2 g6
 7.Hg4 Fxi3 8.kxi3 e5 9.dxe5 dxe5 10.fxe5 Fxe5 11.Vc3 Ve7
@@ -1336,7 +2052,14 @@
 37.Kg4 k3 38.Bh6 Kl4 39.Bl3 Kk6 40.Bxk3 Kh7 41.Kg5 c5
 42.Bk5 Ki7 43.Bi5 Kh7 44.Bh6 Ki7 45.Bxg6   1-0
 
-92 Szegi Antal Rudolf László
+[Variant "Glinski"]
+[Event "I. Erzsébet Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1983.11.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-1104-1-erzsebetk"]
+[GameID "92"]
+[White "Szegi Antal"]
+[Black "Rudolf László"]
 
 1.Fe2 g6 2.Ff4 Hi6 3.He2 Hdg9 4.Hg2 k6 5.g5 Hh6 6.Fxi6 kxi6
 7.d4 Bk7 8.Vf3 Fg9 9.c3 Fg8 10.Fd3 He6 11.k2 Bf8 12.f6 gxf6
@@ -1355,21 +2078,42 @@
 74.Hxc5 i5 75.kxi5 hxi5 76.hxi5 k4 77.ixk4 Kh5 78.Hf7 Kxk4
 79.Kg5 Kl5 80.Kh6 Kk7 81.c5  1-0
 
-93 Rudolf László Molnár József
+[Variant "Glinski"]
+[Event "I. Erzsébet Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1983.11.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-1104-1-erzsebetk"]
+[GameID "93"]
+[White "Rudolf László"]
+[Black "Molnár József"]
 
 1.g5 g6 2.Hdf4 k6 3.e6 Hg9 4.Hg4 Hh6 5.Hxh6 Fxh6 6.d5 Hg7
 7.Fg3 Fg8 8.Fd3 Be8 9.Be3 f6 10.Hxg6 Bf8 11.Hxf9 Vxf9
 12.gxf6 Bxf6 13.Fh5 Bf8 14.Fh4 Bd8 15.Bg3 Fxd3 16.Bxd3 Vg9
 17.f7 exf7 18.exf7 i5 19.fxg7 ixh5 20.gxh7 Bg7 21.Bxg7  1-0
 
-94 Rudolf László Deme Lajos
+[Variant "Glinski"]
+[Event "I. Erzsébet Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1983.11.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-1104-1-erzsebetk"]
+[GameID "94"]
+[White "Rudolf László"]
+[Black "Deme Lajos"]
 
 1.g5 g6 2.Hdf4 e6 3.Hg4 Hg9 4.d4 d5 5.Fd3 Hhi6 6.i3 Fd6
 7.k3 Fd7 8.Be3 e5 9.Hc3 exf5 10.exf5 Be8 11.Bie4 Bxe4
 12.Bxe4 Vd9 13.Fh1 f6 14.Hge6 Ff10 15.Hxf9 Vxf9 16.gxf6 Vxf6
 17.Fg4 Vc6 18.Hf4  Hif7 19.Fxf7 Hxf7 20.Fe7 Bxe7 21.Bxe7  1-0
 
-95 Rudolf László Bolgár Péter
+[Variant "Glinski"]
+[Event "I. Erzsébet Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1983.11.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1983-1104-1-erzsebetk"]
+[GameID "95"]
+[White "Rudolf László"]
+[Black "Bolgár Péter"]
 
 1.g5 g6 2.Hdf4 Hdf8 3.e6 Be8 4.Be3 Hg7 5.Fg3 Fh8 6.Hg4 Fg8
 7.Hi5 Fi6 8.Fxi6 Hxi6 9.Hxg8 Bxg8 10.exf7 Hi4 11.Hd5 Bk4
@@ -1385,8 +2129,9 @@
 [Site "Varsó, POL"]
 [EventDate "1984.01.31"]
 [Source "https://sites.google.com/site/hexasakkversenyek/1984-0131-1-nemzetkoeziv"]
-
-105 Simon Triggs Rudolf László
+[GameID "105"]
+[White "Simon Triggs"]
+[Black "Rudolf László"]
 
 1.g5 g6 2.Hdf4 d6 3.d5 e6 4.Fd3 Hg9 5.Hg4 Fd9 6.Fd4 Hf8
 7.dxe6 dxe6 8.Be3 Fd7 9.Vc1 Hfi6 10.i3 k6 11.Be1 Vf10
@@ -1399,7 +2144,14 @@
 42.Ki2 Bf8 43.B2d5 Kk7 44.cxb3 cxb3 45.Hd4 Be1 46.Kk1 Bh6
 47.h4 Bg6 48.i4 Hh6  0-1
 
-106 Rudolf László Waldemar Seliga
+[Variant "Glinski"]
+[Event "I. Nemzetközi verseny"]
+[Site "Varsó, POL"]
+[EventDate "1984.01.31"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0131-1-nemzetkoeziv"]
+[GameID "106"]
+[White "Rudolf László"]
+[Black "Waldemar Seliga"]
 
 1.g5 g6 2.Hdf4 Fd6 3.e6 Fxf4 4.Hxf4 i6 5.Be3 Vg9 6.d5 Hg7
 7.Fg3 d6 8.exf7 exf7 9.f6 Bd8 10.fxg6 fxg6 11.Hxg6 Be9
@@ -1407,18 +2159,39 @@
 17.Bef4 Vi5 18.h5 Vh6 19.Bf6 Vg8 20.Hg6 Fxg6 21.Bgxg6 Hg9
 22.Fd3 Ve8 23.Fk2 h6 24.Vxe8 Kxe8 25.Fh3 Kf10 26.Bxg7 1-0
 
-107 Marek Mackowiak Rudolf László
+[Variant "Glinski"]
+[Event "I. Nemzetközi verseny"]
+[Site "Varsó, POL"]
+[EventDate "1984.01.31"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0131-1-nemzetkoeziv"]
+[GameID "107"]
+[White "Marek Mackowiak"]
+[Black "Rudolf László"]
 
 1.g5 e5 2.f6 d5 3.Hi3 i6 4.Fg4 Fd7 5.Fh1 Fxh1 6.Bxh1 Hdf8
 7.Fe2 c5  remi
 
-108 Jan Borawski Rudolf László
+[Variant "Glinski"]
+[Event "I. Nemzetközi verseny"]
+[Site "Varsó, POL"]
+[EventDate "1984.01.31"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0131-1-nemzetkoeziv"]
+[GameID "108"]
+[White "Jan Borawski"]
+[Black "Rudolf László"]
 
 1.d5 g5 2.Fd4 Hi6 3.fxg5 Hxg5 4.e6 Hxf3 5.Vxf3 Bg7 6.Hc3 b6
 7.Fb5 Hf8 8.exf7 exf7 9.Fxf8 Bixf8 10.Be3 Vc6 11.Hhf4 f5
 12.Be6 Bxe6 13.dxe6 fxg4 0-1
 
-109 Rudolf László Mariusz Wojnar
+[Variant "Glinski"]
+[Event "I. Nemzetközi verseny"]
+[Site "Varsó, POL"]
+[EventDate "1984.01.31"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0131-1-nemzetkoeziv"]
+[GameID "109"]
+[White "Rudolf László"]
+[Black "Mariusz Wojnar"]
 
 1.g5 Hdf8 2.e6 fxe6 3.Vxe6 Fg9 4.Ve1 g6 5.Hdf4 h6 6.Hhi3 i6
 7.k2 k5 8.Fd4 Hc6 9.Fxg9 Kxg9 10.Ve6 Hhf8 11.Bl1 Bi7
@@ -1431,7 +2204,14 @@
 42.Hf4 Hg4 43.Kxg6 Kh3 44.Hg1 Kxi3 45.Hf4 Kh3 46.Hg1 Kg3
 47.Kg5 k3 48.Hf4 Hd4 49.Ke5 Hf3 50.Ke4 Hh4  0-1
 
-110 Kolozsvári M. Rudolf László
+[Variant "Glinski"]
+[Event "I. Nemzetközi verseny"]
+[Site "Varsó, POL"]
+[EventDate "1984.01.31"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0131-1-nemzetkoeziv"]
+[GameID "110"]
+[White "Kolozsvári M."]
+[Black "Rudolf László"]
 
 1.g5 e5 2.Fg2 Hdf8 3.fxe5 Hxg5 4.Bg4 Hxf3 5.Vxf3 Hi6
 6.i3 k6 7.h5 g6 8.Hhf4 h6 9.Fe3 Bg8 10.Kf1 Fxh5 11.Hxh5 Vxh5
@@ -1442,7 +2222,14 @@
 32.Hf5 Bg8 33.Hi4 Fa4 34.Ba3 Bxa3 35.Kxa3 Fxc2 36.bxc2 Bf8
 37.Kb5 He6 38.Kc4 Bf7 39.Bi1 Hg4 40.Kd6 Be7 0-1
 
-111 Rudolf László Botkó Imre
+[Variant "Glinski"]
+[Event "I. Nemzetközi verseny"]
+[Site "Varsó, POL"]
+[EventDate "1984.01.31"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0131-1-nemzetkoeziv"]
+[GameID "111"]
+[White "Rudolf László"]
+[Black "Botkó Imre"]
 
 1.g5 d5 2.Hi3 i6 3.Fg3 Fd7 4.d4 Hg9 5.Fd3 Hh6 6.Hxh6 Fxh6
 7.h5 k5 8.g6 fxg6 9.hxg6 Ve8 10.Fh3 Vg8 11.Hb2 Fd6 12.Hxd5 e6
@@ -1464,8 +2251,9 @@
 [Site "Pécs, HUN"]
 [EventDate "1984.02.15"]
 [Source "https://sites.google.com/site/hexasakkversenyek/1984-0215-2-tizekb"]
-
-112 Rudolf László Deme Lajos
+[GameID "112"]
+[White "Rudolf László"]
+[Black "Deme Lajos"]
 
 1.Hdf4 Hdf8 2.g6 d5 3.Hhi3 i6 4.Fd4 e5 5.Fxf8 Hxf8 6.Bg3 Fg9
 7.Vg2 Fe8 8.Be1 f6 9.d4 Fi7 10.Hh5 Hxh5 11.Fxh5 Bif8
@@ -1476,7 +2264,14 @@
 32.Kg2 h6 33.gxh6 gxh6 34.Kh3 Fi6 35.Kg5 Kh7 36.Hi3 k4
 37.Hxh6 kxi4 38.Kxi4 ixh5 39.Fxh5 Fl2 40.Ff3 1-0
 
-113 Szabó Miklós Rudolf László
+[Variant "Glinski"]
+[Event "II. Tízek Bajnokság"]
+[Site "Pécs, HUN"]
+[EventDate "1984.02.15"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0215-2-tizekb"]
+[GameID "113"]
+[White "Szabó Miklós"]
+[Black "Rudolf László"]
 
 1.h5 g6 2.hxg6 fxg6 3.g5 i5 4.i4 Fg9 5.Fg2 Hdf8 6.Hdf4 h6
 7.He6 Fg7 8.k2 Hxg5 9.Hb5 Hxf3 10.Vxf3 Be8 11.Fh3 Bf9
@@ -1492,7 +2287,14 @@
 58.k4 Fxb3 59.Fxb3 Kc4 60.Fk3 b3 61.Fxb3 Kxb3 62.Kxd5 Kc2
 63.Ke4 Kb3 64.Hf2 Fi4 65.Kg4 Kd4 66.Hi1 Ke6 67.Hk3 Kg6 remi
 
-114 Rudolf László Bodrogi István
+[Variant "Glinski"]
+[Event "II. Tízek Bajnokság"]
+[Site "Pécs, HUN"]
+[EventDate "1984.02.15"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0215-2-tizekb"]
+[GameID "114"]
+[White "Rudolf László"]
+[Black "Bodrogi István"]
 
 1.Hdf4 Hdf8 2.g6 fxg6 3.Hxg6 i6 4.Hxf9 Vxf9 5.b2 Fd9
 6.Bg3 Kf10 7.Hi3 k5 8.e6 Bg8 9.Fg2 c6 10.Bcg4 Hh5 11.Be4 Fc7
@@ -1504,14 +2306,28 @@
 37.Bg10 Kh8 38.Bg9 Ki8 39.Bxi7 Kxi7 40.Vh4 Vg1 41.Fh2 Ve4
 42.Kk3 h6 43.Vg5 Vxh2 44.Vxg7 Kk6 45.Vh8  1-0
 
-115 Kolozsvári M. Rudolf László
+[Variant "Glinski"]
+[Event "II. Tízek Bajnokság"]
+[Site "Pécs, HUN"]
+[EventDate "1984.02.15"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0215-2-tizekb"]
+[GameID "115"]
+[White "Kolozsvári M."]
+[Black "Rudolf László"]
 
 1.g5 e5 2.Fg2 exf5 3.exf5 Vxe1 4.Hxe1 Be8 5.Be4 Fd5
 6.Bxe8 Fxf3 7.Kxf3 Fxe8 8.Be3 Be7 9.Hc3 Kf9 10.Hg3 Hi6
 11.i3 Fg9 12.Hf6 Bxe3 13.Fxe3 g6 14.Hi5 k6 15.Hg4 Hc6
 16.Hce2 Ha3 17.Fd4 Fxd4 18.Hgxd4 Hxd4 19.Hxd4 c6 20.Kg4 b5  remi
 
-116 Rudolf László Sziráki László
+[Variant "Glinski"]
+[Event "II. Tízek Bajnokság"]
+[Site "Pécs, HUN"]
+[EventDate "1984.02.15"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0215-2-tizekb"]
+[GameID "116"]
+[White "Rudolf László"]
+[Black "Sziráki László"]
 
 1.Hdf4 Fh6 2.g6 Fxf4 3.Hxf4 d6 4.Hi3 i6 5.Bg3 fxg6 6.Hxg6 Fc5
 7.Hxf9 Kxf9 8.Fd1 Fd7 9.Bg2 b6 10.k2 Hg9 11.Vc3 Vc6 12.Ve1 Bcf8
@@ -1525,12 +2341,26 @@
 48.Bd3 Bxd3 49.Kxd3 He6 50.Ke5 Hg8 51.Kd6 a4 52.c5 a3
 53.Kc4 a2 54.Kb3 Hxd7 55.Kxa2 He10  0-1
 
-117 Hámori András Rudolf László
+[Variant "Glinski"]
+[Event "II. Tízek Bajnokság"]
+[Site "Pécs, HUN"]
+[EventDate "1984.02.15"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0215-2-tizekb"]
+[GameID "117"]
+[White "Hámori András"]
+[Black "Rudolf László"]
 
 1.g5 e5 2.Fg2 Hdf8 3.Fxe5 Hxe5 4.fxe5 Vxe5 5.Bg4 Ve10
 6.Fd2 Hi6 7.Fd4 d5  remi
 
-118 Rudolf László Botkó Imre
+[Variant "Glinski"]
+[Event "II. Tízek Bajnokság"]
+[Site "Pécs, HUN"]
+[EventDate "1984.02.15"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0215-2-tizekb"]
+[GameID "118"]
+[White "Rudolf László"]
+[Black "Botkó Imre"]
 
 1.Hdf4 Hdf8 2.g6 Hhi6 3.Hhi3 d6 4.d5 Fd7 5.Fd3 Kf11
 6.Fd4 Hh4 7.Bg3 Hxf3 8.Vxf3 Hc6 9.Fe3 Bg10 10.c4 b5
@@ -1549,7 +2379,14 @@
 71.Kh4 i5 72.Ki3 Kg5 73.Kk3 Kh5 74.Kl1 Kh4 75.Kk2 i4
 76.Kl1 Kh3 0-1
 
-119 Vályi Nagy Tamás Rudolf László
+[Variant "Glinski"]
+[Event "II. Tízek Bajnokság"]
+[Site "Pécs, HUN"]
+[EventDate "1984.02.15"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0215-2-tizekb"]
+[GameID "119"]
+[White "Vályi Nagy Tamás"]
+[Black "Rudolf László"]
 
 1.g5 e5 2.d4 d5 3.Fd3 Hdf8 4.dxe5 dxe5 5.Hdf4 Be8 6.He2 Fd7
 7.Vd1 Be9 8.Hh5 Hxh5 9.Fxh5 exf5 10.exf5 Bd6 11.Bd4 Bxd4
@@ -1560,7 +2397,14 @@
 32.f6 gxf6 33.gxf6 Ff8 34.h5 Fxc2 35.Fb6 b3 36.Fe8 Hd6
 37.Fxd6 cxd6  0-1
 
-120 Rudolf László Juhász János
+[Variant "Glinski"]
+[Event "II. Tízek Bajnokság"]
+[Site "Pécs, HUN"]
+[EventDate "1984.02.15"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0215-2-tizekb"]
+[GameID "120"]
+[White "Rudolf László"]
+[Black "Juhász János"]
 
 1.Hdf4 Fg9 2.g6 fxg6 3.Hxg6 Ff8 4.Hxf9 Vxf9 5.Hi3 Fh6
 6.Bg3 Hg9 7.b2 k6 8.Vc3 Hhi6 9.Hxh6 Hxh6 10.Vxh6 Hg9
@@ -1575,8 +2419,9 @@
 [Site "Budapest, HUN"]
 [EventDate "1984.05.04"]
 [Source "https://sites.google.com/site/hexasakkversenyek/1984-0504-4-ob"]
-
-121 Szabó Miklós Rudolf László
+[GameID "121"]
+[White "Szabó Miklós"]
+[Black "Rudolf László"]
 
 1.h5 Hdf8 2.g5 e5 3.Fg2 d5 4.d4 Fd7 5.He2 Be8 6.dxe5 dxe5
 7.Fh4 Hhi6 8.Hdc3 Hxh4 9.Bxh4 Hi6 10.Bh3 exf5 11.exf5 Be3
@@ -1589,7 +2434,14 @@
 42.Kf4 Bd6 43.Kf5 b3 44.Ke4 c5 45.Ke5 Be6 46.Kd3 Bxe3
 47.Kxe3 Ke6 48.Ke4 c4 49.g6 fxg6 50.hxg6 c3 51.k4 Kc5  0-1
 
-122 Rudolf László Botkó Imre
+[Variant "Glinski"]
+[Event "IV. Országos Bajnokság"]
+[Site "Budapest, HUN"]
+[EventDate "1984.05.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0504-4-ob"]
+[GameID "122"]
+[White "Rudolf László"]
+[Black "Botkó Imre"]
 
 1.Hdf4 Hdf8 2.g6 d6 3.h5 Fd7 4.Hhi3 Hhi6 5.k2 e5 6.f6 Hig5
 7.Fh3 Hxf3 8.Vxf3 Fd8 9.Hc3 Ff9 10.Fg3 Fxg3 11.Bxg3 Kf11
@@ -1598,7 +2450,14 @@
 21.Vg3 Bxg4 22.Vxg4 Vg9 23.Kf3 Vxg4 24.Kxg4 d5 25.Hf4 Kg9
 26.c3 i6 27.b3 k5 28.k3 Fb2 29.Hd1  remi
 
-123 Putzer András Rudolf László
+[Variant "Glinski"]
+[Event "IV. Országos Bajnokság"]
+[Site "Budapest, HUN"]
+[EventDate "1984.05.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0504-4-ob"]
+[GameID "123"]
+[White "Putzer András"]
+[Black "Rudolf László"]
 
 1.i3 Hdf8 2.e6 fxe6 3.Vxe6 Fg9 4.Ve1 Fe8 5.Fd4 g5 6.Fxf8 Hxf8
 7.fxg5 Hxg5 8.Hc3 b6 9.Fg2 Hxf3 10.Vxf3 Fb7 11.d5 c5
@@ -1608,14 +2467,28 @@
 27.i4 Fxh3 28.Vi5 Fd4 29.Ki3 Vg5 30.Vxg5 Fxg5 31.Kh5 Fh3
 32.Kf6 e6 33.Ke4 Fc5 34.k3 Kg7 35.c3 Ke7 36.b3 e5 37.b4 Fe6  0-1
 
-124 Rudolf László Vámosi Albert
+[Variant "Glinski"]
+[Event "IV. Országos Bajnokság"]
+[Site "Budapest, HUN"]
+[EventDate "1984.05.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0504-4-ob"]
+[GameID "124"]
+[White "Rudolf László"]
+[Black "Vámosi Albert"]
 
 1.Hdf4 g6 2.e6 Hg9 3.d5 d6 4.Fd3 Hg7 5.Be3 Be8 6.Hhi3 Fd7
 7.k2 i6 8.c4 dxe6 9.dxe6 Fc5 10.Be2 Fxf2 11.Kxf2 Ve9
 12.Hd5 Vc5 13.Kh1 Be10 14.exf7 exf7 15.Bxe10 Fxe10
 16.Be4 Be7 17.Hb2 Vd7 18.Bxe7 Vxe7 19.Fd5 1-0
 
-125 Rudolf László Sziráki László
+[Variant "Glinski"]
+[Event "IV. Országos Bajnokság"]
+[Site "Budapest, HUN"]
+[EventDate "1984.05.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0504-4-ob"]
+[GameID "125"]
+[White "Rudolf László"]
+[Black "Sziráki László"]
 
 1.Hdf4 Fh6 2.g6 Fxf4 3.Hxf4 Hc6 4.d5 Hhe9 5.Fd3 b6 6.e6 fxg6
 7.Hxg6 k6 8.Ve2 h6 9.Hxf9 Vxf9 10.Bg4 Fh7 11.Fe3 Hh8
@@ -1626,7 +2499,14 @@
 32.h5 Hdxf7 33.Ff6 Bh6 34.Fh2 Bd4 35.Ff3 Bi1 36.Fi2 Hd4
 37.Fh3 Hxf3 38.Fxi1 Hxi1  0-1
 
-126 Deme Lajos Rudolf László
+[Variant "Glinski"]
+[Event "IV. Országos Bajnokság"]
+[Site "Budapest, HUN"]
+[EventDate "1984.05.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0504-4-ob"]
+[GameID "126"]
+[White "Deme Lajos"]
+[Black "Rudolf László"]
 
 1.i4 Hdf8 2.h5 e5 3.Fh4 Fd9 4.Fh3 Hhi6 5.Fxf8 Hxf8 6.Hdf4 d5
 7.g6 fxg6 8.Hxg6 Fxh3 9.Hxh3 exf5 10.Hg6 fxe4 11.Bxe4 Vf10
@@ -1640,7 +2520,14 @@
 47.Fxg7 Kc7 48.Kh3 Kd6 49.d4 Kf7 50.Fe4 Kg6 51.Fa2 Kf5
 52.Fb4 g4 53.Kg2 Kxd4 54.Kg3 He5  0-1
 
-127 Szokodi László Rudolf László
+[Variant "Glinski"]
+[Event "IV. Országos Bajnokság"]
+[Site "Budapest, HUN"]
+[EventDate "1984.05.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0504-4-ob"]
+[GameID "127"]
+[White "Szokodi László"]
+[Black "Rudolf László"]
 
 1.Hdf4 d6 2.g5 Hhf8 3.Hhi3 i6 4.g6 f6 5.e5 fxe5 6.fxe5 e6
 7.Be3 Hg5 8.Be2 Hxf3 9.Vxf3 b5 10.Ve1 c5 11.Fg2 b4 12.Fg3 Hf8
@@ -1655,7 +2542,14 @@
 53.Hf6 c2 54.Ke3 Ff7 55.Kd1 Kf8 56.Fc1 Kg6 57.Hc4 Fxc1
 58.Kxc1 Kh4 59.Hf6 h5 60.Hh3 Ki3  0-1
 
-128 Rudolf László Kolozsvári M.
+[Variant "Glinski"]
+[Event "IV. Országos Bajnokság"]
+[Site "Budapest, HUN"]
+[EventDate "1984.05.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0504-4-ob"]
+[GameID "128"]
+[White "Rudolf László"]
+[Black "Kolozsvári M."]
 
 1.Hdf4 e5 2.fxe5 Vxe5 3.Fg2 Ve10 4.g6 Fd6 5.h5 Hg9 6.Be3 Be7
 7.Hhi3 Fxf4 8.Fxf4 Hf8 9.Be2 He5 10.Fg4 Be6 11.Fd4 Be9
@@ -1671,7 +2565,14 @@
 58.cxb3 Be3 59.Kg3 Bxb3 60.Bg6 Kf8 61.Bf6 Ke8 62.Kh4 i4
 63.kxi4 Be3 64.Kh3 kxi4 65.Hd5  1-0
 
-129 Buzási József Rudolf László
+[Variant "Glinski"]
+[Event "IV. Országos Bajnokság"]
+[Site "Budapest, HUN"]
+[EventDate "1984.05.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0504-4-ob"]
+[GameID "129"]
+[White "Buzási József"]
+[Black "Rudolf László"]
 
 1.Hdf4 Fe9 2.e6 Ff8 3.d5 fxe6 4.Hxe6 Fxe6 5.Vxe6 Fg8
 6.Be1 Vg9 7.Ve4 Hc6 8.Hf4 Be10 9.He6 d6 10.Hxf9 Vxf9
@@ -1684,8 +2585,9 @@
 [Site "Budapest, HUN"]
 [EventDate "1984.08.04"]
 [Source "https://sites.google.com/site/hexasakkversenyek/1984-0804-eb-felk-"]
-
-130 Rudolf László Kolozsvári M.
+[GameID "130"]
+[White "Rudolf László"]
+[Black "Kolozsvári M."]
 
 1.Hdf4 e6 2.g6 Fd6 3.Fg2 Fxf4 4.Hxf4 d5 5.Bg3 Hg9 6.h5 Fd7
 7.Fh3 Kf11 8.Bg2 f6 9.i4 i6 10.k3 k5 11.e5 dxe5 12.fxe5 fxe5
@@ -1698,7 +2600,14 @@
 43.Hi4 Bk7 44.Hf6 Kd6 45.Fe8 Kd5 46.Hg8 Bk5 47.Be6 Kb4
 48.Bd6 c5 49.He6 Ka4  0-1
 
-131 Sziráki László Rudolf László
+[Variant "Glinski"]
+[Event "EB-felkészítő verseny"]
+[Site "Budapest, HUN"]
+[EventDate "1984.08.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0804-eb-felk-"]
+[GameID "131"]
+[White "Sziráki László"]
+[Black "Rudolf László"]
 
 1.d5 g5 2.fxg5 Hdf8 3.h4 Hxd5 4.e6 fxe6 5.Vxe6 Bg7 6.Vxd5 Bxd5
 7.Fxd5 Fi3 8.Ke1 Fxk1 9.Fk4 i6 10.i3 Ff3 11.Kxf3 Bf8
@@ -1712,7 +2621,14 @@
 48.Fl3 Vi2 49.Kk4 Vg4 50.Bi4 Vk1 51.Kl4 Vi2 52.Kl5 Va5
 53.Bde7 Kf9 54.Bif7 Kd8 55.Bf10  1-0
 
-132 Rudolf László Botkó Imre
+[Variant "Glinski"]
+[Event "EB-felkészítő verseny"]
+[Site "Budapest, HUN"]
+[EventDate "1984.08.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0804-eb-felk-"]
+[GameID "132"]
+[White "Rudolf László"]
+[Black "Botkó Imre"]
 
 1.Hdf4 g5 2.fxg5 Hdf8 3.h4 He5 4.Fh2 Hi6 5.i3 d6 6.d4 Hef8
 7.Fg3 Bd9 8.Fh3 Fd7 9.e6 dxe6 10.g6 Fe8 11.gxf7 exf7
@@ -1729,7 +2645,14 @@
 63.Kh8 Kh6 64.Kk7 Kg8 65.Kl5 Fh6 66.Kk4 Ke8 67.Kh5 Fe2
 68.Kg7 Kd6 69.Kh8 Kb5  remi
 
-133 Botkó Imre Rudolf László
+[Variant "Glinski"]
+[Event "EB-felkészítő verseny"]
+[Site "Budapest, HUN"]
+[EventDate "1984.08.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0804-eb-felk-"]
+[GameID "133"]
+[White "Botkó Imre"]
+[Black "Rudolf László"]
 
 1.g6 fxg6 2.Hdf4 h6 3.He6 Fg9 4.Hxf9 Vxf9 5.h5 gxh5
 6.Fxh5 i5 7.Ff3 Hdf8 8.Bif4 k5 9.e6 h5 10.Fh3 Fh6 11.Bg4 g5
@@ -1741,7 +2664,14 @@
 37.Vg8 Be9 38.Va6 Kf10 39.Vc4 Be8 40.Vxh7 Vxf3 41.Vh8 Kd9
 42.Vg8 Kc7 43.Vf10 Bd8 44.Vg8 Kd6  0-1
 
-134 Kolozsvári Miklós Rudolf László
+[Variant "Glinski"]
+[Event "EB-felkészítő verseny"]
+[Site "Budapest, HUN"]
+[EventDate "1984.08.04"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0804-eb-felk-"]
+[GameID "134"]
+[White "Kolozsvári Miklós"]
+[Black "Rudolf László"]
 
 1.g5 e5 2.fxe5 Hdf8 3.h4 Hxe5 4.Fh2 Fe8 5.Fh3 Hi6 6.Be3 Hk3
 7.d4 Hxi1 8.dxe5 Hk3 9.Ff3 Fd6 10.i3 Hh6 11.Fi4 Vxe5
@@ -1753,8 +2683,9 @@
 [Site "Szekszárd, HUN"]
 [EventDate "1984.08.18"]
 [Source "https://sites.google.com/site/hexasakkversenyek/1984-0818-2-eb-"]
-
-135 John Ryan Rudolf László
+[GameID "135"]
+[White "John Ryan"]
+[Black "Rudolf László"]
 
 1.g5 Hhf8 2.Hg2 e5 3.Hgi3 Be8 4.Be3 d5 5.k2 Fd7 6.h5 He7
 7.Fg3 Vc8 8.He2 Hexg5 9.fxg5 Fxg3 10.Bg4 Fd7 11.Fh3 Be9
@@ -1764,7 +2695,14 @@
 27.exd4 Fe7 28.Fxe7 Hxe7 29.Bxc5 Vxc5 30.Bxf8 Vc2 31.He2 Bxf8
 32.Vxf8 Vxe2 33.Kh2 Ve6 34.Vi8 Ke10  0-1
 
-136 Rudolf László Szabó Miklós
+[Variant "Glinski"]
+[Event "II. Európa Bajnokság"]
+[Site "Szekszárd, HUN"]
+[EventDate "1984.08.18"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0818-2-eb-"]
+[GameID "136"]
+[White "Rudolf László"]
+[Black "Szabó Miklós"]
 
 1.Hhf4 g6 2.e6 d6 3.d5 Fd7 4.Fd3 Hg9 5.Fd4 He9 6.exf7 exf7
 7.Fxg9 Kxg9 8.Be3 Vf11 9.c4 Bif8 10.Hc2 f6 11.Bie4 Hc6
@@ -1779,7 +2717,14 @@
 52.Hh7 Kxd6 53.Hf6 Hg7 54.Kg5 He5 55.Fh2 k5 56.Kh6 Ke6
 57.g7 k4 58.Hxi5 c5 59.Kh7 Hd7 60.Hg8  1-0
 
-137 Czékus András Rudolf László
+[Variant "Glinski"]
+[Event "II. Európa Bajnokság"]
+[Site "Szekszárd, HUN"]
+[EventDate "1984.08.18"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0818-2-eb-"]
+[GameID "137"]
+[White "Czékus András"]
+[Black "Rudolf László"]
 
 1.g5 e5 2.d4 d5 3.c4 exd4 4.exd4 Be8 5.Be4 dxc4 6.dxc4 He7
 7.Hg2 Fd7 8.Hhi3 i6 9.Fh1 Be9 10.Hd2 g6 11.Hig2 Fd6
@@ -1795,7 +2740,14 @@
 57.Kc6 Be8 58.Kxb7 Be10 59.Kb6 Ba6 60.Kc7 Va5 61.Ke8 Vg7
 62.Vf8 Bc8  0-1
 
-138 Rudolf László Gyarmati T.
+[Variant "Glinski"]
+[Event "II. Európa Bajnokság"]
+[Site "Szekszárd, HUN"]
+[EventDate "1984.08.18"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0818-2-eb-"]
+[GameID "138"]
+[White "Rudolf László"]
+[Black "Gyarmati T."]
 
 1.Hdf4 Hdf8 2.g6 Fd6 3.e6 Fxf4 4.Hxf4 d6 5.exd6 exd6
 6.Be3 Vf10 7.d5 Be10 8.Fd3 Hhi6 9.Bxe10 Vxe10 10.Vc1 Fd7
@@ -1804,7 +2756,14 @@
 21.Vf4 Ff6 22.Fh2 Fxd5 23.Kf1 Ff6 24.Fxf6 Vxf6 25.Hxb7 He6
 26.Vd6 Hxd3 27.Vi8 Kf10 28.Be3 Vb4 29.Vxk7 Vi1  0-1
 
-139 Waldemar Seliga Rudolf László
+[Variant "Glinski"]
+[Event "II. Európa Bajnokság"]
+[Site "Szekszárd, HUN"]
+[EventDate "1984.08.18"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0818-2-eb-"]
+[GameID "139"]
+[White "Waldemar Seliga"]
+[Black "Rudolf László"]
 
 1.Hdf4 Fd6 2.Hfi3 Fe9 3.Fd1 f6 4.g5 g6 5.Fe2 Hg9 6.k2 Hhi6
 7.gxf6 gxf6 8.Bg3 Bg7 9.Bcg4 Big8 10.Bxg7 Fxg7 11.Fe3 Fh4
@@ -1821,16 +2780,30 @@
 62.c4 Kh4 63.e6 h2 64.Hxh2 Bg3 65.Ke5 Bxh2 66.c5 Kg6
 67.d5 Kf8 68.d6 Be1 69.Kd4 Bxe6  0-1
 
-140 Rudolf László Botkó Imre
+[Variant "Glinski"]
+[Event "II. Európa Bajnokság"]
+[Site "Szekszárd, HUN"]
+[EventDate "1984.08.18"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0818-2-eb-"]
+[GameID "140"]
+[White "Rudolf László"]
+[Black "Botkó Imre"]
 
 1.Hdf4 Hdf8 2.g6 e5 3.Hhi3 Hhi6 4.Fg2 d5 5.Hh5 Fd7 6.Hxf8 Hxf8
 7.fxe5 Hg5 8.exd5 Hxf3 9.Vxf3 Fxd5 10.gxf7 Bcf8 11.Fg3 Bxf7
 12.Bf4 Fh5 13.Vf1 Fxi3 14.hxi3 Bif8 15.Fxd7 cxd7 16.Vf3 Vf9
 17.Bxf7 Bxf7 18.Bf4 Bxf4 19.Fxf4 Kh8 20.Fh3 Fg8 21.e6 Kg9
 22.d5 g6 23.Vxf9 Kxf9 24.Kf3 Kg7 25.Kg4 i6 26.c4 h5
-27.b3 i5 28.k3 Fh6 29.b4 Fe2 30.c5 Ke7 31.Ke4 g5  ź-ź
+27.b3 i5 28.k3 Fh6 29.b4 Fe2 30.c5 Ke7 31.Ke4 g5  ź-ź { draw? }
 
-141 Marek Mackowiak Rudolf László
+[Variant "Glinski"]
+[Event "II. Európa Bajnokság"]
+[Site "Szekszárd, HUN"]
+[EventDate "1984.08.18"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0818-2-eb-"]
+[GameID "141"]
+[White "Marek Mackowiak"]
+[Black "Rudolf László"]
 
 1.g5 e5 2.f6 Hhf8 3.Fe2 He7 4.h4 d5 5.Hdf4 Fe8 6.Hh5 Hxh5
 7.Fxh5 i5 8.Ff3 i4 9.hxi4 Hxg5 10.Fxg5 Vl5 11.Kf1 Vxg5
@@ -1849,7 +2822,14 @@
 72.Be10 Kc4 73.Be6 Ka3 74.Be3 Kb2 75.Bd2 Kc3 76.Be3 Kd4
 77.Bf4 Ke6 78.Be3 Kf8 79.Bf4 Kg9 80.Bg4 Bxg4  0-1
 
-142 Rudolf László Buzási József
+[Variant "Glinski"]
+[Event "II. Európa Bajnokság"]
+[Site "Szekszárd, HUN"]
+[EventDate "1984.08.18"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0818-2-eb-"]
+[GameID "142"]
+[White "Rudolf László"]
+[Black "Buzási József"]
 
 1.Hdf4 g6 2.e6 h6 3.d5 f6 4.Fd3 Hdf8 5.Hhi3 Fxi3 6.Hxi3 Fg8
 7.Fxg8 Bxg8 8.Hxh6 i6 9.Hi3 Vi7 10.Fh4 Fh7 11.c4 Be10
@@ -1863,7 +2843,14 @@
 47.Hg4 Kk4 48.Bc2 Bf6 49.Kh2 Hxe6 50.Bi5 Kl2 51.k2 Kl1
 52.Bl3  1-0
 
-143 Rudolf László Hámori András
+[Variant "Glinski"]
+[Event "II. Európa Bajnokság"]
+[Site "Szekszárd, HUN"]
+[EventDate "1984.08.18"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-0818-2-eb-"]
+[GameID "143"]
+[White "Rudolf László"]
+[Black "Hámori András"]
 
 1.Hdf4 g6 2.e6 d6 3.d5 dxe6 4.dxe6 Fd7 5.Fd3 Fg8 6.Hhi3 Fxi3
 7.Hxi3 Hhf8 8.exf7 Fxf7 9.Hxg6 Fxd3 10.cxd3 Vg7 11.Hi3 Bg8
@@ -1879,8 +2866,9 @@
 [Site "Budapest, HUN"]
 [EventDate "1984.11.07"]
 [Source "https://sites.google.com/site/hexasakkversenyek/1984-1107-2-erzsebetk"]
-
-144 Gyarmati Tihamér Rudolf László
+[GameID "144"]
+[White "Gyarmati Tihamér"]
+[Black "Rudolf László"]
 
 1.Hdf4 Hdf8 2.e6 g5 3.Fd1 Hhi6 4.i3 f6 5.d5 Fg9 6.c4 Hc6
 7.Bc3 Fg7 8.Fe4 Vf9 9.Vd2 Bcf8 10.Hg6 Vg8 11.Hk5 gxf5
@@ -1894,7 +2882,14 @@
 47.Fd3 Ki6 48.Kh4 Fd4 49.Ki4 Ff10 50.Kg5 Ki5 51.Ff4 Fh6
 52.Ke5 Fxf4 53.Kxf4 Fxk3 54.ixk3 Kxk3 55.Kd3 i5  0-1
 
-145 Rudolf László Kolozsvári M.
+[Variant "Glinski"]
+[Event "II. Erzsébet Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1984.11.07"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-1107-2-erzsebetk"]
+[GameID "145"]
+[White "Rudolf László"]
+[Black "Kolozsvári M."]
 
 1.Hdf4 g6 2.e6 Fg9 3.d5 Ff8 4.Fd3 Fg8 5.Be3 f6 6.Hhi3 Fxd3
 7.Bxd3 Bg8 8.g5 i6 9.Kf1 Fxi3 10.Hxi3 fxg5 11.fxg5 Hg7
@@ -1908,7 +2903,14 @@
 47.Bh3 Be3 48.Ff3 Bf4 59.Hh2 Hi5 50.Bd5 Hig8 51.He2 Bf7
 52.Hd4 Bf9 53.Fh2 g5 54.Hg4 Kg6 55.Hh1 Bf5 56.Hi3  remi
 
-146 Szokodi László Rudolf László
+[Variant "Glinski"]
+[Event "II. Erzsébet Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1984.11.07"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-1107-2-erzsebetk"]
+[GameID "146"]
+[White "Szokodi László"]
+[Black "Rudolf László"]
 
 1.g5 e5 2.Be3 Hdf8 3.Fg2 d5 4.d4 Fd7 5.Hi3 i6 6.Ff4 g6
 7.Hdg2 Hg7 8.k2 Fd6 9.Fg3 Be8 10.Hd2 Hc6 11.dxe5 dxe5
@@ -1916,7 +2918,14 @@
 17.Kxf3 Fxb1 18.Ke1 Be7 19.Kd1 Fxd2 20.Kxd2 Fxg2
 21.Hxg2 Bb4 22.Kf3 Fxf5 23.Hd2 Fxg3 24.Hxg3 Hh4  0-1
 
-147 Buzási József Rudolf László
+[Variant "Glinski"]
+[Event "II. Erzsébet Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1984.11.07"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-1107-2-erzsebetk"]
+[GameID "147"]
+[White "Buzási József"]
+[Black "Rudolf László"]
 
 1.Hdf4 Hdf8 2.g6 i6 3.e6 d6 4.f6 Hg5 5.Fe4 Fd7 6.Hg4 dxe6
 7.fxe6 f5 8.Hc3 fxe4 9.Vxe4 Hhf8 10.h4 b5 11.Ke1 Fb7
@@ -1924,7 +2933,14 @@
 17.Hg5 Bf6 18.Hxb5 Hxh4 19.Fxh4 Bxg5 20.Bf4 Fa5 21.Kd1 Fxe6
 22.Fh3 Bxh4 23.Hxe6 Bxe6  0-1
 
-148 Rudolf László Sziráki László
+[Variant "Glinski"]
+[Event "II. Erzsébet Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1984.11.07"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-1107-2-erzsebetk"]
+[GameID "148"]
+[White "Rudolf László"]
+[Black "Sziráki László"]
 
 1.Hdf4 e5 2.fxe5 Vxe5 3.Fg2 Ve10 4.g6 fxg6 5.Hxg6 k6
 6.Hhi3 Fh6 7.Bg3 Fg9 8.Ff4 i6 9.Bg2 Fg8 10.Hd6 Bf8 11.Fd4 Be7
@@ -1935,7 +2951,14 @@
 32.Bh7 Kc8 33.Be8 Kb6 34.Bb3 Ka5 35.Be4 b5 36.Bf5 c6
 37.dxc6 dxc6 38.Ba3  1-0
 
-149 Boronyák István Rudolf László
+[Variant "Glinski"]
+[Event "II. Erzsébet Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1984.11.07"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-1107-2-erzsebetk"]
+[GameID "149"]
+[White "Boronyák István"]
+[Black "Rudolf László"]
 
 1.g5 e5 2.Fg2 Hdf8 3.Fxe5 Hxe5 4.fxe5 Vxe5 5.Bg4 Ve10
 6.Kf1 Fh6 7.Hi3 g6 8.Hig2 Hi6 9.Bg1 Hxg5 10.Hf5 Hxf3
@@ -1944,7 +2967,14 @@
 21.Ke2 Fh6 22.Ke3 Fg9 23.Fxg9 Kxg9 24.h5 Bd6 25.hxg6 Vc1
 26.Bd2 Bh4 27.Kf5 Vxd2 28.gxh6 Kf8 29.Hc3 Bh3 30.Kg5 Vh4  0-1
 
-150 Rudolf László Rutkovszky T.
+[Variant "Glinski"]
+[Event "II. Erzsébet Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1984.11.07"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-1107-2-erzsebetk"]
+[GameID "150"]
+[White "Rudolf László"]
+[Black "Rutkovszky T."]
 
 1.Hdf4 Hdf8 2.g6 Fe9 3.Hhi3 i6 4.Bg3 Hi7 5.f6 d6 6.Bg2 Bg8
 7.d5 c5 8.Fd3 cxd5 9.Hxd5 e6 10.He3 k5 11.c4 Bc7 12.Ve2 Fe8
@@ -1954,13 +2984,27 @@
 28.Bd2 Vb3 29.Hxh7 Kg9 30.Hce7 Kh8 31.He8 Kg8 32.H7h7 Ve6
 33.Vxe6  1-0
 
-151 ifjú Vámosi A. Rudolf László
+[Variant "Glinski"]
+[Event "II. Erzsébet Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1984.11.07"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-1107-2-erzsebetk"]
+[GameID "151"]
+[White "ifjú Vámosi A."]
+[Black "Rudolf László"]
 
 1.e6 fxe6 2.Vxe6 Fg9 3.Vl4 Hdf8 4.Fd4 e5 5.fxe5 Vxe5
 6.Be4 Vi6 7.Va4 Fd5 8.Bi1 Fxf3 9.Kxf3 Vf6 10.Bcf4 Vc6
 11.Vxc6 Hxc6 12.Fxg9 Kxg9  remi
 
-152 Rudolf László Vályi Nagy T.
+[Variant "Glinski"]
+[Event "II. Erzsébet Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1984.11.07"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1984-1107-2-erzsebetk"]
+[GameID "152"]
+[White "Rudolf László"]
+[Black "Vályi Nagy T."]
 
 1.Hdf4 f6 2.Hg6 Fe9 3.Hxf9 Vxf9 4.Hi3 i6 5.e6 Hg9 6.Vc3 Hh6
 7.Hxh6 Fxh6 8.Be1 Hf8 9.Vxf6 Fi7 10.g6 Vg9 11.Vc3 Bf11
@@ -1968,19 +3012,27 @@
 17.Vxf9 Kxf9 18.Ba4 Kg8 19.d5 Fxg6 20.Fd3 Kh6 21.Bd4 remi
 
 [Variant "Glinski"]
-[Event "II. Bátaszék kupa"
-[Site ""]
+[Event "II. Bátaszék kupa"]
+[Site "Bátaszék, HUN"]
 [EventDate "1985.01.13"]
 [Source "https://sites.google.com/site/hexasakkversenyek/1985-0113-2-bataszekk"]
-
-153 Rudolf László Kolozsvári M.
+[GameID "153"]
+[White "Rudolf László"]
+[Black "Kolozsvári M."]
 
 1.Hdf4 g6 2.e6 Fg8 3.Hhi3 i6 4.Be3 Be8 5.d5 d6 6.Fc4 Fi7
 7.Fb2 Fd7 8.Fd1 Hg9 9.k2 Be9 10.g5 Hg7 11.Hc3 Hh6 12.Hxh6 Fxh6
 13.Bie4 dxe6 14.dxe6 f6 15.h5 fxg5 16.hxg6 Fk5 17.f7 Vl5
 18.Fh2 Vl1 19.Bh1 Vxi2 20.fxe7 Fxe7 21.Fxe7 1-0
 
-154 Gyarmati Tihamér Rudolf László
+[Variant "Glinski"]
+[Event "II. Bátaszék kupa"]
+[Site "Bátaszék, HUN"]
+[EventDate "1985.01.13"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1985-0113-2-bataszekk"]
+[GameID "154"]
+[White "Gyarmati Tihamér"]
+[Black "Rudolf László"]
 
 1.Hdf4 Hdf8 2.g6 e5 3.h5 Be8 4.Fh4 Hhi6 5.Hfi3 Hxh4
 6.Bxh4 exf5 7.Hxf5 He5 8.Bd6 Bh9 9.Fg4 fxg6 10.hxg6 Be9
@@ -1991,7 +3043,14 @@
 31.gxf8 Vxf8 32.Bf6 Bg9 33.Kf3 Vg8 34.Bf11 Kh8 35.Vl5 Kh7
 36.Bk7 Kf8 37.Vi3 Vg6 38.Vd6 Ke9 39.Ve6  1-0
 
-155 Rudolf László Botkó Imre
+[Variant "Glinski"]
+[Event "II. Bátaszék kupa"]
+[Site "Bátaszék, HUN"]
+[EventDate "1985.01.13"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1985-0113-2-bataszekk"]
+[GameID "155"]
+[White "Rudolf László"]
+[Black "Botkó Imre"]
 
 1.Hdf4 e5 2.fxe5 Vxe5 3.Fg2 g5 4.Hfi3 Ve10 5.Ff4 h5
 6.h4 Bg8 7.Kf1 Fd6 8.Fk2 Bi6 9.Be3 Fh7 10.Be2 f6 11.Hhf4 Fk6
@@ -2009,7 +3068,14 @@
 67.b5 Ha3 68.c4 Hb6 69.c5 He8 70.c6 Hb7 71.Kc4 Kc8 72.Kb4 He8
 73.Hc5  1-0
 
-156 Vámosi Albert Rudolf László
+[Variant "Glinski"]
+[Event "II. Bátaszék kupa"]
+[Site "Bátaszék, HUN"]
+[EventDate "1985.01.13"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1985-0113-2-bataszekk"]
+[GameID "156"]
+[White "Vámosi Albert"]
+[Black "Rudolf László"]
 
 1.e6 fxe6 2.Vxe6 Fg9 3.Vl4 i6 4.g6 k5 5.Vk4 Be8 6.Fg2 Hdf8
 7.Hi3 Kf11 8.Fd4 Fg8 9.Be4 e5 10.Fxf8 Hxf8 11.Fxe5 Fd5
@@ -2017,7 +3083,14 @@
 17.Bf3 d4 18.Hb3 Be6 19.Vxd4 Hg5 20.Vc3 Kh9 21.Bf2 He3
 22.Kh1 Bf8 23.Bxf8 Fxf8 24.He4 Bf6 25.Vb3 Fd7  0-1
 
-157 Rudolf László Hámori András
+[Variant "Glinski"]
+[Event "II. Bátaszék kupa"]
+[Site "Bátaszék, HUN"]
+[EventDate "1985.01.13"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1985-0113-2-bataszekk"]
+[GameID "157"]
+[White "Rudolf László"]
+[Black "Hámori András"]
 
 1.Hdf4 Fh6 2.g6 Fxf4 3.Hxf4 Fh8 4.Hi3 Fi6 5.h5 fxg6
 6.Hxg6 Fe9 7.Hh3 Bcf8 8.Fg2 Bf10 9.Bg3 Hc6 10.i4 Bif8
@@ -2028,20 +3101,41 @@
 31.Fxc7 Vd4 32.Ve6 Vxk3 33.Vxc6 Kg10 34.Ve7 Ke10 35.Vh8 Fg9
 36.Vxg9  1-0
 
-158 Vályi Nagy Tamás Rudolf László
+[Variant "Glinski"]
+[Event "II. Bátaszék kupa"]
+[Site "Bátaszék, HUN"]
+[EventDate "1985.01.13"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1985-0113-2-bataszekk"]
+[GameID "158"]
+[White "Vályi Nagy Tamás"]
+[Black "Rudolf László"]
 
 1.d5 g5 2.e6 fxe6 3.dxe6 Hi6 4.i3 Fg9 5.Fd4 Hc6 6.Hc3 Bh6
 7.Fxc6 Vxc6 8.Ve4 Ve10 9.Fd3 b5 10.Kg2 gxf5 11.Hxf5 Bh5
 12.Fxb5 Fe8 13.Fd3 Fb7 14.Ve2 Fg5 15.Ff4 Bxh3 16.Vd2 Bf3  0-1
 
-159 Rudolf László Buzási József
+[Variant "Glinski"]
+[Event "II. Bátaszék kupa"]
+[Site "Bátaszék, HUN"]
+[EventDate "1985.01.13"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1985-0113-2-bataszekk"]
+[GameID "159"]
+[White "Rudolf László"]
+[Black "Buzási József"]
 
 1.Hdf4 e6 2.g6 fxg6 3.Hxg6 i6 4.Hhf4 k5 5.Hxf9 Kxf9
 6.Hg6 Kg10 7.b2 He7 8.Fb1 Fg9 9.Fe2 Fg8 10.Fa2 Vf10
 11.Ff4 c6 12.Fc3 Fh6 13.Fg2 Bd8 14.Bg4 Kf11 15.Fxe7 Bxe7
 16.Ff4 Fe9 17.Fxh6 Vxh6 18.Hi3 Vi7 19.Fh4  remi
 
-160 Waldemar Seliga Rudolf László
+[Variant "Glinski"]
+[Event "II. Bátaszék kupa"]
+[Site "Bátaszék, HUN"]
+[EventDate "1985.01.13"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1985-0113-2-bataszekk"]
+[GameID "160"]
+[White "Waldemar Seliga"]
+[Black "Rudolf László"]
 
 1.Hdf4 Hdf8 2.e5 g5 3.Fd1 Hhi6 4.i3 Fg9 5.f6 Hc6 6.c3 Kf11
 7.d4 Fb2 8.Bc2 Fxf4 9.Hxf4 Hcf8 10.Fe2 Bg10 11.Fc1 h5
@@ -2060,7 +3154,14 @@
 72.Fd5 b3 73.Fxe7 b2 74.Fxb2 b5 75.Fd5 Kf8 76.Fc4 Kg6
 77.Fc3 Kf8 78.Kf6 Kd7 79.Fxb5 Kc5 80.Fh6 Kd4 81.Fi3 Ke3 remi
 
-161 Rudolf László Sziráki László
+[Variant "Glinski"]
+[Event "II. Bátaszék kupa"]
+[Site "Bátaszék, HUN"]
+[EventDate "1985.01.13"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1985-0113-2-bataszekk"]
+[GameID "161"]
+[White "Rudolf László"]
+[Black "Sziráki László"]
 
 1.Hdf4 Fe9 2.e6 Hg9 3.d5 b6 4.Fd3 Hhi6 5.Hhi3 Fh6 6.exf7 gxf7
 7.Hxh6 Bxh6 8.Kf1 d6 9.c4 c5 10.dxc5 Fxc5 11.Hd5 b5
@@ -2076,14 +3177,14 @@
 57.Bc6 Hxg6 58.Bxe6 Ff5 59.Bf6 Fe3 60.Ke2 Fc5 61.Bf8 Kxc7
 62.Bxc5 Kd7 63.Bb5  1-0
 
-; ========================================
 [Variant "Glinski"]
 [Event "I. Magyar Kupa"]
 [Site "Budapest, HUN"]
 [EventDate "1985.01.25"]
 [Source "https://sites.google.com/site/hexasakkversenyek/1985-0125-1-magyark"]
-
-196 Rudolf László Csupor Péter
+[GameID "196"]
+[White "Rudolf László"]
+[Black "Csupor Péter"]
 
 1.Hdf4 Hdf8 2.g6 Fd6 3.Hhi3 Fxf4 4.Bcxf4 i6 5.e6 d6
 6.exf7 gxf7 7.gxf7 exf7 8.Be4 Fxi3 9.hxi3 Vxi3 10.Fh2 Bg8
@@ -2097,7 +3198,14 @@
 46.Bd9 Kf7 47.Fxi6 Hxk1 48.Bd5 Kg5 49.Bxk1 Fb6 50.Fd4 Fxd4
 51.cxd4 Kxi4 52.Bxk7 h5 53.Bk4 Ki3 54.Kg3 g5 55.Bi5  1-0
 
-197 Csupor Péter Rudolf László
+[Variant "Glinski"]
+[Event "I. Magyar Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1985.01.25"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1985-0125-1-magyark"]
+[GameID "197"]
+[White "Csupor Péter"]
+[Black "Rudolf László"]
 
 1.Hdf4 Hdf8 2.e6 Hhi6 3.i3 d6 4.exd6 Fxd6 5.Fd4 Hc6
 6.Fxc6 Vxc6 7.Vf3 Vd7 8.g6 e5 9.fxe5 Fxe5 10.gxf7 Vxd4
@@ -2107,7 +3215,14 @@
 26.Bf10 Ki6 27.b2 Be5 28.g5 Bxg5 29.B1f4 Bg2 30.Kk3 Fb3
 31.Kl3 Bh6 32.Ki4 Bhg6  0-1
 
-198 Rudolf László Rottek Ferenc
+[Variant "Glinski"]
+[Event "I. Magyar Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1985.01.25"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1985-0125-1-magyark"]
+[GameID "198"]
+[White "Rudolf László"]
+[Black "Rottek Ferenc"]
 
 1.Hdf4 Fh6 2.g6 Fxf4 3.Hxf4 Vg9 4.Fg2 i6 5.h5 Hdf8 6.Kf1 He9
 7.e6 k5 8.Fh3 He10 9.Bg1 Bg8 10.d5 Fd8 11.c4 Fc6 12.Fd4 fxg6
@@ -2116,7 +3231,14 @@
 23.Bxg8 Bxg8 24.fxg8 Vxg8 25.Bg4 Hg7 26.Vg1 Fe10 27.Fe4 Kh8
 28.Vl5  1-0
 
-199 Rottek Ferenc Rudolf László
+[Variant "Glinski"]
+[Event "I. Magyar Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1985.01.25"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1985-0125-1-magyark"]
+[GameID "199"]
+[White "Rottek Ferenc"]
+[Black "Rudolf László"]
 
 1.Fe2 Hdf8 2.Fd4 e5 3.Fxf8 Hhxf8 4.fxe5 Hxe5 5.Fg5 Hxf3
 6.Vxf3 Vc6 7.Fe2 Bcf8 8.e5 Ve10 9.Fg2 c5 10.He4 d5 11.Be1 dxe5
@@ -2125,7 +3247,14 @@
 22.Fxd6 Fxe3 23.Vxe3 Bxd6 24.Kg2 Bg5 25.Ke2 Bf6 26.Hf4 Vb5
 27.Ke1 Vxb1 28.Ke2 Vb5 29.Ke1  0-1
 
-200 Rudolf László Rottek Ferenc
+[Variant "Glinski"]
+[Event "I. Magyar Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1985.01.25"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1985-0125-1-magyark"]
+[GameID "200"]
+[White "Rudolf László"]
+[Black "Rottek Ferenc"]
 
 1.g6 fxg6 2.Hi3 h6 3.Fe3 i6 4.f6 Fh7 5.fxg6 hxg6 6.Hxg6 Fxg6
 7.Fxg6 Bi7 8.Fe2 Bk6 9.Fi8 Bk5 10.Fxc8 Hc6 11.Fi8 Fh6
@@ -2134,7 +3263,14 @@
 22.Bl2 Vk4 23.Hxh5 Hli6 24.Bl4 Vg7 25.Vf3 Vg6 26.Fk3 Vf7
 27.e6 Vxf3 28.Kxf3  1-0
 
-210 Rudolf László Rutkovszky T.
+[Variant "Glinski"]
+[Event "I. Magyar Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1985.01.25"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1985-0125-1-magyark"]
+[GameID "210"]
+[White "Rudolf László"]
+[Black "Rutkovszky T."]
 
 1.Hdf4 e5 2.fxe5 Vxe5 3.Fg2 Ve10 4.g6 Hg9 5.Hhi3 Fd6
 6.Fd4 Hgi6 7.Hk5 Be7 8.Fg4 Be9 9.Hc3 Fxg2 10.Kxg2 Fxc3
@@ -2142,14 +3278,28 @@
 16.Hxf10 Kxf10 17.Fxi6 Hxi6 18.Bcg4 Ke10 19.Bg10 Bk4
 20.Bi8 Fe9 21.Bh8 Kd8 22.Bg10 Ke8 23.Bhf10 Fg6 24.Bd8  1-0
 
-211 Rutkovszky Tibor Rudolf László
+[Variant "Glinski"]
+[Event "I. Magyar Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1985.01.25"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1985-0125-1-magyark"]
+[GameID "211"]
+[White "Rutkovszky Tibor"]
+[Black "Rudolf László"]
 
 1.Hdf4 Hdf8 2.e6 Hhi6 3.Hhi3 g5 4.Hfh1 Fg9 5.exf7 Hxf7
 6.Fe2 gxf5 7.Hxf5 e5 8.Be3 Hd5 9.Fxd5 Fxd5 10.Kf1 Fd4
 11.Hh6 Fxh6 12.Bxd4 Hxd4 13.Fxh6 Bxh6 14.Hi3 Bf6 15.Hf4 Vxk1
 16.Bh1 Vxb1 17.Fxd4 Bxf4 18.Ff2 Bif8 19.Bg2 Bi1  0-1
 
-212 Rudolf László Rutkovszky T.
+[Variant "Glinski"]
+[Event "I. Magyar Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1985.01.25"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1985-0125-1-magyark"]
+[GameID "212"]
+[White "Rudolf László"]
+[Black "Rutkovszky T."]
 
 1.Hdf4 Fe9 2.e6 Ff8 3.d5 d6 4.f6 Fg8 5.Bd1 dxe6 6.dxe6 g6
 7.exf7 exf7 8.Vxe10 Hxe10 9.fxg6 Fxg6 10.Hxg6 fxg6 11.Bid4 Hdf8
@@ -2162,7 +3312,14 @@
 42.Hg9 Ba3 43.b3 Baa1 44.Hf7 Kg8 45.g6 Bf3 46.Kh2 Baf1
 47.Bg9+# 1-0
 
-223 Rudolf László Hámori András
+[Variant "Glinski"]
+[Event "I. Magyar Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1985.01.25"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1985-0125-1-magyark"]
+[GameID "223"]
+[White "Rudolf László"]
+[Black "Hámori András"]
 
 1.Hdf4 Fh6 2.g5 e5 3.Hhi3 g6 4.Be3 Fxi3 5.Hxi3 i6 6.Fg2 Hc6
 7.b2 Fg9 8.d4 Kf11 9.Hxh6 Bxh6 10.fxe5 Fe6 11.c4 Ba3
@@ -2174,7 +3331,14 @@
 37.Ff2 Ff8 38.k3 Fb6 39.Fc5 Fxc5 40.dxc5 Ve6 41.Fxd6 Hxd6
 42.cxd6 Vxd6 43.Vf2 Kh7 44.Bd2 Ve5 45.Bd5 Be6 46.Bxe5  1-0
 
-224 Botkó Imre Rudolf László
+[Variant "Glinski"]
+[Event "I. Magyar Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1985.01.25"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1985-0125-1-magyark"]
+[GameID "224"]
+[White "Botkó Imre"]
+[Black "Rudolf László"]
 
 1.Hdf4 Hdf8 2.g6 Hhi6 3.d4 k6 4.Fd3 Fh9 5.Hhi3 Fg9 6.Kf1 Kf11
 7.Bg1 e6 8.Hfh1 f6 9.Fxi6 Fxd3 10.cxd3 Hxi6 11.e5 Be8
@@ -2192,7 +3356,14 @@
 68.Hi8 Kxi4 69.Hg7 Kh6 70.Hxd6 Kf7 71.He4 Ke7 72.Hh3 Kf7
 73.Ke4 Fe7 74.d5 Fd7 75.Kd4 Fxd5 76.Hi5 Kd6  remi
 
-225 Rudolf László Sziráki László
+[Variant "Glinski"]
+[Event "I. Magyar Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1985.01.25"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1985-0125-1-magyark"]
+[GameID "225"]
+[White "Rudolf László"]
+[Black "Sziráki László"]
 
 1.Hdf4 Hhf8 2.g6 d5 3.Hhi3 Hdc6 4.Fh4 Fd6 5.gxf7 exf7
 6.Fxf8 Hxf8 7.Hc3 Vf10 8.Fg2 Fe8 9.Fg4 Be10 10.Be3 h6
@@ -2202,7 +3373,14 @@
 26.h5 Fe6 27.h6 Hg9 28.Bl3 Vb4 29.Ke2 f5 30.Bl6 Kh8
 31.Vl2 Kf9 32.Vg10  1-0
 
-226 Hámori András Rudolf László
+[Variant "Glinski"]
+[Event "I. Magyar Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1985.01.25"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1985-0125-1-magyark"]
+[GameID "226"]
+[White "Hámori András"]
+[Black "Rudolf László"]
 
 1.g5 Hdf8 2.Fd4 Hfi6 3.Fg2 Fe9 4.Fxi6 Hxi6 5.i3 d5 6.e6 c5
 7.Hdf4 Fd7 8.Hg4 k6 9.c3 b5 10.Be3 Vc6 11.Kf1 Ba6 12.Bg3 c4
@@ -2221,7 +3399,14 @@
 73.Kf7 g5 74.Kf6 Kh4 75.Hf8 g4 76.He5 Kh3 77.Ke4 g3
 78.Ke3 h4 79.Kf2 Kg4 80.Kg2 h3  0-1
 
-227 Rudolf László Botkó Imre
+[Variant "Glinski"]
+[Event "I. Magyar Kupa"]
+[Site "Budapest, HUN"]
+[EventDate "1985.01.25"]
+[Source "https://sites.google.com/site/hexasakkversenyek/1985-0125-1-magyark"]
+[GameID "227"]
+[White "Rudolf László"]
+[Black "Botkó Imre"]
 
 1.Hdf4 Hdf8 2.g6 d6 3.Hhi3 Hhi6 4.d5 k6 5.Fd3 Fd7 6.Kf1 Kf11
 7.Bg1 Fe8 8.e6 Fk7 9.Fg3 Fl5 10.Be2 Fxi3 11.exd6 exd6
