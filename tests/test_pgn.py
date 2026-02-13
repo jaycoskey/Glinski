@@ -63,6 +63,28 @@ class TestPgn(unittest.TestCase):
         cls.check_parsing_moves(movetext)
         print()
 
+    def test_pgn_lines_to_game_specs(self):
+        FOOLS_MATE_PGN = [line.strip() for line in """
+            [Variant "Glinski"]
+            [Result "1-0"]
+            [Source "Glinski, W. First theories of Hexagonal Chess. Hexagonal Chess Publications, 1974."]
+            [Published "1974"]
+
+            1. Qe1c3     Qe10c6
+            2. b1b2      b7b6
+            3. Bf3b1     e7e6?
+            4. Qc3xBf9#
+            """.split('\n')]
+        game_specs = Pgn.pgn_lines_to_game_specs(FOOLS_MATE_PGN)
+        self.assertEqual(len(game_specs), 1)  # One game
+        game_spec = game_specs[0]
+        tag_pairs = game_spec[0]
+        move_text = game_spec[1]
+
+        self.assertEqual(len(tag_pairs.keys()), 4)  # 4 tag pairs
+        self.assertTrue('Result' in tag_pairs.keys())
+        self.assertEqual(len(move_text), 4)  # 4 lines of move text
+
 
 if __name__ == '__main__':
     unittest.main()

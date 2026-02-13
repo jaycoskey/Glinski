@@ -1,12 +1,34 @@
 #!/usr/bin/env python
 # by Jay M. Coskey, 2026
 
+from collections import OrderedDict
+import itertools
+import re
+from typing import Dict, List, Tuple
+
+# from src.game import Game
+from src.move import Move
 from src.move_info import MoveInfo
 from src.move_parse_phase import MoveParsePhase
 from src.piece_type import PieceType
 
 
+GameTagPair = Tuple[str, str]
+GameTagPairSet = OrderedDict[str, str]
+GameSpec = Tuple[GameTagPairSet, List[str]]
+
 class Pgn:
+    RE_MOVE_END_SCORE = re.compile(r"^(0-1|1-0|1/2-1/2|draw)$")
+    RE_PGN_COMMENT = re.compile(r"{[^}]*}")
+    RE_PGN_ELLIPSIS = re.compile(r"\.{3}$")
+    RE_PGN_LINE_IS_ATTRIBUTE = re.compile("^\[")
+    RE_PGN_LINE_IS_BLANK = re.compile("^\s*")
+    RE_PGN_LINE_IS_COMMENT = re.compile("^#")
+    RE_PGN_LINE_IS_TURN_NUM = re.compile('^[1-9]')
+    RE_PGN_LINE_IS_TURN_NUM = re.compile(r"^(1-9)(0-9)*\.")
+    RE_PGN_LINE_NONMOVE     = re.compile('^\s*([#[].*)?')
+    RE_PGN_TAG = re.compile(r'^\[(\w+)\s+"([^\]]+)"]$')
+
     # Note: This method uses 2 techniques to handle multi-character tokens:
     #   (1) To handle two-digit rank numbers (e.g., 10, 11), the first digit
     #       is cached (into the variable "cached_digit") in one loop iteration,
@@ -185,3 +207,91 @@ class Pgn:
             move_info.to_rank = move_info.fr_rank
             move_info.fr_rank = None
         return move_info
+
+    # Split movetext into turns and moves (and score / draw / resignation).
+    # Create game object, which will be the method return value.
+    #     Repeatedly call Pgn.alg_to_moveinfo().
+    #     Where needed, call game.moveinfo_to_move() to disambiguate.
+    @classmethod
+    def game_spec_to_game(cls, game_spec: GameSpec):  # TODO: Add return type once Game class is ready
+        raise NotImplementedError('Pgn.game_spec_to_game()')
+
+    @classmethod
+    def get_game_specs(cls, fname: str, tag_filter: Dict[str, str]=None) -> List[str]:
+        pgn_lines = cls.get_pgn_lines(fname)
+        return cls.pgn_lines_to_game_specs(pgn_lines)
+
+    @classmethod
+    def get_game_tag_pair(cls, line: str, line_num: int) -> GameTagPair:
+        tag_pair_re = re.compile('\[(\w+)\s+"([^"]+)"\]$')
+        match = re.match(tag_pair_re, line)
+        if match:
+            return (match.group(1), match.group(2))
+        else:
+            raise ValueError(f'Unexpected tag pair syntax at line {line_num}: {line}')
+
+    @classmethod
+    def get_pgn_lines(cls, fname: str) -> List[str]:
+        with open(fname, 'r') as f:
+            return [line.strip() for line in f.readlines()]
+
+    @classmethod
+    def is_line_blank(cls, line) -> bool:
+        blank_re = re.compile('^\s*$')
+        match = re.match(blank_re, line)
+        return bool(match)
+
+    @classmethod
+    def is_line_game_tag_pair(cls, line) -> bool:
+        return line[0] == '['
+
+    @classmethod
+    def is_line_move_text(cls, line) -> bool:
+        return line[0].isdigit()
+
+    # PGN files specify games. Each game has tags which specify attributes of the game,
+    # and text that specifies the moves of the game.
+    #
+    # TODO: Remove comments within a single line.
+    # TODO: Remove comments that span multiple lines.
+    @classmethod
+    def pgn_lines_to_game_specs(cls, lines: List[str], tag_filter :Dict[str, str]=None) -> List[GameSpec]:
+        game_specs = []
+        game_tags = OrderedDict[str, str]()
+        move_text = []
+        is_in_move_text = False
+        is_in_tags = False
+
+        for line_num, line in enumerate(lines, start=1):
+            # TODO: Remove comment(s) within line
+            if cls.is_line_blank(line):
+                continue
+            if cls.is_line_move_text(line):
+                if is_in_tags:
+                    is_in_tags = False
+                is_in_move_text = True
+                move_text.append(line)
+                continue
+            if cls.is_line_game_tag_pair(line):
+                if is_in_move_text:
+                    # Before we starting new game, wrap up the current one
+                    game_spec = (game_tags, move_text)
+                    game_specs.append(game_spec)
+                    # And start over
+                    game_tags = OrderedDict[str, str]()
+                    move_text = []
+                    is_in_move_text = False
+                is_in_tags = True
+                # Now we're ready for the current game's tag pairs.
+                game_tag = cls.get_game_tag_pair(line, line_num)
+                game_tags[game_tag[0]] = game_tag[1]
+                continue
+        # Handle any accumulated but unprocesed state
+        if len(move_text) > 0:
+            game_spec = (game_tags, move_text)
+            game_specs.append(game_spec)
+        return game_specs
+
+    @classmethod
+    def uci_to_move(cls, move_str, lang='en') -> Move:
+        raise NotImplementedError('Pgn.uci_to_move')
