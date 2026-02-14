@@ -13,6 +13,7 @@ from src.geometry import Geometry as G
 from src.hex_pos import HexPos
 from src.hex_vec import HexVec
 from src.move import Move
+from src.move_info import MoveInfo
 from src.piece import Piece
 from src.piece_type import PieceType, PIECE_TYPE_COUNT
 from src.player import Player, PLAYER_COUNT
@@ -177,10 +178,10 @@ class Board:
     # ========================================
 
     def get_board_errors(self):
-        raise NotImplementedError("board.get_board_errors()")
+        raise NotImplementedError('board.get_board_errors()')
 
     def get_ep_target(self):
-        raise NotImplementedError("board.get_ep_target()")
+        raise NotImplementedError('board.get_ep_target()')
 
     # Return the FEN Board representation, plus 5 other strings:
     #     Active color (w or b)
@@ -189,7 +190,7 @@ class Board:
     #     Halfmove clock
     #     Fullmove number (= floor(halfmove_count / 2))
     def get_fen(self):
-        raise NotImplementedError("board.get_fen()")
+        raise NotImplementedError('board.get_fen()')
 
     def get_fen_board(self):
         result = ''
@@ -271,8 +272,14 @@ class Board:
             self.move_undo()
         return result
 
-    def get_moves_legal_matching(self):
-        raise NotImplementedError("board.get_moves_legal_matching()")
+    # Move specifications (in text, or in a MoveSpec object) can be:
+    #   * unambiguous (e.g., Nb2e4)
+    #   * ambiguous without board context (e.g., exf)
+    # Disambiguation can take two broad paths:
+    #   Intricate and fast: A search tailored to the missing information.
+    #   Simple and slow:    Find all (legal) moves to find a match.
+    def get_moves_matching(self, move_info: MoveInfo):
+        raise NotImplementedError('board.get_moves_legal_matching()')
 
     def get_moves_pseudolegal(self):
         moves = []
@@ -460,11 +467,11 @@ class Board:
 
     # TODO: Fetch info cached at time move is made
     def is_condition_dead_position(self):
-        raise NotImplementedError("board.is_condition_dead_position()")
+        raise NotImplementedError('board.is_condition_dead_position()')
 
     # TODO: Fetch info cached at time move is made
     def is_condition_insufficient_material(self):
-        raise NotImplementedError("board.is_condition_insufficient_material()")
+        raise NotImplementedError('board.is_condition_insufficient_material()')
 
     # ========================================
     # Tests on individual spaces or pieces
@@ -499,13 +506,13 @@ class Board:
     # ========================================
 
     def is_move_pseudolegal(self, m: Move):
-        raise NotImplementedError("board.is_move_pseudolegal()")
+        raise NotImplementedError('board.is_move_pseudolegal()')
 
     # Called by is_condition_check() / is_condition_checkmate()
     # When player=None, player=self.cur_player is assumed.
     # In theory, player=self.cur_player.opponent() could be used
     #   to detect the error condition in which the opponent of
-    #   the player moving is already in "check".
+    #   the player moving is already in 'check'.
     # See FIDE rule 3.9.1: Psuedolegal attacks suffice to bring mate.
     def is_king_attacked(self):
         player = self.cur_player
@@ -615,7 +622,7 @@ class Board:
         #
         self.halfmove_count += 1
         self.cur_player = self.cur_player.opponent()
-        self.notify_player(self.cur_player, "Your move")
+        self.notify_player(self.cur_player, 'Your move')
 
     def move_undo(self):
         assert(self.game_state != GameState.Unstarted)
@@ -665,10 +672,10 @@ class Board:
         self.cur_player = self.cur_player.opponent()
 
     def moves_make(self, moves):
-        raise NotImplementedError("board.moves_make()")
+        raise NotImplementedError('board.moves_make()')
 
     def moves_undo(self, moves):
-        raise NotImplementedError("board.moves_undo()")
+        raise NotImplementedError('board.moves_undo()')
 
     # ========================================
     # TODO: Implement
