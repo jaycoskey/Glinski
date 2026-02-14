@@ -7,6 +7,8 @@ from src.move_parse_phase import MoveParsePhase
 from src.piece_type import PieceType
 
 
+# TODO: Consider changing name to MoveSpec.
+#
 # In the move Qc3xBf9#!
 #   Q ~ fr_pt
 #   c = fr_file
@@ -18,7 +20,7 @@ from src.piece_type import PieceType
 #   # ~ checkness
 #   ! ~ move_eval
 # This example does not illustrate Pawn promotion (=) or en passant (ep, e.p., etc.).
-class MoveInfo:
+class MoveSpec:
     fr_pt: PieceType        = None  # 1
     fr_file: str            = ''    # 2
     fr_rank: int            = None  # 3

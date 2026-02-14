@@ -13,7 +13,7 @@ from src.geometry import Geometry as G
 from src.hex_pos import HexPos
 from src.hex_vec import HexVec
 from src.move import Move
-from src.move_info import MoveInfo
+from src.move_spec import MoveSpec
 from src.piece import Piece
 from src.piece_type import PieceType, PIECE_TYPE_COUNT
 from src.player import Player, PLAYER_COUNT
@@ -278,7 +278,7 @@ class Board:
     # Disambiguation can take two broad paths:
     #   Intricate and fast: A search tailored to the missing information.
     #   Simple and slow:    Find all (legal) moves to find a match.
-    def get_moves_matching(self, move_info: MoveInfo):
+    def get_moves_matching(self, move_spec: MoveSpec):
         raise NotImplementedError('board.get_moves_legal_matching()')
 
     def get_moves_pseudolegal(self):

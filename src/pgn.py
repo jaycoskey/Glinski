@@ -8,7 +8,7 @@ from typing import Dict, List, Tuple
 
 # from src.game import Game
 from src.move import Move
-from src.move_info import MoveInfo
+from src.move_spec import MoveSpec
 from src.move_parse_phase import MoveParsePhase
 from src.piece_type import PieceType
 
@@ -41,8 +41,8 @@ class Pgn:
     #       such as score, or indications of how the game ended (agreement
     #       to a draw, or one player resigning).
     @classmethod
-    def alg_to_moveinfo(cls, move_str, lang='en') -> MoveInfo:
-        move_info = MoveInfo()
+    def alg_to_move_spec(cls, move_str, lang='en') -> MoveSpec:
+        move_spec = MoveSpec()
 
         # TODO: Break up into one set for each Player
         FILE_PROMOTION_SPACES = """a6 b7 c8 d9 e10 f11 g10 h9 i8 k7 l6
@@ -66,11 +66,11 @@ class Pgn:
                     rank = int(cached_digit + c)
                     cached_digit = None
                     if cur_phase.value < MoveParsePhase.FROM_RANK.value:
-                        move_info.fr_rank = rank
+                        move_spec.fr_rank = rank
                         cur_phase = MoveParsePhase.FROM_RANK
                         continue
                     if cur_phase.value < MoveParsePhase.TO_RANK.value:
-                        move_info.to_rank = rank
+                        move_spec.to_rank = rank
                         cur_phase = MoveParsePhase.TO_RANK
                         continue
                     raise ValueError(f'Rank ({rank}) appears in invalid location')
@@ -82,10 +82,10 @@ class Pgn:
                 # Handle the single-row digit, without caching cache.
                 rank = int(c)
                 if cur_phase.value < MoveParsePhase.FROM_RANK.value:
-                    move_info.fr_rank = rank
+                    move_spec.fr_rank = rank
                     cur_phase = MoveParsePhase.FROM_RANK
                 elif cur_phase.value < MoveParsePhase.TO_RANK.value:
-                    move_info.to_rank = rank
+                    move_spec.to_rank = rank
                     cur_phase = MoveParsePhase.TO_RANK
                 continue
             # c is not a digit.
@@ -93,11 +93,11 @@ class Pgn:
                 rank = int(cached_digit)
                 cached_digit = None
                 if cur_phase.value < MoveParsePhase.FROM_RANK.value:
-                    move_info.fr_rank = rank
+                    move_spec.fr_rank = rank
                     cur_phase = MoveParsePhase.FROM_RANK
                     # Proceed with this loop iteration, since we still need to handle c.
                 elif cur_phase.value < MoveParsePhase.TO_RANK.value:
-                    move_info.to_rank = rank
+                    move_spec.to_rank = rank
                     cur_phase = MoveParsePhase.TO_RANK
                     # Proceed with this loop iteration, since we still need to handle c.
                 else:
@@ -105,29 +105,29 @@ class Pgn:
             if c.isupper():
                 # UPPER CASE => Represents a PieceType
                 if cur_phase == MoveParsePhase.START:
-                    move_info.fr_pt = PieceType.from_symbol(c, lang)
+                    move_spec.fr_pt = PieceType.from_symbol(c, lang)
                     cur_phase = MoveParsePhase.FROM_PIECE_TYPE
                     continue
                 if cur_phase == MoveParsePhase.IS_CAPTURE:
-                    move_info.capture_pt = PieceType.from_symbol(c, lang)
+                    move_spec.capture_pt = PieceType.from_symbol(c, lang)
                     cur_phase = MoveParsePhase.CAPTURE_PIECE_TYPE
                     continue
                 if cur_phase == MoveParsePhase.IS_PROMOTION:
-                    move_info.promotion_pt = PieceType.from_symbol(c, lang)
+                    move_spec.promotion_pt = PieceType.from_symbol(c, lang)
                     cur_phase = MoveParsePhase.PROMOTION_TYPE
                     continue
                 if c in PROMOTION_PIECES:
                     # Might indicate a Pawn promotion without a preceding promotion indicator (=).
                     if cur_phase == MoveParsePhase.FROM_RANK:
-                        fr_pos = move_info.fr_file + str(move_info.fr_rank)
+                        fr_pos = move_spec.fr_file + str(move_spec.fr_rank)
                         if fr_pos in FILE_PROMOTION_SPACES:
-                            move_info.promotion_pt = PieceType.from_symbol(c, lang)
+                            move_spec.promotion_pt = PieceType.from_symbol(c, lang)
                             cur_phase = MoveParsePhase.PROMOTION_TYPE
                             continue
                     if cur_phase == MoveParsePhase.TO_RANK:
-                        to_pos = move_info.to_file + str(move_info.to_rank)
+                        to_pos = move_spec.to_file + str(move_spec.to_rank)
                         if to_pos in FILE_PROMOTION_SPACES:
-                            move_info.promotion_pt = PieceType.from_symbol(c, lang)
+                            move_spec.promotion_pt = PieceType.from_symbol(c, lang)
                             cur_phase = MoveParsePhase.PROMOTION_TYPE
                             continue
                     msg = f'Movetext {move_str}[{k}]=({c}) in invalid context.'
@@ -138,8 +138,8 @@ class Pgn:
             if c.islower():
                 if c == 'x':
                     # x => Represents capture
-                    assert not move_info.is_capture  # We can't have multiple of these.
-                    move_info.is_capture = True
+                    assert not move_spec.is_capture  # We can't have multiple of these.
+                    move_spec.is_capture = True
                     cur_phase = MoveParsePhase.IS_CAPTURE
                     continue
                 # LOWER CASE => Represents a file or 'ep'
@@ -148,69 +148,69 @@ class Pgn:
                 if c == 'e':
                     if (k < len(move_str) - 1 and move_str[k + 1] == 'p'):
                         # Found en passant
-                        move_info.is_en_passant = True
+                        move_spec.is_en_passant = True
                         cur_phase = MoveParsePhase.IS_EN_PASSANT
                         if k < len(move_str) - 2 and move_str[k + 2] == '.':
                             skip_chars = 2
-                            move_info.en_passant_str = 'ep.'
+                            move_spec.en_passant_str = 'ep.'
                         else:
                             skip_chars = 1
-                            move_info.en_passant_str = 'ep'
+                            move_spec.en_passant_str = 'ep'
                         continue
                     if (k < len(move_str) - 3  # At least 3 chars left in input
                             and move_str[k + 1] == '.'
                             and move_str[k + 1] == 'e'
                             and move_str[k + 1] == '.'):
                         # Found verbose en passant
-                        move_info.is_en_passant = True
+                        move_spec.is_en_passant = True
                         cur_phase = MoveParsePhase.IS_EN_PASSANT
-                        move_info.en_passant_str = 'e.p.'
+                        move_spec.en_passant_str = 'e.p.'
                         skip_chars = 3
                         continue
                 # Not en passant
                 if cur_phase.value < MoveParsePhase.FROM_FILE.value:
-                    move_info.fr_file = c
+                    move_spec.fr_file = c
                     cur_phase = MoveParsePhase.FROM_FILE
                     continue
                 if cur_phase.value < MoveParsePhase.TO_FILE.value:
-                    move_info.to_file = c
+                    move_spec.to_file = c
                     cur_phase = MoveParsePhase.TO_FILE
                     continue
                 raise ValueError(f'Invalid state: file symbols ({c}) comes after valid positions')
             if c == '=':
-                assert not move_info.is_promotion  # We can't have multiple of these.
-                move_info.is_promotion = True
+                assert not move_spec.is_promotion  # We can't have multiple of these.
+                move_spec.is_promotion = True
                 cur_phase = MoveParsePhase.IS_PROMOTION
                 continue
             if c in ['+', '#']:
-                assert not move_info.checkness_str  # We can't have multiple of these.
-                move_info.checkness_str = c
+                assert not move_spec.checkness_str  # We can't have multiple of these.
+                move_spec.checkness_str = c
                 cur_phase = MoveParsePhase.CHECKNESS
                 continue
             if c in ['!', '?']:
-                if move_info.move_eval_str:
-                    move_info.move_eval_str += c
+                if move_spec.move_eval_str:
+                    move_spec.move_eval_str += c
                 else:
-                    move_info.move_eval_str = c
+                    move_spec.move_eval_str = c
                 continue
             raise ValueError(f'Character with unrecognized role in Move string: {c}')
         assert not cached_digit
 
         # Final conditional transformation
-        if (move_info.fr_file and move_info.fr_rank
-                and (not move_info.to_file) and (not move_info.to_rank)):
+        if (move_spec.fr_file and move_spec.fr_rank
+                and (not move_spec.to_file) and (not move_spec.to_rank)):
             # The eager approach populated the "from" position with file and rank.
             # But it's now apparent that these actually belong to the "to" position.
-            move_info.to_file = move_info.fr_file
-            move_info.fr_file = None
+            move_spec.to_file = move_spec.fr_file
+            move_spec.fr_file = None
 
-            move_info.to_rank = move_info.fr_rank
-            move_info.fr_rank = None
-        return move_info
+            move_spec.to_rank = move_spec.fr_rank
+            move_spec.fr_rank = None
+        return move_spec
 
     # Split movetext into turns and moves (and score / draw / resignation).
     # Create game object, which will be the method return value.
-    #     Repeatedly call Pgn.alg_to_moveinfo().
+    #     Repeatedly call Pgn.alg_to_move_spec().
     #     Where needed, call game.moveinfo_to_move() to disambiguate.
     @classmethod
     def game_spec_to_game(cls, game_spec: GameSpec):  # TODO: Add return type once Game class is ready

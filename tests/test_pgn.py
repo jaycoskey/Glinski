@@ -8,7 +8,7 @@ from bitarray import bitarray, frozenbitarray
 
 import unittest
 
-from src.move_info import MoveInfo
+from src.move_spec import MoveSpec
 from src.pgn import Pgn
 
 
@@ -22,13 +22,13 @@ class TestPgn(unittest.TestCase):
         fields_seen = bitarray(12)
 
         for _, move_str in enumerate(move_strs):
-            move_info = Pgn.alg_to_moveinfo(move_str, lang)
-            result = move_info.to_str(lang)
+            move_spec = Pgn.alg_to_move_spec(move_str, lang)
+            result = move_spec.to_str(lang)
             if result != move_str:
                 print(f'check_parsing_moves: result = {result} != {move_str} = move_str')
             assert result == move_str
 
-            move_sig = move_info.to_move_sig()
+            move_sig = move_spec.to_move_sig()
             fields_seen |= move_sig
             if move_sig not in move_sig_map.keys():
                 move_sig_map[move_sig] = [move_str]
