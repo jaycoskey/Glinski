@@ -216,6 +216,13 @@ class Board:
                 result += '/'
         return result
 
+    def get_halfmove_count(self):
+        # Don't count moves[0], which is None.
+        halfmove_count = len(self.history_move) - 1
+
+        assert self.halfmove_count == halfmove_count
+        return self.halfmove_count
+
     def get_king_npos(self, player: Player):
         for npos in range(G.SPACE_COUNT):
             piece = self.pieces[npos]
@@ -226,7 +233,6 @@ class Board:
     # ========================================
 
     def get_leap_pawn_adv(self, npos: Npos) -> Npos:
-        # self.print(f'Board printed from board.get_leap_pawn_adv(npos=#{npos}={G.npos_to_alg(npos)})')
         if self.cur_player == Player.Black:
             result = G.LEAP_PAWN_ADV_BLACK[npos]
         else:
@@ -278,8 +284,25 @@ class Board:
     # Disambiguation can take two broad paths:
     #   Intricate and fast: A search tailored to the missing information.
     #   Simple and slow:    Find all (legal) moves to find a match.
-    def get_moves_matching(self, move_spec: MoveSpec):
-        raise NotImplementedError('board.get_moves_legal_matching()')
+    def get_moves_matching(self, ms: MoveSpec):
+        # TODO: Implement methodical means of determining Move details from MoveSpec.
+        #       For now: (a) Handle only the easiest case: from & to positions are specified.
+        #                (b) Ignore Pawn promotion.
+        move = None
+        if ms.fr_file and ms.fr_rank and ms.to_file and ms.to_rank:
+            # TODO: Improve efficiency
+            fr_npos = G.alg_to_npos(ms.fr_file + str(ms.fr_rank))
+            to_npos = G.alg_to_npos(ms.to_file + str(ms.to_rank))
+            move = Move(fr_npos, to_npos, None)  # TODO: Add setting of other fields
+        else:
+            return None
+        move.fr_pt = ms.fr_pt
+        move.is_cappture = ms.is_capture
+        # TODO: en passant
+        move.is_promotion = ms.is_promotion
+        # TODO: Check & checkmate
+        # TODO: move_eval
+        return [move]
 
     def get_moves_pseudolegal(self):
         moves = []
@@ -574,7 +597,14 @@ class Board:
         # TODO: Implement Pawn promotion
 
         # Phase 4: Check for end of Game
-        board_state = self.compute_board_state()
+
+        # TODO: Uncomment. Method compute_board_state() is in progress.
+        TODO_is_compute_board_state_complete = False
+        if TODO_is_compute_board_state_complete:
+            board_state = self.compute_board_state()
+        else:
+            board_state = BoardState.Normal
+
         if board_state == BoardState.Check:
             self.notify_player(self.cur_player.opponent(), 'Check')
         next_zobrist_hash = self.get_zobrist_hash()
