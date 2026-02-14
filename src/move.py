@@ -78,10 +78,11 @@ class Move:
         return self.__str__()
 
     def __str__(self):
-        return "{0}{1}{2}".format(
-            PieceType.to_symbol(self.pt) if self.pt else "-",
-            G.npos_to_alg(self.fr_npos) if self.fr_npos else "-",
-            G.npos_to_alg(self.to_npos) if self.to_npos else "-"
+        return '{0}{1}{2}{3}'.format(
+            PieceType.to_symbol(self.pt) if self.pt else '-',
+            G.npos_to_alg(self.fr_npos) if self.fr_npos else '-',
+            G.npos_to_alg(self.to_npos) if self.to_npos else '-'
+            '=' + PieceType.to_symbol(self.promo_pt) if self.promo_pt else ''
         )
 
     # ========================================
