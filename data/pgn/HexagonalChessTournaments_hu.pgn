@@ -2900,7 +2900,7 @@
 32.Vc8 Ve9 33.Va6 Vc7 34.Vc4 Hg8 35.Ke2 Bf5 36.Be3 Vb5
 37.Vxb5 Bxb5 38.Ff3 Hf8 39.Bd3 Hf6 40.Be4 Kh8 41.Fd2 Kh7
 42.Kg2 Hg8 43.Hc3 Be5 44.Bd3 Hh5 45.Bf3 Hhxe6 46.Hf5 h5
-47.Bh3 Be3 48.Ff3 Bf4 59.Hh2 Hi5 50.Bd5 Hig8 51.He2 Bf7
+47.Bh3 Be3 48.Ff3 Bf4 49.Hh2 Hi5 50.Bd5 Hig8 51.He2 Bf7
 52.Hd4 Bf9 53.Fh2 g5 54.Hg4 Kg6 55.Hh1 Bf5 56.Hi3  remi
 
 [Variant "Glinski"]
@@ -3611,7 +3611,7 @@
 [Site "Wroclaw, POL"]
 [EventDate "1985.04.19"]
 [Source "https://sites.google.com/site/hexasakkversenyek/1985-0419-3-nemz-v"]
-[GameID 171]
+[GameID "171"]
 [White "Vida László"]
 [Black "Rudolf László"]
 
@@ -4370,40 +4370,43 @@
 28.Bf4 Kh8 29.Bd2 Hg5 30.Kg1 Bg7 31.b3 Fb5 32.e6 He7
 33.Bf2 dxe6 34.dxe6 Fk5 35.Kh2 Bxg2 36.Bxg2 Fxg2 37.Kxg2  0-1
 
-[Variant "Glinski"]
-[Event "III. Tízek Bajnokság"]
-[Site "Harkány, HUN"]
-[EventDate "1985.10.14"]
-[Source "https://sites.google.com/site/hexasakkversenyek/1985-1014-3-tizekb"]
-[GameID "221"]
-[White "Hámori András"]
-[Black "Rudolf László"]
-
-1.g5 Hdf8 2.Fd4 e5 3.Fxf8 Hxf8 4.Fg2 d5 5.fxe5 Hxg5
-6.exd5 Hxf3 7.Vxf3 Fxd5 8.Hdf4 Ff9 9.Hhi3 Fd7 10.Hfh1 Be7
-11.Hf5 Bc5 12.Kf1 B8f8 13.Hhe2 g6 14.i3 Fh5 15.Vf2 Fb6
-16.Vg3 Fc8 17.k3 Ff9 18.Ff4 Kf11 19.Vg2 h5 20.Hec3 Vg10
-21.Hfd6 Fxd6 22.Hxd6 c6 23.Hxc8 Bxc8 24.c3 B8f8 25.Bg3 Fd8
-26.e5 Bce7 27.d4 Ff9 28.b2 b5 29.Be1 Ve9 30.Bge2 Fh8
-31.Bg3 Fi6 32.Bee2 Bk4 33.h4 Bl4 34.Fh3 Fl5 35.Fi1 i5
-36.Bf4 Bf9 37.Vf2 f6 38.exf6 Bxe2 39.Vxe2 Vxe2 40.Kxe2 gxf6
-41.i4 Fg7 42.Be4 Kg9 43.Be8 Kh7 44.Bxf9 Fxf9 45.Kf4 Kg6
-46.Kh3 Kf5 47.Fe2 Fg7 48.Ff4 Fi6 49.Fd3 k5 50.Ff4 k4
-51.ixk4 Fxk4 52.Fd3 Fg10 53.Fe2 Ke4 54.Ff4 b4 55.Kg3 c5
-56.c4 b3 57.d5 Fxd5 58.Fe2 Fe7 59.Ff1 Fc3 60.Fe2 f5
-61.Ff4 Fe7 62.Fe2 Ff9 63.Ff4 Kd4 64.Fe2 Kc2 65.Ff4 Kd4
-66.Fe2 Ke5 67.Kf3 Kf6 68.Kf4 Kg6 69.Kh3 Kh7 70.Kf4 Kg6
-71.Kh3 Fh8 72.Ff1 Kf6 73.Kf4 Ke6 74.Fe2 Kd4 75.Ff1 Fk4
-76.Fe2 i4 77.kxi4 hxi4 78.hxi4 Fg10 79.i5 Fe7 80.Ff1 Ke6
-81.Fe2 Fg4 82.Ff1 Kd4 83.Fe2 Fi6 84.Ff1 Fe7 85.Fe2 Ke6
-86.Ff1 Kf6 87.Fe2 Fa5 88.Ff1 Fc3 89.Kd3 Ff9 90.Fe2 Fe7
-91.Ff4 Kg4 92.Fe2 Kf3 93.Ff4 Fi6 94.Fe2 Fc6 95.Ff4 Kg4
-96.Fe2 Kf6 97.Ff4 Fa5 100.Fe2 Fg4 101.Ff4 Kf6 102.Fe2 Kh5
-103.Ff4 Fl2 104.Fe2 Kxi5 105.Ff4 Kh4 106.Fe2 Kg6 107.Ff4 Ke6
-108.Fe2 Kf6 109.Ff4 Fg10 110.Fe2 Fe7 111.Ff4 Fa5 112.Fe2 Fc6
-113.Ff4 Fg1 114.Fe2 Ke6 115.Ff4 Fc6 116.Fe2 Fl5 117.Ff4 Fi3
-118.Fe2 Kf6 119.Ff4 Ke6 120.Fe2 Fh2 121.Ff4 Kf6 122.Fe2 Fb1
-123.Ff4 Fa2 124.Fe2 Kg4  0-1
+; Commented out due to apparently missing turns 98 & 99.
+; Missing turns might be reconstructable, given later moves in turns 100-124.
+;
+; [Variant "Glinski"]
+; [Event "III. Tízek Bajnokság"]
+; [Site "Harkány, HUN"]
+; [EventDate "1985.10.14"]
+; [Source "https://sites.google.com/site/hexasakkversenyek/1985-1014-3-tizekb"]
+; [GameID "221"]
+; [White "Hámori András"]
+; [Black "Rudolf László"]
+;
+; 1.g5 Hdf8 2.Fd4 e5 3.Fxf8 Hxf8 4.Fg2 d5 5.fxe5 Hxg5
+; 6.exd5 Hxf3 7.Vxf3 Fxd5 8.Hdf4 Ff9 9.Hhi3 Fd7 10.Hfh1 Be7
+; 11.Hf5 Bc5 12.Kf1 B8f8 13.Hhe2 g6 14.i3 Fh5 15.Vf2 Fb6
+; 16.Vg3 Fc8 17.k3 Ff9 18.Ff4 Kf11 19.Vg2 h5 20.Hec3 Vg10
+; 21.Hfd6 Fxd6 22.Hxd6 c6 23.Hxc8 Bxc8 24.c3 B8f8 25.Bg3 Fd8
+; 26.e5 Bce7 27.d4 Ff9 28.b2 b5 29.Be1 Ve9 30.Bge2 Fh8
+; 31.Bg3 Fi6 32.Bee2 Bk4 33.h4 Bl4 34.Fh3 Fl5 35.Fi1 i5
+; 36.Bf4 Bf9 37.Vf2 f6 38.exf6 Bxe2 39.Vxe2 Vxe2 40.Kxe2 gxf6
+; 41.i4 Fg7 42.Be4 Kg9 43.Be8 Kh7 44.Bxf9 Fxf9 45.Kf4 Kg6
+; 46.Kh3 Kf5 47.Fe2 Fg7 48.Ff4 Fi6 49.Fd3 k5 50.Ff4 k4
+; 51.ixk4 Fxk4 52.Fd3 Fg10 53.Fe2 Ke4 54.Ff4 b4 55.Kg3 c5
+; 56.c4 b3 57.d5 Fxd5 58.Fe2 Fe7 59.Ff1 Fc3 60.Fe2 f5
+; 61.Ff4 Fe7 62.Fe2 Ff9 63.Ff4 Kd4 64.Fe2 Kc2 65.Ff4 Kd4
+; 66.Fe2 Ke5 67.Kf3 Kf6 68.Kf4 Kg6 69.Kh3 Kh7 70.Kf4 Kg6
+; 71.Kh3 Fh8 72.Ff1 Kf6 73.Kf4 Ke6 74.Fe2 Kd4 75.Ff1 Fk4
+; 76.Fe2 i4 77.kxi4 hxi4 78.hxi4 Fg10 79.i5 Fe7 80.Ff1 Ke6
+; 81.Fe2 Fg4 82.Ff1 Kd4 83.Fe2 Fi6 84.Ff1 Fe7 85.Fe2 Ke6
+; 86.Ff1 Kf6 87.Fe2 Fa5 88.Ff1 Fc3 89.Kd3 Ff9 90.Fe2 Fe7
+; 91.Ff4 Kg4 92.Fe2 Kf3 93.Ff4 Fi6 94.Fe2 Fc6 95.Ff4 Kg4
+; 96.Fe2 Kf6 97.Ff4 Fa5 100.Fe2 Fg4 101.Ff4 Kf6 102.Fe2 Kh5
+; 103.Ff4 Fl2 104.Fe2 Kxi5 105.Ff4 Kh4 106.Fe2 Kg6 107.Ff4 Ke6
+; 108.Fe2 Kf6 109.Ff4 Fg10 110.Fe2 Fe7 111.Ff4 Fa5 112.Fe2 Fc6
+; 113.Ff4 Fg1 114.Fe2 Ke6 115.Ff4 Fc6 116.Fe2 Fl5 117.Ff4 Fi3
+; 118.Fe2 Kf6 119.Ff4 Ke6 120.Fe2 Fh2 121.Ff4 Kf6 122.Fe2 Fb1
+; 123.Ff4 Fa2 124.Fe2 Kg4  0-1
 
 [Variant "Glinski"]
 [Event "III. Bátaszék Kupa"]
@@ -6140,7 +6143,9 @@
 1.e6 h5 2.exf7 gxf7 3.g5 Fh7 4.Bg4 hxg5 5.Hg2 Hi6 6.fxg5 Bg8
 7.Bk4 Bxk4 8.Fxi6+ Fh8 9.Fxk4 Fxk4+ 10.i3 Fd5+ 11.Kh2 Vb4+
 12.Ki2 Vxb1 13.Vxk7+ Bi8 14.Vi6+ Kf11 15.Hf4 Hf8 16.Vl5 Ff3
-17.Fg3 Fi4 18.h4 Bl6 19.Vg7? /Vk4 Be5!/ Bl2+ 20.Kh1 Vxf1+  0-1
+17.Fg3 Fi4 18.h4 Bl6
+19.Vg7? { Vk4 Be5! }
+Bl2+ 20.Kh1 Vxf1+  0-1
 
 [Variant "Glinski"]
 [Event "IV. Tízek Bajnokság"]
@@ -6268,29 +6273,31 @@
 37.Fe2 Hg8 38.Bfd1 He6 39.g5 hxg5 40.h5 ixh5 41.Bd5 f5
 42.exf5 gxf5 43.Kk1 Bg1 44.Hxg1 Vxg1 45.Kl2 Bl5 46.Kk2 Vh2  0-1
 
-[Variant "Glinski"]
-[Event "III. Európa Bajnokság"]
-[Site "Poznan, POL"]
-[EventDate "1986.07.19"]
-[Source "https://sites.google.com/site/hexasakkversenyek/1986-0719-3-eb"]
-[GameID "260"]
-[White "Rudolf László"]
-[Black "Bodrogi István"]
-
-1.Hdf4 Hdf8 2.g6 Fd9 3.e6 i6 4.Hhi3 c5 5.c4 Fe9 6.d5 b5
-7.Fd3 fxe6 8.dxc5 d6 9.cxb5 Fxb5 10.Fxh9 Bxh9 11.c5 Fd3
-12.Bc2 Fxf4 13.Hxf4 Fd8 14.Vc1 Fc6 15.Bg3 Fxf3 16.Bxf3 Bhc6
-17.cxd6 Bxc2 18.bxc2 exd6 19.Fb6 Vl5 20.Hi3 Bc6 21.Fxf8 Fxf8
-22.Vg8 Vg9 23.Vxg9 Kxg9 24.Bd3 h6 25.gxh6 gxh6 26.Kf3 Kf9
-27.c3 Ke7 28.Ke4 k6 29.Bd4 Bg9 30.Kf3 Fb6 31.Bb4 Kc6
-32.Bc4 Fc5 33.Hg2 d5 34.Bf4 Bg6 35.Hd1 Bk3 36.Kh2 Kb5
-37.Bg4 Kc4 38.Hf4 Kd3 39.f6 Bf7 40.Bf5 Ke3 41.Kg4 Bxf6
-42.Hxd5 Kd2 43.Bxf6 exf6 44.He8 Fg6 45.c4 f5 46.Kf4 Fe6
-47.c5 Kc3 48.Ke5 Fc8 49.c6 Kb4 50.c7 Kc6 51.Hd5 Ke7
-52.Hg5 Kc6 53.Hf8 Kd7 54.Hh9 Kxc7 55.Hxk6 Ke8 56.Kg5 Kf8
-57.Hl3 Kh7 58.Hh4 i5 59.i4 f4 60.Kxf4 h5 61.ixh5 ixh5
-62.Kg4 Ki5 63.He5 Kk3 64.Hxh5 Fe9 65.Hg3 Fb3 66.h5 Ff11
-67.Kh3 Kk4 68.He5 Kl2 69.h6 Kxk1 70.Hh4 Kl1 72.Ki3  1-0
+; Commented out due to an apparently missing turn #71.
+;
+; [Variant "Glinski"]
+; [Event "III. Európa Bajnokság"]
+; [Site "Poznan, POL"]
+; [EventDate "1986.07.19"]
+; [Source "https://sites.google.com/site/hexasakkversenyek/1986-0719-3-eb"]
+; [GameID "260"]
+; [White "Rudolf László"]
+; [Black "Bodrogi István"]
+;
+; 1.Hdf4 Hdf8 2.g6 Fd9 3.e6 i6 4.Hhi3 c5 5.c4 Fe9 6.d5 b5
+; 7.Fd3 fxe6 8.dxc5 d6 9.cxb5 Fxb5 10.Fxh9 Bxh9 11.c5 Fd3
+; 12.Bc2 Fxf4 13.Hxf4 Fd8 14.Vc1 Fc6 15.Bg3 Fxf3 16.Bxf3 Bhc6
+; 17.cxd6 Bxc2 18.bxc2 exd6 19.Fb6 Vl5 20.Hi3 Bc6 21.Fxf8 Fxf8
+; 22.Vg8 Vg9 23.Vxg9 Kxg9 24.Bd3 h6 25.gxh6 gxh6 26.Kf3 Kf9
+; 27.c3 Ke7 28.Ke4 k6 29.Bd4 Bg9 30.Kf3 Fb6 31.Bb4 Kc6
+; 32.Bc4 Fc5 33.Hg2 d5 34.Bf4 Bg6 35.Hd1 Bk3 36.Kh2 Kb5
+; 37.Bg4 Kc4 38.Hf4 Kd3 39.f6 Bf7 40.Bf5 Ke3 41.Kg4 Bxf6
+; 42.Hxd5 Kd2 43.Bxf6 exf6 44.He8 Fg6 45.c4 f5 46.Kf4 Fe6
+; 47.c5 Kc3 48.Ke5 Fc8 49.c6 Kb4 50.c7 Kc6 51.Hd5 Ke7
+; 52.Hg5 Kc6 53.Hf8 Kd7 54.Hh9 Kxc7 55.Hxk6 Ke8 56.Kg5 Kf8
+; 57.Hl3 Kh7 58.Hh4 i5 59.i4 f4 60.Kxf4 h5 61.ixh5 ixh5
+; 62.Kg4 Ki5 63.He5 Kk3 64.Hxh5 Fe9 65.Hg3 Fb3 66.h5 Ff11
+; 67.Kh3 Kk4 68.He5 Kl2 69.h6 Kxk1 70.Hh4 Kl1 72.Ki3  1-0
 
 [Variant "Glinski"]
 [Event "III. Európa Bajnokság"]
@@ -6433,7 +6440,7 @@
 [Black "Marek Mackowiak"]
 
 1.e6 fxe6 2.Fg3 Fg9 3.Hc3 Be8 4.Hxe6 Fxe6 5.Vxe6 Fd8
-6.Hf4 Fc6 7.d5 Bf9 8.c4 Bif8 9.Fc2 Fg8  remi3
+6.Hf4 Fc6 7.d5 Bf9 8.c4 Bif8 9.Fc2 Fg8  remi
 
 ; I. Kristály Kupa, in Tatabánya, HUN, 1986.08.07. No recorded games available.
 
@@ -6819,7 +6826,7 @@
 1.Fg2 g5 2.fxg5 Hi6 3.Fe2 Hk3 4.Bg3 Fxk1 5.i3 Fxf3+
 6.Vxf3 Hi6 7.Hc3 Fh6 8.Vk1 Fxg5 9.Fxg5 Hxg5 10.Hf5 Fe9
 11.h4 Hi6 12.Vk3 Hdf8 13.Hh6 Bh9 14.Hxk7 Hh5 15.Bh3 Bl3
-16.Vxl3 Vf9 ...? 1-0
+16.Vxl3 Vf9 { ...? }  1-0
 
 [Variant "Glinski"]
 [Event "VI. Országos Bajnokság"]
@@ -8022,7 +8029,7 @@
 17.Fxe5 Bxe5 18.Fxf9 Vxf9 19.Hi3 Bie7 20.Hf5? Vxk1 21.Bi1 Vk4
 22.i3 B7c5 23.Hc3 Vg7 24.Bf4 Fi7 25.Bxf7 Vxe4 26.Kh1 Ve3
 27.Vxe3 Bxe3 28.Kf2 Bce7 29.Bxh7 Hxc2 30.Bxi6 Be1 31.Bxe1 Bxe1
-3B2.Kg1 g5 33.Bg6 Kf9 34.Hce6 Ke8 35.Hh5 Be4 36.Bg7 Kd6
+32.Kg1 g5 33.Bg6 Kf9 34.Hce6 Ke8 35.Hh5 Be4 36.Bg7 Kd6
 37.Hxi7? kxi7 38.Bxi7 Bg3 39.Kf2 Bxh3 40.Be6 Kc5 41.Bxg5 Hd5
 42.Bg8 Kc4  0-1
 
@@ -8230,7 +8237,7 @@
 
 [Variant "Glinski"]
 [Event "III. Magyar Kupa"]
-[Site "Játékidő, H"UN"]
+[Site "Játékidő, HUN"]
 [EventDate "1987.02.20"]
 [Source "https://sites.google.com/site/hexasakkversenyek/1987-0220-3-mk"]
 [GameID "9"]
@@ -8265,19 +8272,21 @@
 41.k3 He8 42.k4 c5 43.Hc3 Hi8 44.Hd6 Kh5 45.e7 Hk5 46.Hi2 Kg4
 47.He4 c4 48.Kd6 Hf6 49.Kd5 b3 50.Hl3 Kf5 51.Hh5 Kg5  1-0
 
-[Variant "Glinski"]
-[Event "III. Magyar Kupa"]
-[Site "Játékidő, HUN"]
-[EventDate "1987.02.20"]
-[Source "https://sites.google.com/site/hexasakkversenyek/1987-0220-3-mk"]
-[GameID "2"]
-[White "Rudolf László"]
-[Black "Somlai László"]
-
-1.e6 d6 2.d5 Be8 3.Hdf4 dxe 4.dxe Fd8 5.Hd5 Bf9 6.Hi3 Hhf8
-7.Fh4 Hxd5 8.Fxd5 Fc6 9.c4 Hb6 10.Fxc6 Vxc6 11.Ve4 Vxe4
-12.Bxe4 Bd9 13.g6 Fg8 15.Bc3 fxg 16.Fxg8 Bixg8 17.Hxg6 Hxg6
-18.Fxg6 Bd2 19.Kh2 Bgd9 20.Ba3?? B9d4  0-1
+; Commented out due to an apparently missing turn #14.
+;
+; [Variant "Glinski"]
+; [Event "III. Magyar Kupa"]
+; [Site "Játékidő, HUN"]
+; [EventDate "1987.02.20"]
+; [Source "https://sites.google.com/site/hexasakkversenyek/1987-0220-3-mk"]
+; [GameID "2"]
+; [White "Rudolf László"]
+; [Black "Somlai László"]
+;
+; 1.e6 d6 2.d5 Be8 3.Hdf4 dxe 4.dxe Fd8 5.Hd5 Bf9 6.Hi3 Hhf8
+; 7.Fh4 Hxd5 8.Fxd5 Fc6 9.c4 Hb6 10.Fxc6 Vxc6 11.Ve4 Vxe4
+; 12.Bxe4 Bd9 13.g6 Fg8 15.Bc3 fxg 16.Fxg8 Bixg8 17.Hxg6 Hxg6
+; 18.Fxg6 Bd2 19.Kh2 Bgd9 20.Ba3?? B9d4  0-1
 
 [Variant "Glinski"]
 [Event "III. Magyar Kupa"]
