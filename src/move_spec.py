@@ -10,7 +10,7 @@ from src.piece_type import PieceType
 # TODO: Consider changing name to MoveSpec.
 #
 # In the move Qc3xBf9#!
-#   Q ~ fr_pt
+#   Q ~ pt
 #   c = fr_file
 #   3 ~ fr_rank
 #   x ~ is_capture
@@ -21,7 +21,7 @@ from src.piece_type import PieceType
 #   ! ~ move_eval
 # This example does not illustrate Pawn promotion (=) or en passant (ep, e.p., etc.).
 class MoveSpec:
-    fr_pt: PieceType        = None  # 1
+    pt: PieceType           = None  # 1
     fr_file: str            = ''    # 2
     fr_rank: int            = None  # 3
 
@@ -44,7 +44,7 @@ class MoveSpec:
     # Used to determine test coverage
     def to_move_sig(self) -> frozenbitarray:
         sig = bitarray(12)
-        if self.fr_pt:
+        if self.pt:
             sig |= MoveParsePhase.FROM_PIECE_TYPE.to_bitarray()
         if self.fr_file:
             sig |= MoveParsePhase.FROM_FILE.to_bitarray()
@@ -76,7 +76,7 @@ class MoveSpec:
     def to_str(self, lang='en'):
         return '{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}'.format(
 
-            self.fr_pt.to_symbol(lang) if self.fr_pt else '',
+            self.pt.to_symbol(lang) if self.pt else '',
             self.fr_file if self.fr_file else '',
             self.fr_rank if self.fr_rank else '',
             'x' if self.is_capture else '',

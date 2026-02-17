@@ -7,6 +7,7 @@ import re
 from typing import Dict, List, Tuple
 
 from src.game import Game
+from src.geometry import Geometry as G
 from src.move import Move
 from src.move_spec import MoveSpec
 from src.move_parse_phase import MoveParsePhase
@@ -66,7 +67,8 @@ class Pgn:
                                    a1 b1 c1 d1 e1 f1 g1 h1 i1 k1 l1""".split()
         PROMOTION_PIECES_EN = tuple('QRBN')
         PROMOTION_PIECES_HU = tuple('VBFH')
-        PROMOTION_PIECES = PROMOTION_PIECES_EN if lang == 'en' else PROMOTION_PIECES_HU
+        PROMOTION_PIECES = (PROMOTION_PIECES_EN
+                if lang == 'en' else PROMOTION_PIECES_HU)
 
         cached_digit = None
         cur_phase = MoveParsePhase.START
@@ -122,7 +124,7 @@ class Pgn:
             if c.isupper():
                 # UPPER CASE => Represents a PieceType
                 if cur_phase == MoveParsePhase.START:
-                    move_spec.fr_pt = PieceType.from_symbol(c, lang)
+                    move_spec.pt = PieceType.from_symbol(c, lang)
                     cur_phase = MoveParsePhase.FROM_PIECE_TYPE
                     continue
                 if cur_phase == MoveParsePhase.IS_CAPTURE:
@@ -226,18 +228,37 @@ class Pgn:
             move_spec.fr_rank = None
         return move_spec
 
-    # Split movetext into turns and moves (and score / draw / resignation).
-    # Create game object, which will be the method return value.
-    #     Repeatedly call Pgn.alg_to_move_spec().
-    #     Where needed, call game.moveinfo_to_move() to disambiguate.
+    # TODO: Support passing line numbers, so error msgs can point to location in file.
     @classmethod
-    def game_spec_to_game(cls, game_spec: GameSpec):  # TODO: Add return type once Game class is ready
-        raise NotImplementedError('Pgn.game_spec_to_game()')
+    def game_spec_to_game(cls, game_spec: GameSpec, lang='en') -> Game:
+        game = Game()
+        game.set_attributes(game_spec[0])
+        game_id = game_spec[0]['GameID'] if 'GameID' in game_spec[0] else '???'
 
-    @classmethod
-    def get_game_specs(cls, fname: str, tag_filter: Dict[str, str]=None) -> List[str]:
-        pgn_lines = cls.get_pgn_lines(fname)
-        return cls.pgn_lines_to_game_specs(pgn_lines)
+        move_texts = cls.move_lines_to_move_texts(game_spec[1])
+        for move_text in move_texts:
+            if move_text in ['', '0-1', '1-0', 'draw', 'remi', 'ź-ź', '...']:
+                # TODO: Insert info into Game
+                continue
+            move_spec = cls.alg_to_move_spec(move_text, lang)
+            moves = game.board.get_moves_matching(move_spec, move_text)
+            if len(moves) != 1:
+                print(f'Game tag pairs={", ".join(f"({k}=>{v})" for k,v in game_spec[0].items())}')
+                print(f'Game moves={move_texts}')
+                game.board.print()
+                print(f'Halfmove_count={game.board.halfmove_count}, '
+                        + f'move_text={move_text} '
+                        + f'(ep_target={G.npos_to_alg(game.board.ep_target) if game.board.ep_target else "None"}, '
+                        , f'lang={lang})'
+                        )
+            if len(moves) == 0:
+                print(f'No moves available')
+            elif len(moves) > 1:
+                print(f'Multiple moves available: {moves}')
+            assert len(moves) == 1
+            move = moves[0]
+            game.board.move_make(move)
+        return game
 
     @classmethod
     def get_game_tag_pair(cls, line: str, line_num: int) -> GameTagPair:
@@ -276,99 +297,109 @@ class Pgn:
         # TODO: Remove comments
         # TODO: Carry over file line_num from the calling context
         # TODO: Handle post-move text, such as "draw" or a score, etc.
-        turn_num = 0
-        TURN_NUMS_RE = re.compile('(\d+)\.')
+        expected_turn_num = 1
         turn_texts = []
-        for line in lines:
+
+        COMMENT_RE = re.compile(r"\{[^}].*\}")
+        TURN_NUMS_RE = re.compile(r"(\d+)\.")
+        for line_num, line in enumerate(lines):
+            line = re.sub(COMMENT_RE, "", line)
             turn_matches = list(re.finditer(TURN_NUMS_RE, line))
             jmc_turn_num_spans = [turn_match.span() for turn_match in turn_matches]
-            turn_num_txts = [
+            turn_num_texts = [
                     line[int(turn.span()[0]): int(turn.span()[1])-1]
                     for turn in turn_matches
                     ]
-            turn_nums = [int(turn_num_txt) for turn_num_txt in turn_num_txts]
+            turn_nums = [int(turn_num_text) for turn_num_text in turn_num_texts]
 
             # Verify that the turns are appropriately numbered
-            assert turn_nums[0] == turn_num + 1
-            for k in range(1, len(turn_nums)):
-                assert turn_nums[k] == turn_nums[k - 1] + 1
-                turn_num += 1
+            for k in range(len(turn_nums)):
+                assert turn_nums[k] == expected_turn_num
+                expected_turn_num += 1
 
             # From the regexp identifying the spans for the turn numbers,
             # we can identify the text between/after the turn numbers.
             # Chop the line into move text chunks.
             # Each chunk should have 1 or 2 moves, & possibly the final score.
+            line_turn_texts = []
             for k in range(len(turn_matches)):
                 a = int(turn_matches[k].span()[1])
                 b = int(turn_matches[k+1].span()[0]) if k < len(turn_matches) - 1 else len(line)
-                turn_texts.append(line[a: b].strip())
-            assert len(turn_num_txts) == len(turn_texts)
+                line_turn_texts.append(line[a: b].strip())
+            if len(turn_num_texts) != len(line_turn_texts):
+                print(f'line={line}: Counts of turn #s ({turn_num_texts}~{len(turn_num_texts)} and line turn texts ({line_turn_texts}~{len(line_turn_texts)}) do not match')
+            assert len(turn_num_texts) == len(line_turn_texts)
+            turn_texts.extend(line_turn_texts)
         move_texts = [move_text for turn_text in turn_texts for move_text in turn_text.split(' ')]
         return move_texts
-
-    # TODO: Support passing line numbers, so error msgs can point to location in file.
-    @classmethod
-    def pgn_lines_to_games(cls, lines: List[str], tag_filter: Dict[str, str]=None) -> List[Game]:
-        game_specs = cls.pgn_lines_to_game_specs(lines)
-        games = []
-        for game_spec in game_specs:
-            # TODO: Determine whether or not to filter this game_spec, based on tag_filter.
-            game = Game()
-            game.set_attributes(game_spec[0])
-            # TODO: Uncomment when implemented: game.set_attributes(game_spec.tag_pairs)
-            move_texts = cls.move_lines_to_move_texts(game_spec[1])  # TODO Complete
-            for move_text in move_texts:
-                move_spec = cls.alg_to_move_spec(move_text)
-
-                # The following call resolves ambiguity, if any.
-                # As a last resort, it can match against all legal moves.
-                moves = game.board.get_moves_matching(move_spec)
-                assert len(moves) == 1
-                game.board.move_make(moves[0])
-            games.append(game)
-        return games
 
     # PGN files specify games. Each game has tags which specify attributes of the game,
     # and text that specifies the moves of the game.
     #
-    # TODO: Remove comments within a single line.
     # TODO: Remove comments that span multiple lines.
     @classmethod
     def pgn_lines_to_game_specs(cls, lines: List[str], tag_filter: Dict[str, str]=None) -> List[GameSpec]:
         game_specs = []
         game_tags = OrderedDict[str, str]()
         move_text = []
-        is_in_move_text = False
-        is_in_tags = False
+        is_in_moves  = False
+        is_in_tags   = False
+        is_rejecting = False
 
         for line_num, line in enumerate(lines, start=1):
-            # TODO: Remove comment(s) within line
             if cls.is_line_blank(line):
                 continue
             if cls.is_line_move_text(line):
                 if is_in_tags:
                     is_in_tags = False
-                is_in_move_text = True
+                is_in_moves = True
+                if is_rejecting:
+                    continue
                 move_text.append(line)
                 continue
             if cls.is_line_game_tag_pair(line):
-                if is_in_move_text:
+                if is_in_moves:
                     # Before we starting new game, wrap up the current one
-                    game_spec = (game_tags, move_text)
-                    game_specs.append(game_spec)
+                    if is_rejecting:
+                        is_rejecting = False
+                    else:
+                        tag_str = ';'.join([f'{k}=>{v}' for k,v in game_tags.items()])
+                        do_record_game_spec = True
+                        if tag_filter:
+                            for k, v in tag_filter.items():
+                                if k not in game_tags or game_tags[k] != v:
+                                    do_record_game_spec = False
+                                    break
+                        if do_record_game_spec:
+                            game_spec = (game_tags, move_text)
+                            game_specs.append(game_spec)
                     # And start over
                     game_tags = OrderedDict[str, str]()
                     move_text = []
-                    is_in_move_text = False
                 is_in_tags = True
+                is_in_moves = False
+                if is_rejecting:
+                    continue
                 # Now we're ready for the current game's tag pairs.
-                game_tag = cls.get_game_tag_pair(line, line_num)
-                game_tags[game_tag[0]] = game_tag[1]
-                continue
+                game_tag_pair = cls.get_game_tag_pair(line, line_num)
+                key = game_tag_pair[0]
+                val = game_tag_pair[1]
+                if tag_filter and key in tag_filter and val != tag_filter[key]:
+                    is_rejecting = True
+                    continue
+                game_tags[game_tag_pair[0]] = game_tag_pair[1]
+
         # Handle any accumulated but unprocesed state
-        if len(move_text) > 0:
-            game_spec = (game_tags, move_text)
-            game_specs.append(game_spec)
+        if len(move_text) > 0 and not is_rejecting:
+            do_record_game_spec = True
+            if tag_filter:
+                for k, v in tag_filter.items():
+                    if k not in game_tags or game_tags[k] != v:
+                        do_record_game_spec = False
+                        break
+            if do_record_game_spec:
+                game_spec = (game_tags, move_text)
+                game_specs.append(game_spec)
         return game_specs
 
     @classmethod

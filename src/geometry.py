@@ -100,6 +100,7 @@ class Geometry:
 
         FILE_CHARS = list("abcdefghikl")
         setattr(cls, "FILE_CHARS", FILE_CHARS)
+
         FILE_CHAR_TO_HEX0 = {
             # GREP Choice of coordinates
             letter: k - 5 for k, letter in enumerate(FILE_CHARS)
@@ -327,7 +328,7 @@ class Geometry:
         #
         LEAP_PAWN_ADV_BLACK = {}
         for npos in range(SPACE_COUNT):
-            if BB_COURT_BLACK[npos] or BB_PROMO_BLACK[npos]:
+            if BB_COURT_BLACK[npos] or BB_PAWN_PROMO_BLACK[npos]:
                 continue
             pos = cls.npos_to_pos(npos)
             pos_adv = pos + VECS_PAWN_ADV_BLACK
@@ -336,7 +337,7 @@ class Geometry:
 
         LEAP_PAWN_ADV_WHITE = {}
         for npos in range(SPACE_COUNT):
-            if BB_COURT_WHITE[npos] or BB_PROMO_WHITE[npos]:
+            if BB_COURT_WHITE[npos] or BB_PAWN_PROMO_WHITE[npos]:
                 continue
             pos = cls.npos_to_pos(npos)
             pos_adv = pos + VECS_PAWN_ADV_WHITE
@@ -347,7 +348,7 @@ class Geometry:
 
         LEAP_PAWN_CAPT_BLACK = {}
         for npos in range(SPACE_COUNT):
-            if BB_COURT_BLACK[npos] or BB_PROMO_BLACK[npos]:
+            if BB_COURT_BLACK[npos] or BB_PAWN_PROMO_BLACK[npos]:
                 continue
             pos = cls.npos_to_pos(npos)
             npos_capt = [cls.pos_to_npos(pos + vec)
@@ -358,7 +359,7 @@ class Geometry:
 
         LEAP_PAWN_CAPT_WHITE = {}
         for npos in range(SPACE_COUNT):
-            if BB_COURT_WHITE[npos] or BB_PROMO_WHITE[npos]:
+            if BB_COURT_WHITE[npos] or BB_PAWN_PROMO_WHITE[npos]:
                 continue
             pos = cls.npos_to_pos(npos)
             npos_capt = [cls.pos_to_npos(pos + vec)
@@ -475,8 +476,19 @@ class Geometry:
         return cls.BOARD_SPACE_NAMES[npos].lower()
 
     @classmethod
+    def npos_to_file_char(cls, npos: Npos) -> str:
+        return cls.FILE_CHARS[cls.COORD_HEX0[npos] + 5]
+
+    @classmethod
     def npos_to_pos(cls, npos: Npos) -> str:
         return HexPos(cls.COORD_HEX0[npos], cls.COORD_HEX1[npos])
+
+    @classmethod
+    def npos_to_rank(cls, npos: Npos) -> int:
+        hex0 = cls.COORD_HEX0[npos]
+        hex1 = cls.COORD_HEX1[npos]
+        rank = 6 - max(0, hex0) + hex1
+        return rank
 
     @classmethod
     def pos_to_alg(cls, pos: HexPos) -> str:

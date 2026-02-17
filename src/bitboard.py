@@ -145,11 +145,11 @@ BB_PAWN_HOME_WHITE = (BB_B1 | BB_C2 | BB_D3 | BB_E4
         | BB_G4 | BB_H3 | BB_I2 | BB_K1)
 
 # ========================================
-BB_PROMO_BLACK = (BB_A1 | BB_B1 | BB_C1 | BB_D1 | BB_E1
+BB_PAWN_PROMO_BLACK = (BB_A1 | BB_B1 | BB_C1 | BB_D1 | BB_E1
         | BB_F1
         | BB_G1 | BB_H1 | BB_I1 | BB_K1 | BB_L1)
 
-BB_PROMO_WHITE = (BB_A6 | BB_B7 | BB_C8 | BB_D9 | BB_E10
+BB_PAWN_PROMO_WHITE = (BB_A6 | BB_B7 | BB_C8 | BB_D9 | BB_E10
         | BB_F11
         | BB_G10 | BB_H9 | BB_I8 | BB_K7 | BB_L6)
 

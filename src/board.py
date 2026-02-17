@@ -2,11 +2,14 @@
 # by Jay M. Coskey, 2026
 # pylint: disable=fixme, too-many-instance-attributes, too-many-public-methods
 
+from bitarray import bitarray
 from collections import Counter
 from typing import Dict, Iterator, List
 
 from src.bitboard import BB_COURT_BLACK, BB_COURT_WHITE
 from src.bitboard import BB_PAWN_HOME_BLACK, BB_PAWN_HOME_WHITE
+from src.bitboard import BB_PAWN_PROMO_BLACK, BB_PAWN_PROMO_WHITE
+from src.bitboard import BITBOARD_FILES
 from src.board_state import BoardState
 from src.game_state import GameState
 from src.geometry import Geometry as G
@@ -28,6 +31,8 @@ class Board:
     #         placements: Dict[Player, Dict[PieceType, List[Pos]]]
     #   * By a FEN string:
     #         placements: str
+    # Note: An e.p. move executed in halfmove N (in move.ep_target)
+    #   creates a Board ep_target in halfmove N+1 (in board.ep_target).
     def __init__(self, placements=None):
         if placements is None:
             placements = G.INIT_PIECES_DICT
@@ -46,7 +51,7 @@ class Board:
         self.game_state = GameState.Unstarted
 
         # Note: Support move_undo()
-        self.history_ep_target = [None]
+        self.history_ep_target = [None]  # Pawns destinations used for en passant capture
         self.history_move = [None]  # The move resulting in the current Board position
         self.history_nonprogress_halfmove_count = [0]
         self.history_zobrist_hash = [self.get_zobrist_hash()]
@@ -267,7 +272,24 @@ class Board:
         return max(Counter(self.history_zobrist_hash).values())
 
     # ========================================
+    # TODO: Check legality of the move.
+    # Currently, we don't even check to see if sliders are blocked.
+    def get_moves_to(self, to_npos: Npos):
+        result = []
+        for fr_npos in range(G.SPACE_COUNT):
+            if not self.pieces[fr_npos]:
+                continue
+            piece = self.pieces[fr_npos]
+            if piece.player != self.cur_player:
+                continue
+            moves = self.get_moves_pseudolegal_from(fr_npos)
+            for move in moves:
+                move.pt = piece.pt
+                if move.to_npos == to_npos:
+                    result.append(move)
+        return result
 
+    # ========================================
     def get_moves_legal(self):
         result = []
         for move in self.get_moves_pseudolegal():
@@ -280,29 +302,99 @@ class Board:
 
     # Move specifications (in text, or in a MoveSpec object) can be:
     #   * unambiguous (e.g., Nb2e4)
-    #   * ambiguous without board context (e.g., exf)
-    # Disambiguation can take two broad paths:
-    #   Intricate and fast: A search tailored to the missing information.
-    #   Simple and slow:    Find all (legal) moves to find a match.
-    def get_moves_matching(self, ms: MoveSpec):
-        # TODO: Implement methodical means of determining Move details from MoveSpec.
-        #       For now: (a) Handle only the easiest case: from & to positions are specified.
-        #                (b) Ignore Pawn promotion.
-        move = None
+    #   * ambiguous without board context (e.g., dxe5)
+    # If a move is written without a PieceType or starting position
+    #   (e.g., b5), and both a Pawn and another PieceType could have
+    #   moved there, we should probably give priority to the Pawn.
+    # Possible alternate approach: Find all legal moves, and( apply filter.
+    # Note: The "move_text" arg is not needed, but can be helpful for debugging.
+    def get_moves_matching(self, ms: MoveSpec, move_text):
+        moves = []
+
         if ms.fr_file and ms.fr_rank and ms.to_file and ms.to_rank:
-            # TODO: Improve efficiency
+            # TODO: Find fr_npos & to_npos more efficiently.
             fr_npos = G.alg_to_npos(ms.fr_file + str(ms.fr_rank))
             to_npos = G.alg_to_npos(ms.to_file + str(ms.to_rank))
-            move = Move(fr_npos, to_npos, None)  # TODO: Add setting of other fields
-        else:
-            return None
-        move.fr_pt = ms.fr_pt
-        move.is_cappture = ms.is_capture
-        # TODO: en passant
-        move.is_promotion = ms.is_promotion
-        # TODO: Check & checkmate
-        # TODO: move_eval
-        return [move]
+            move = Move(fr_npos, to_npos, ms.promotion_pt)
+            move.pt = ms.pt
+            move.is_capture = ms.is_capture
+            move.is_check = ms.checkness_str and ms.checkness_str == '+'
+            move.is_checkmate = ms.checkness_str and ms.checkness_str == '#'
+            if ms.promotion_pt:
+                move.promotion_pt = ms.promotion_pt
+            move.is_checkmate = ms.checkness_str and ms.checkness_str == '#'
+            if move.pt == PieceType.Pawn and move.to_npos == self.ep_target:
+                if G.npos_to_file_char(to_npos) != G.npos_to_file_char(fr_npos):
+                    move.ep_target = self.ep_target
+            # TODO: move_eval
+            return [move]
+        elif ms.to_file and ms.to_rank:
+            # We know the moving Piece's destination
+            to_npos = G.alg_to_npos(ms.to_file + str(ms.to_rank))
+            if ms.promotion_pt:
+                assert self.is_in_pawn_promo_zone(to_npos)
+            moves = self.get_moves_to(to_npos)
+            if not moves:
+                return []
+
+            # Filter on PieceType
+            moves = [move for move in moves
+                    if (self.pieces[move.fr_npos].pt == ms.pt)
+                    or (ms.pt is None and self.pieces[move.fr_npos].pt == PieceType.Pawn)]
+            if not moves:
+                return []
+
+            if ms.is_capture:
+                opponent = self.cur_player.opponent()
+                moves = [move for move in moves
+                        if ((self.pieces[move.to_npos] and self.pieces[move.to_npos].player == opponent)
+                            or (move.to_npos == self.ep_target and self.pieces[self.ep_target] is None))
+                            ]
+                if not moves:
+                    return []
+
+            if ms.fr_file:
+                for z, move in enumerate(moves):
+                    file_char = G.npos_to_file_char(move.fr_npos)
+                moves = [move for move in moves if G.npos_to_file_char(move.fr_npos) == ms.fr_file]
+                if not moves:
+                    return []
+
+            if ms.fr_rank:
+                moves = [move for move in moves if G.npos_to_rank(move.fr_npos) == ms.fr_rank]
+                if not moves:
+                    return []
+
+            for move in moves:
+                if ms.promotion_pt:
+                    move.promotion_pt = ms.promotion_pt
+            return moves
+
+        # TODO: Consider expanding to handle capture by non-Pawn pieces
+        if (ms.pt is None and ms.fr_file and ms.is_capture and ms.to_file
+                and (not ms.fr_rank and not ms.to_rank)):
+            for fr_npos in BITBOARD_FILES[G.FILE_CHAR_TO_HEX0[ms.fr_file] + 5].search(bitarray('1')):
+                if not self.pieces[fr_npos]:
+                    continue
+                fr_piece = self.pieces[fr_npos]
+                if fr_piece.player != self.cur_player or fr_piece.pt != PieceType.Pawn:
+                    continue
+                if self.is_in_pawn_promo_zone(fr_npos):
+                    assert False  # TODO: There shouldn't be a Pawn in the last rank.
+
+                for to_npos in self.get_leap_pawn_capt(fr_npos):
+                    if G.npos_to_file_char(to_npos) != ms.to_file:
+                        continue
+                    move = Move(fr_npos, to_npos, ms.promotion_pt or None)
+                    move.pt = PieceType.Pawn
+                    move.is_capture = True
+                    move.is_check = ms.checkness_str and ms.checkness_str == '+'
+                    move.is_checkmate = ms.checkness_str and ms.checkness_str == '#'
+                    move.ep_target = to_npos if self.ep_target == to_npos else None
+                    # TODO: Set move_eval
+                    moves.append(move)
+            return moves
+        raise NotImplementedError('board.get_moves_matching(). Move pattern not recognized')
 
     def get_moves_pseudolegal(self):
         moves = []
@@ -340,12 +432,13 @@ class Board:
                 move = Move(npos, to_npos, None)
                 yield move
 
-    # TODO: Allow for selection of promo_pt on Pawn promotion
+    # TODO: Allow for selection of promotion_pt on Pawn promotion
     def get_moves_pseudolegal_pawn(self, npos: Npos) -> Iterator[Move]:
         fwd1_npos = self.get_leap_pawn_adv(npos)
         fwd1_piece = self.pieces[fwd1_npos]
         if not fwd1_piece:
-            yield Move(npos, fwd1_npos, None)
+            is_promotion = self.is_in_pawn_promo_zone(fwd1_npos)
+            yield Move(npos, fwd1_npos, PieceType.King if is_promotion else None)
             if self.is_in_pawn_home_zone(npos):
                 fwd2_npos = self.get_leap_pawn_hop(npos)
                 fwd2_piece = self.pieces[fwd2_npos]
@@ -355,22 +448,18 @@ class Board:
             if capt_npos == self.ep_target:
                 move = Move(npos, capt_npos, None)
                 move.capture_pt = PieceType.Pawn
+                # Note: ep capture will be available on the next half-move
                 yield move
             else:
+                is_promotion = self.is_in_pawn_promo_zone(capt_npos)
                 capt_piece = self.pieces[capt_npos]
                 if capt_piece and capt_piece.player == self.cur_player.opponent():
-                    move = Move(npos, capt_npos, None)
+                    move = Move(npos, capt_npos, PieceType.King if is_promotion else None)
                     move.capture_pt = capt_piece.pt
                     yield move
 
     def get_moves_pseudolegal_slider(self, npos: Npos, pt: PieceType):
-        if pt == PieceType.Queen:
-            rays = G.RAYS_QUEEN[npos]
-        elif pt == PieceType.Rook:
-            rays = G.RAYS_ROOK[npos]
-        else:
-            rays = G.RAYS_BISHOP[npos]
-
+        rays = self.get_rays(npos, pt)
         for ray in rays:
             for to_npos in ray:
                 dest_piece = self.pieces[to_npos]
@@ -466,6 +555,17 @@ class Board:
             result_rows.append(row_str.rstrip())  # End of row
         return '\n'.join(result_rows)
 
+    def get_rays(self, npos: Npos, pt: PieceType):
+        if pt == PieceType.Queen:
+            rays = G.RAYS_QUEEN[npos]
+        elif pt == PieceType.Rook:
+            rays = G.RAYS_ROOK[npos]
+        elif pt == PieceType.Bishop:
+            rays = G.RAYS_BISHOP[npos]
+        else:
+            raise ValueError(f'Unrecognized slider type: {pt}')
+        return rays
+
     # For each piece on the Board, there is a corresponding unique triple:
     #   (Board position ID, player ID, piece_type ID).
     # That is used to look up a value in the ZobristHashTable that
@@ -521,9 +621,9 @@ class Board:
 
     def is_in_pawn_promo_zone(self, npos: Npos):
         if self.cur_player == Player.Black:
-            result = G.PAWN_PROMO_BLACK[npos]
+            result = BB_PAWN_PROMO_BLACK[npos]
         else:
-            result = G.PAWN_PROMO_WHITE[npos]
+            result = BB_PAWN_PROMO_WHITE[npos]
         return result
 
     # ========================================
@@ -578,6 +678,7 @@ class Board:
         # Phase 1: Capture.
         #
         if move.ep_target:
+            assert move.ep_target != move.to_npos
             move.capture_pt = PieceType.Pawn
             self.pieces[move.ep_target] = None
         else:
@@ -592,9 +693,20 @@ class Board:
         self.pieces[move.to_npos] = self.pieces[move.fr_npos]
         self.pieces[move.fr_npos] = None
 
+        if (move.pt == PieceType.Pawn
+                and self.is_in_pawn_home_zone(move.fr_npos)
+                and move.to_npos == self.get_leap_pawn_hop(move.fr_npos)):
+            next_ep_target = self.get_leap_pawn_adv(move.fr_npos)
+        else:
+            next_ep_target = None
+
         # Phase 3: Pawn promotion.
         #
         # TODO: Implement Pawn promotion
+        if move.promotion_pt:
+            assert move.pt == PieceType.Pawn
+            assert self.is_in_pawn_promo_zone(move.to_npos)
+            self.pieces[move.to_npos].pt = move.promotion_pt
 
         # Phase 4: Check for end of Game
 
@@ -626,8 +738,7 @@ class Board:
                     if z == next_zobrist_hash]) == 4
                 )
         if board_state in [BoardState.Checkmate, BoardState.Stalemate] or is_pending_draw:
-            assert(False)
-            # TODO: Bring the game to a close
+            raise NotImplementedError('board: Termination of Game')
 
         # Phase 5: Update counters & history
         #
@@ -639,7 +750,7 @@ class Board:
                 else self.history_nonprogress_halfmove_count[-1] + 1)
 
         # Already set above: history_zobirst_hash
-        self.history_ep_target.append(move.ep_target)
+        self.history_ep_target.append(next_ep_target)
         self.history_is_check.append(board_state == BoardState.Check)
         self.history_is_checkmate.append(board_state == BoardState.Checkmate)
         self.history_is_repetition_3x.append(next_is_board_repetition_3x)
