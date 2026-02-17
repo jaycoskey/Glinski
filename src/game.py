@@ -34,11 +34,15 @@ class Game:
     # Added for testing.
     # Not to be used for printing game state for a text-based human player.
     def __str__(self):
-        attrs_str = ('{'
-                + '; '.join([f'{k}=>"{v}"' for k,v in self.attrs.items()])
-                + ' }')
-        board_str = self.board.get_print_str()
-        return attrs_str + '\n' + board_str
+        # attrs_str = ('{'
+        #         + '; '.join([f'{k}=>"{v}"' for k,v in self.attrs.items()])
+        #         + ' }')
+        # board_str = self.board.get_print_str()
+        # board_str = self.board.get_print_str()
+        piece_count = len([1 for piece in self.board.pieces if piece is not None])
+        move_count = len([1 for move in self.board.history_move if move is not None])
+        result = f'<<{len(self.attrs)} attrs,  {piece_count} pieces, {move_count} moves>>'
+        return result
 
     @property
     def game_state(self):
