@@ -130,7 +130,7 @@ class Board:
     # ========================================
 
     def find_mates_in_1(self) -> Iterator[Move]:
-        moves = self.board.get_legal_moves()
+        moves = self.board.get_moves_legal()
         result = []
         for move in moves:
             self.move_make(move)
@@ -145,7 +145,7 @@ class Board:
     #   A first move, followed by a series of moves that brings about checkmate to the opponent.
     def find_mates_in_2(self)-> Dict:
         mates_in_2 = {}
-        moves_p = self.get_legal_moves()
+        moves_p = self.get_moves_legal()
         for m_p in moves_p:
             inevitable_mates = find_mates_in_2_starting_with(m_p)
             if inevitable_mates:
@@ -158,7 +158,7 @@ class Board:
     def find_mates_in_2_starting_with(self, m_p):
         inevitable_mates = {}
         self.move_make(m_p)
-        moves_opp = self.get_legal_moves()
+        moves_opp = self.get_moves_legal()
         for m_opp in moves_opp:
             self.move_make(m_opp)
             if self.is_game_over():
@@ -166,7 +166,7 @@ class Board:
                 self.move_undo(m_p)
                 break
             else:
-                mates_p = [m2_p for m2_p in self.get_legal_moves() if self.is_checkmate(m2_p)]
+                mates_p = [m2_p for m2_p in self.get_moves_legal() if self.is_checkmate(m2_p)]
                 if len(mates_p) == 0:
                     is_mate_avoidable = True
                     self.move_undo(m_opp)
