@@ -35,7 +35,7 @@ class Board:
     #   creates a Board ep_target in halfmove N+1 (in board.ep_target).
     def __init__(self, layout=None):
         if layout is None:
-            layout = G.INIT_PIECES_DICT
+            layout = G.INIT_LAYOUT_DICT
 
         self.pieces = [None for k in range(G.SPACE_COUNT)]
         for player in layout.keys():

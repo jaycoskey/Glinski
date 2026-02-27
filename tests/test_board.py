@@ -146,7 +146,7 @@ class TestBoard(unittest.TestCase):
     #     K:2,Q:6,R:6(3+3),B:12(2+8+2),N:8(4+4),P:17(2*8+1).
     #     Total: 51
     def test_init_piece_move_counts(self):
-        INIT_PIECE_MOVE_COUNTS = list(map(int, """
+        INIT_LAYOUT_MOVE_COUNTS = list(map(int, """
                   0   0   0   0   0   0
                 2   0   0   0   0   0   2
               3   2   0   0   0   0   2   3
@@ -165,7 +165,7 @@ class TestBoard(unittest.TestCase):
             if piece and piece.player != b.cur_player:
                 continue
             actual_count = len(list(b.get_moves_pseudolegal_from(npos)))
-            expected_count = INIT_PIECE_MOVE_COUNTS[npos]
+            expected_count = INIT_LAYOUT_MOVE_COUNTS[npos]
             self.assertEqual(actual_count, expected_count,
                 f'At {G.npos_to_alg(npos)}: {actual_count} != {expected_count}')
 
@@ -178,7 +178,7 @@ class TestBoard(unittest.TestCase):
     def test_init_empty(self):
         pass
 
-    def test_init_placement_data(self):
+    def test_init_layout_data(self):
         pass
 
     def test_move_counts_by_piece_type(self):
