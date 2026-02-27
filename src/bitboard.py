@@ -136,6 +136,15 @@ BITBOARD_FILES = [
         BB_FILE_I, BB_FILE_K, BB_FILE_L]
 
 # ========================================
+BB_PAWN_EP_TARGET_BLACK = (BB_B6 | BB_C6 | BB_D6 | BB_E6
+        | BB_F6
+        | BB_G6 | BB_H6 | BB_I6 | BB_K6)
+
+BB_PAWN_EP_TARGET_WHITE = (BB_B2 | BB_C3 | BB_D4 | BB_E5
+        | BB_F6
+        | BB_G5 | BB_H4 | BB_I3 | BB_K2)
+
+# ========================================
 BB_PAWN_HOME_BLACK = (BB_B7 | BB_C7 | BB_D7 | BB_E7
         | BB_F7
         | BB_G7 | BB_H7 | BB_I7 | BB_K7)
