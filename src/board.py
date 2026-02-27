@@ -568,7 +568,7 @@ class Board:
 
     # For each piece on the Board, there is a corresponding unique triple:
     #   (Board position ID, player ID, piece_type ID).
-    # That is used to look up a value in the ZobristHashTable that
+    # That is used to look up a value in the ZobristTable that
     # corresponds to that triplet.
     #   * The Board position ID (npos) selects a plane.
     #   * The Player value (p_val) selects a row within that plane.
