@@ -718,8 +718,7 @@ class Board:
         # Phase 2: Move piece
         #
         move.pt = self.pieces[move.fr_npos].pt
-        self.pieces[move.to_npos] = self.pieces[move.fr_npos]
-        self.pieces[move.fr_npos] = None
+        self.piece_move(move.fr_npos, move.to_npos)
 
         if (move.pt == PieceType.Pawn
                 and self.is_in_pawn_home_zone(move.fr_npos)
@@ -734,7 +733,7 @@ class Board:
         if move.promotion_pt:
             assert move.pt == PieceType.Pawn
             assert self.is_in_pawn_promo_zone(move.to_npos)
-            self.pieces[move.to_npos].pt = move.promotion_pt
+            self.piece_set_pt(move.to_npos, move.promotion_pt)
 
         # Phase 4: Check for end of Game
 
@@ -804,9 +803,9 @@ class Board:
         mover = self.cur_player.opponent()
         opponent = self.cur_player
 
-        self.pieces[move.to_npos] = None
-        self.pieces[move.fr_npos] = Piece(mover, move.pt)
-        assert move.pt is not None
+        assert not self.pieces[move.fr_npos]
+        self.piece_move(move.to_npos, move.fr_npos)
+        assert self.pieces[move.fr_npos]
 
         # Restore captured piece, if any
         if move.capture_pt:
