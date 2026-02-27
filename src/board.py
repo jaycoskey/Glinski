@@ -4,7 +4,8 @@
 
 from bitarray import bitarray
 from collections import Counter
-from typing import Dict, Iterator, List
+from copy import deepcopy
+from typing import Dict, Iterator, List, Union
 
 from src.bitboard import BB_COURT_BLACK, BB_COURT_WHITE
 from src.bitboard import BB_PAWN_HOME_BLACK, BB_PAWN_HOME_WHITE
@@ -13,6 +14,7 @@ from src.bitboard import BITBOARD_FILES
 from src.board_state import BoardState
 from src.game_state import GameState
 from src.geometry import Geometry as G
+from src.geometry import LayoutDict, Npos
 from src.hex_pos import HexPos
 from src.hex_vec import HexVec
 from src.move import Move
@@ -21,8 +23,6 @@ from src.piece import Piece
 from src.piece_type import PieceType, PIECE_TYPE_COUNT
 from src.player import Player, PLAYER_COUNT
 from src.zobrist import ZOBRIST_TABLE
-
-Npos = int
 
 
 class Board:
@@ -33,35 +33,93 @@ class Board:
     #         layout: str
     # Note: An e.p. move executed in halfmove N (in move.ep_target)
     #   creates a Board ep_target in halfmove N+1 (in board.ep_target).
-    def __init__(self, layout=None):
+    def __init__(self, layout:Union[str, LayoutDict]=None):
         if layout is None:
-            layout = G.INIT_LAYOUT_DICT
+            layout_dict = deepcopy(G.INIT_LAYOUT_DICT)
+            self.init_layout(layout_dict)
+            self.init_defaults()
+        elif type(layout) == LayoutDict:
+            layout_dict = deepcopy(layout)
+            self.init_layout(layout_dict)
+            self.init_defaults()
+        elif type(layout) == str:
+            fen_parts = layout.split()
+            if len(fen_parts) not in [1, 6]:
+                msg = ('Board constructor: LayoutDict parameter appears to be a FEN string '
+                        + f'with {len(fen_parts)} parts. It should have 1 or 6.')
+                raise ValueError(f'Board.__init__(): {msg}')
+            if len(fen_parts) == 1:
+                fen_board_str = fen_parts[0]
+                layout_dict = G.fen_board_to_layout_dict(fen_board_str)
+                self.init_layout(layout_dict)
+                self.init_defaults()
+            else:  # len(layout_chunks) == 6, so layout should be a full FEN string
+                (fen_board_str, cur_player, ep_tgt_npos,
+                        nonprogress_ctr, fullmove_count,
+                        halfmove_count) = Pgn.fen_to_fen_info(layout_fen)
+                nones = [None] * (self.halfmove_count + 1)
+                ind = self.halfmove_count
 
-        self.pieces = [None for k in range(G.SPACE_COUNT)]
-        for player in layout.keys():
-            for pt in layout[player].keys():
-                for pos in layout[player][pt]:
-                    # piece_name = f'{player.name} {pt.name}'
-                    # space_name = f'{G.pos_to_alg(pos)}=HexPos{pos}'
-                    # print(f'INFO: adding ({piece_name:<12}) to {space_name}')
-                    self.piece_add(pos, player, pt)
+                # FEN part #1 (Board layout)
+                layout_dict = G.fen_board_to_layout_dict(fen_board_str)
+                self.init_layout(layout_dict)
 
+                self.cur_player = cur_player  # FEN part #2
+
+                # FEN part #3 regards castling, which is not allowed in Glinski's hexagonal chess.
+
+                self.halfmove_count = halfmove_count  # FEN part #6
+
+                self.history_ep_target = copy(nones)
+                self.history_ep_target[ind] = None if ep_tgt_str == '-' else G.alg_to_npos(ep_tgt_str)  # FEN part #4
+
+                self.history_nonprogress_halfmove_count[ind] = int(nonprogress_str)  # FEN part #5
+
+                self.history_move = copy(nones)
+                self.history_zobrist_hash = copy(nones)
+
+                self.history_is_check = copy(nones)
+                self.history_is_checkmate = copy(nones)
+                self.history_is_repetition_3x = copy(nones)
+                self.history_is_repetition_5x = copy(nones)
+                self.history_is_stalemate = copy(nones)
+
+                self.game_state_set(GameState.InPlay)
+
+    def init_defaults(self):
+        # Board layout is addressed elsewhere.
+        ####################
+        # Info that is provided by a FEN string.
+        ####################
         self.cur_player = Player.White
         self.halfmove_count = 0
-        self.game_state = GameState.Unstarted
-
-        # Note: Support move_undo()
-        self.history_ep_target = [None]  # Pawns destinations used for en passant capture
-        self.history_move = [None]  # The move resulting in the current Board position
         self.history_nonprogress_halfmove_count = [0]
+        self.history_ep_target = [None]  # Pawns destinations used for en passant capture
+
+        ####################
+        # Info not provided by a FEN string
+        ####################
+        self.game_state_set(GameState.Unstarted)
+
+        self.history_move = [None]  # The move resulting in the current Board position
         self.history_zobrist_hash = [self.get_zobrist_hash()]
 
-        # Note: Track other computed values to avoid recomputation upon rewind & ffwd.
+        # Note: Tracking computed values avoids recomputation upon rewind/ffwd.
+        # Note: No storage is needed for the non-progress states
+        #   (for the 50- & 75-move rules), since they just echo
+        #   the non-progress counter.
         self.history_is_check = [False]
         self.history_is_checkmate = [False]
         self.history_is_repetition_3x = [False]
         self.history_is_repetition_5x = [False]
         self.history_is_stalemate = [False]
+
+    def init_layout(self, layout_dict: LayoutDict):
+        self.pieces = [None for k in range(G.SPACE_COUNT)]
+        for player in layout_dict.keys():
+            for pt in layout_dict[player].keys():
+                for pos in layout_dict[player][pt]:
+                    self.piece_add(pos, player, pt)
 
     # ========================================
     # Access current values of history-tracked attributes using properties.
@@ -190,6 +248,9 @@ class Board:
 
     # ========================================
 
+    def game_state_set(self, game_state):
+        self.game_state = game_state
+
     def get_board_errors(self):
         raise NotImplementedError('board.get_board_errors()')
 
@@ -242,6 +303,20 @@ class Board:
             if piece and piece.player == player and piece.pt == PieceType.King:
                 return npos
         assert False, f'Error: The Board contains no King for player {player}.'
+
+    # ========================================
+
+    def get_layout_dict(self) -> Dict[Player, Dict[PieceType, List[HexPos]]]:
+        layout_dict = G.get_layout_dict_empty()
+
+        for npos in range(G.SPACE_COUNT):
+            piece = self.pieces[npos]
+            if not piece:
+                continue
+            player = piece.player
+            pt = piece.pt
+            layout[player][pt].append(G.npos_to_pos(npos))
+        return layout
 
     # ========================================
 

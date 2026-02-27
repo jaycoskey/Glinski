@@ -8,10 +8,12 @@ from typing import Dict, List, Tuple
 from src.board import Board
 from src.game import Game
 from src.geometry import Geometry as G
+from src.hex_pos import HexPos
 from src.move import Move
 from src.move_spec import MoveSpec
 from src.move_parse_phase import MoveParsePhase
 from src.piece_type import PieceType
+from src.player import Player
 
 
 GameTagPair = Tuple[str, str]
@@ -47,6 +49,55 @@ class Pgn:
     RE_PGN_LINE_IS_TURN_NUM = re.compile(r"^(1-9)(0-9)*\.")
     RE_PGN_LINE_NONMOVE     = re.compile('^\s*([#[].*)?')
     RE_PGN_TAG = re.compile(r'^\[(\w+)\s+"([^\]]+)"]$')
+
+    # TODO: Consider returning namedtuple to reduce the risk of error.
+    @classmethod
+    def fen_to_fen_info(cls, fen: str) -> Tuple:
+        fen_parts = fen.split()
+        assert(len(fen_parts) == 6)
+
+        #1: Layout
+        fen_board_str = fen_parts[0]
+
+        #2: Active color
+        cur_player_str = fen_parts[1]
+        if cur_player_str == 'b':
+            cur_player = Player.Black
+        elif cur_player_str == 'w':
+            cur_player = Player.White
+        else:
+            raise ValueError(f'fen_to_fen_info: Unrecognized Player in FEN string')
+
+        #3: Castling availability
+        # Note: There is no castling in Glinski's hexagonal chess.
+        castling_info = None
+
+        #4: En passant target npos
+        ep_tgt_str = fen_parts[3]
+
+        #5: Non-progress halfmove clock
+        nonprogress_ctr = int(fen_parts[4])
+
+        #6: Turn/fullmove number
+        fullmove_num = int(fen_parts[5])
+        halfmove_base = 2 * (fullmove_num - 1)
+        halfmove_bump = 1 if cur_player == Player.Black else 0
+        halfmove_num = halfmove_base + halfmove_bump
+
+        return (fen_board_str, cur_player, ep_tgt_str,
+                nonprogress_ctr, fullmove_num, halfmove_num)
+
+    @classmethod
+    def get_layout_dict_empty(cls) -> Dict[Player, Dict[PieceType, List[HexPos]]]:
+        PLAYERS = [Player.Black, Player.White]
+        PIECE_TYPES = [PieceType.King, PieceType.Queen, PieceType.Rook,
+                PieceType.Bishop, PieceType.Knight, PieceType.Pawn]
+        layout = {}
+        for player in PLAYERS:
+            layout[player] = {}
+            for pt in PIECE_TYPES:
+                layout[player][pt] = []
+        return layout
 
     # Note: This method uses 2 techniques to handle multi-character tokens:
     #   (1) To handle two-digit rank numbers (e.g., 10, 11), the first digit

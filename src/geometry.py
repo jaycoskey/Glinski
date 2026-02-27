@@ -2,18 +2,20 @@
 # by Jay M. Coskey, 2026
 
 import re
-from typing import List
+from typing import Dict, List
 
 from src.bitboard import *
 from src.board_color import BoardColor
 from src.hex_pos import HexPos
 from src.hex_vec import HexVec
+from src.piece import Piece
 from src.piece_type import PieceType
 from src.player import Player
 
 from src.util import static_init
 
 Npos = int
+LayoutDict = Dict[Player, Dict[PieceType, List[HexPos]]]
 
 
 @static_init
@@ -117,7 +119,7 @@ class Geometry:
             hex1 = rank - 6 + max(0, hex0)
             return HexPos(hex0, hex1)
 
-        # ========================================
+        # --------------------
 
         # Define Board Spaces
         #     A6 ... A1 ...... F11 ... F1 ...... L6 ... L1
@@ -170,7 +172,7 @@ class Geometry:
         for k, alg in enumerate(BOARD_SPACE_NAMES):
             setattr(cls, alg, alg_to_pos(alg))
 
-        # ========================================
+        # --------------------
 
         # Define initial layout of pieces,
         #   using multiple representations.
@@ -220,7 +222,7 @@ class Geometry:
              """.split())
         setattr(cls, "INIT_LAYOUT_LIST", INIT_LAYOUT_LIST)
 
-        # ========================================
+        # --------------------
 
         ZERO = HexVec(0, 0)
         setattr(cls, "ZERO", ZERO)
@@ -303,7 +305,7 @@ class Geometry:
         setattr(cls, "VECS_PAWN_HOP_BLACK",  VECS_PAWN_HOP_BLACK)
         setattr(cls, "VECS_PAWN_HOP_WHITE",  VECS_PAWN_HOP_WHITE)
 
-        # ========================================
+        # --------------------
         LEAPS_KING = {}
         for npos in range(SPACE_COUNT):
             pos = cls.npos_to_pos(npos)
@@ -322,7 +324,7 @@ class Geometry:
             LEAPS_KNIGHT[npos] = npos_leap
         setattr(cls, "LEAPS_KNIGHT", LEAPS_KNIGHT)
 
-        # ========================================
+        # --------------------
         #
         # This section could likely be more compact, at the cost of clarity.
         #
@@ -384,7 +386,7 @@ class Geometry:
             LEAP_PAWN_HOP_WHITE[npos] = cls.pos_to_npos(pos_hop)
         setattr(cls, "LEAP_PAWN_HOP_WHITE", LEAP_PAWN_HOP_WHITE)
 
-        # ========================================
+        # --------------------
 
         # When moving a slider, check space in progression,
         # until the piece moves off the board or contacts a piece.
@@ -440,12 +442,52 @@ class Geometry:
         hex1 = rank - 6 + max(0, hex0)
         return HexPos(hex0, hex1)
 
+    @classmethod
+    def fen_board_to_layout_dict(cls, fen: str) -> LayoutDict:
+        layout_dict = cls.get_layout_dict_empty()
+
+        # Replace digits with repeated hyphens
+        fen2 = re.sub(r'\d+', lambda m: '-' * int(m.group(0)), fen)
+
+        # Check shape/length of string
+        file_strs = fen2.split('/')
+        if len(file_strs) != 11:
+            raise ValueError(f'Invalid FEN string: Has {len(file_strs)} files instead of 11: {fen}')
+        for file_num, file_str in enumerate(file_strs):
+            if len(file_str) != cls.RANK_COUNT_PER_FILE[file_num]:
+                expected_len = cls.RANK_COUNT_PER_FILE[file_num]
+                actual_len = len(file_str)
+                msg = (f'Invalid FEN string: The (1-based) file #{file_num}, '
+                    + f'"{file_str}", has info on {actual_len} spaces, '
+                    + f'when it should have info on {expected_len} spaces.')
+                raise ValueError(msg)
+
+        fen3 = re.sub(r'\/', '', fen2)  # Remove slashes
+        for npos, c in enumerate(fen3):
+            if c == '-':
+                continue
+            player, pt = Piece.fen_symbol_to_player_pt(c)
+            layout_dict[player][pt].append(cls.npos_to_pos(npos))
+        return layout_dict
+
     # get_space_color() would be a more specific name,
     # but get_board_color() is more idiomatic.
     @classmethod
     def get_board_color(cls, npos: Npos) -> BoardColor:
         pos = cls.npos_to_pos(npos)
         return BoardColor((pos.hex0 + pos.hex1) % 3)
+
+    @classmethod
+    def get_layout_dict_empty(cls) -> LayoutDict:
+        PLAYERS = [Player.Black, Player.White]
+        PIECE_TYPES = [PieceType.King, PieceType.Queen, PieceType.Rook,
+                PieceType.Bishop, PieceType.Knight, PieceType.Pawn]
+        layout = {}
+        for player in PLAYERS:
+            layout[player] = {}
+            for pt in PIECE_TYPES:
+                layout[player][pt] = []
+        return layout
 
     @classmethod
     def is_pos_on_board(cls, pos: HexPos):

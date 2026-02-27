@@ -21,3 +21,10 @@ class Piece:
         if self.player == Player.Black:
             result = result.lower()
         return result
+
+    @classmethod
+    def fen_symbol_to_player_pt(cls, c: str) -> (Player, PieceType):
+        player = Player.Black if c.islower() else Player.White
+        pt = PieceType.from_symbol(c.upper())
+        return (player, pt)
+
