@@ -605,21 +605,36 @@ class Board:
     def is_ep_target(self, npos: Npos):
         return npos == self.ep_target
 
-    def is_in_court_zone(self, npos: Npos):
+    def is_in_court_zone(self, npos: Npos, player:Player=None):
+        if player is None:
+            player = self.cur_player
         if self.cur_player == Player.Black:
             result = BB_COURT_BLACK[npos]
         else:
             result = BB_COURT_WHITE[npos]
         return result
 
-    def is_in_pawn_home_zone(self, npos: Npos):
+    def is_in_pawn_ep_target_zone(self, npos: Npos, player:Player=None):
+        if player is None:
+            player = self.cur_player
+        if player == Player.Black:
+            result = BB_PAWN_EP_TARGET_BLACK[npos]
+        else:
+            result = BB_PAWN_EP_TARGET_WHITE[npos]
+        return result
+
+    def is_in_pawn_home_zone(self, npos: Npos, player:Player=None):
+        if player is None:
+            player = self.cur_player
         if self.cur_player == Player.Black:
             result = BB_PAWN_HOME_BLACK[npos]
         else:
             result = BB_PAWN_HOME_WHITE[npos]
         return result
 
-    def is_in_pawn_promo_zone(self, npos: Npos):
+    def is_in_pawn_promo_zone(self, npos: Npos, player:Player=None):
+        if player is None:
+            player = self.cur_player
         if self.cur_player == Player.Black:
             result = BB_PAWN_PROMO_BLACK[npos]
         else:
