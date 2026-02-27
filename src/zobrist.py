@@ -10,7 +10,7 @@
 #
 # Each piece in a Board position yields a triplet
 #     (Board position ID, player, piece_type),
-# which is used to index into the ZobristHashTable.
+# which is used to index into the ZobristTable.
 #   * The Board position ID selects a plane.
 #   * The Player value selects a row within that plane.
 #   * The PieceType value selects a column within that plane.
@@ -1110,3 +1110,4 @@ ZOBRIST_TABLE = [
     0xF0CA991AE91D41B9,
     0x1CD4F5F756E30AE7
 ]
+
