@@ -860,7 +860,7 @@ class Board:
         self.pieces[npos] = Piece(player, pt)
 
     def piece_move(self, fr_npos: Npos, to_npos: Npos):
-        assert not self.pieces[to_npos] 
+        assert not self.pieces[to_npos]
         self.pieces[to_npos] = self.pieces[fr_npos]
         self.pieces[fr_npos] = None
 
@@ -882,3 +882,19 @@ class Board:
         if heading:
             print(heading + ':')
         print(text)
+
+    def print_ascii(self, heading=None, indent_board=8, indent_incr=3,
+            item_width=6):
+        print(self, heading, indent_board, indent_incr, item_width, do_use_unicode=False)
+
+    def print_info(self):
+        ep_tgt = game.board.ep_target
+        ep_str = (f'{G.npos_to_alg(ep_tgt) if ep_tgt else "None"}')
+        print(f'Halfmove_count={game.board.halfmove_count}, '
+                + f'cur_player={self.cur_player} '
+                + f'last_move_text={self.last_move} '
+                + f'(ep_target={ep_str})')
+
+    def print_unicode(self, heading=None, indent_board=8, indent_incr=3, item_width=6):
+        print(self, heading, indent_board, indent_incr, item_width, do_use_unicode=True)
+
