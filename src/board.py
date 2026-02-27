@@ -5,6 +5,7 @@
 from bitarray import bitarray
 from collections import Counter
 from copy import deepcopy
+import math
 from typing import Dict, Iterator, List, Union
 
 from src.bitboard import BB_COURT_BLACK, BB_COURT_WHITE
@@ -27,10 +28,8 @@ from src.zobrist import ZOBRIST_TABLE
 
 class Board:
     # Different ways to initialize board:
-    #   * By data showing piece layout by color and piece type:
-    #         layout: Dict[Player, Dict[PieceType, List[Pos]]]
-    #   * By a FEN string:
-    #         layout: str
+    #   * By a Layout structure (which can be empty, for an empty board)
+    #   * By a FEN string
     # Note: An e.p. move executed in halfmove N (in move.ep_target)
     #   creates a Board ep_target in halfmove N+1 (in board.ep_target).
     def __init__(self, layout:Union[str, LayoutDict]=None):
@@ -45,8 +44,9 @@ class Board:
         elif type(layout) == str:
             fen_parts = layout.split()
             if len(fen_parts) not in [1, 6]:
-                msg = ('Board constructor: LayoutDict parameter appears to be a FEN string '
-                        + f'with {len(fen_parts)} parts. It should have 1 or 6.')
+                msg = ('Board constructor: LayoutDict parameter appears '
+                    + f'to be a FEN string with {len(fen_parts)} parts. '
+                    + 'It should have 1 or 6.')
                 raise ValueError(f'Board.__init__(): {msg}')
             if len(fen_parts) == 1:
                 fen_board_str = fen_parts[0]
@@ -261,7 +261,13 @@ class Board:
     #     Halfmove clock
     #     Fullmove number (= floor(halfmove_count / 2))
     def get_fen(self):
-        raise NotImplementedError('board.get_fen()')
+        fen = self.get_fen_board()
+        player = 'b' if self.cur_player == Player.Black else 'w'
+        castling = '-'  # No castling in Glinski's hexagonal chess
+        ep = G.npos_to_alg(self.ep_target) if self.ep_target else '-'
+        nonprogress = str(self.nonprogress_halfmove_count)
+        fullmove = str(1 + math.floor(self.halfmove_count / 2))
+        return f'{fen} {player} {castling} {ep} {nonprogress} {fullmove}'
 
     def get_fen_board(self):
         result = ''

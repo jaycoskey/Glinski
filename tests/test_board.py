@@ -21,14 +21,16 @@ class TestBoard(unittest.TestCase):
 
     def test_board_initialization(self):
         b0 = Board()
-        fen = '6/p5P/rp4PR/n1p3P1N/q2p2P2Q/bbb1p1P1BBB/k2p2P2K/n1p3P1N/rp4PR/p5P/6'
-        b1 = Board(fen)
+        fen_board = '6/p5P/rp4PR/n1p3P1N/q2p2P2Q/bbb1p1P1BBB/k2p2P2K/n1p3P1N/rp4PR/p5P/6'
+        b1 = Board(fen_board)
         zh0 = b0.get_zobrist_hash()
         zh1 = b1.get_zobrist_hash()
         if zh0 != zh1:
             b0.print()
             b1.print()
         self.assertEqual(b1.get_zobrist_hash(), b0.get_zobrist_hash())
+        fen_board1 = b1.get_fen_board()
+        self.assertEqual(fen_board1, fen_board)
 
     def test_detect_check(self):
         pass
