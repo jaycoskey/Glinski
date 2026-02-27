@@ -480,7 +480,7 @@ class Board:
 
     def get_pieces_list(self, player: Player=None, pt: PieceType=None) -> List[Piece]:
         result = []
-        for npos in range(G.PIECE_COUNT):
+        for npos in range(G.SPACE_COUNT):
             piece = self.pieces[npos]
             if not piece:
                 continue
