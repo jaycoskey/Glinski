@@ -28,6 +28,9 @@ from src.zobrist import ZOBRIST_TABLE
 
 
 class Board:
+    # ========================================
+    # SECTION: CONSTRUCTOR
+    # ========================================
     # Different ways to initialize board:
     #   * By a Layout structure (which can be empty, for an empty board)
     #   * By a FEN string
@@ -126,7 +129,11 @@ class Board:
                     self.piece_add(pos, player, pt)
 
     # ========================================
-    # Access current values of history-tracked attributes using properties.
+    # SECTION: PROPERTIES
+    # ========================================
+    # Some attributes are tracked in history arrays,
+    # to support undo/redo, and perhaps later rewind & fastforward.
+    # The current values of these attributes are accessed via properties.
 
     @property
     def ep_target(self):
@@ -172,91 +179,18 @@ class Board:
     def zobrist_hash(self):
         return self.history_zobrist_hash[self.halfmove_count]
 
-    # ========================================
+    # TODO: Convert to property
+    def get_halfmove_count(self):
+        # Don't count moves[0], which is None.
+        halfmove_count = len(self.history_move) - 1
 
-    def compute_board_state(self) -> BoardState:
-        moves = self.get_moves_pseudolegal()
-        is_king_attacked = self.is_king_attacked()
-        if is_king_attacked:
-            is_escapable = False
-            for protect_move in self.get_moves_pseudolegal():
-                self.move_make(protect_move)
-                if not self.is_king_attacked():
-                    is_escapable = True
-                self.make_undo()
-                if is_escapable:
-                    break
-            if is_escapable:
-                result = BoardState.Check
-            else:
-                result = BoardState.Checkmate
-        else:
-            if len(moves) == 0:
-                result = BoardState.Stalemate
-            else:
-                result = BoardState.Normal
-        return result
+        assert self.halfmove_count == halfmove_count
+        return self.halfmove_count
 
     # ========================================
-
-    def find_mates_in_1(self) -> Iterator[Move]:
-        moves = self.board.get_moves_legal()
-        result = []
-        for move in moves:
-            self.move_make(move)
-            if self.is_checkmate():
-                result.append(move)
-            self.move_undo(move)
-        return result
-
-    # Assume the next player to move is White
-    # Returns a tree structure of moves, with depth 3:
-    #   mates_in_2[m_p][m_opp][
-    #   A first move, followed by a series of moves that brings about checkmate to the opponent.
-    def find_mates_in_2(self)-> Dict:
-        mates_in_2 = {}
-        moves_p = self.get_moves_legal()
-        for m_p in moves_p:
-            inevitable_mates = find_mates_in_2_starting_with(m_p)
-            if inevitable_mates:
-                mates_in_2[m_p] = inevitable_mates
-        return mates_in_2
-
-    # p:   The Player who makes move m_p.
-    # opp: The opponent of Player p. Player opp makes move m_opp.
-    #
-    def find_mates_in_2_starting_with(self, m_p):
-        inevitable_mates = {}
-        self.move_make(m_p)
-        moves_opp = self.get_moves_legal()
-        for m_opp in moves_opp:
-            self.move_make(m_opp)
-            if self.is_game_over():
-                is_mate_avoidable = True
-                self.move_undo(m_p)
-                break
-            else:
-                mates_p = [m2_p for m2_p in self.get_moves_legal() if self.is_checkmate(m2_p)]
-                if len(mates_p) == 0:
-                    is_mate_avoidable = True
-                    self.move_undo(m_opp)
-                    break
-                if not m_p in inevitable_mates:
-                    inevitable_mates[m_opp] = mates_p
-                    self.move_undo(m_opp)
-        if is_mate_avoidable:
-            result = {}
-        else:
-            result = inevitable_mates
-        return result
-
+    # SECTION: LAYOUT
     # ========================================
-
-    def get_board_errors(self):
-        raise NotImplementedError('board.get_board_errors()')
-
-    def get_ep_target(self):
-        raise NotImplementedError('board.get_ep_target()')
+    # Note: This is called by get_layout_dict_str, for support of SVG creation.
 
     # Return the FEN Board representation, plus 5 other strings:
     #     Active color (w or b)
@@ -297,21 +231,12 @@ class Board:
                 result += '/'
         return result
 
-    def get_halfmove_count(self):
-        # Don't count moves[0], which is None.
-        halfmove_count = len(self.history_move) - 1
-
-        assert self.halfmove_count == halfmove_count
-        return self.halfmove_count
-
     def get_king_npos(self, player: Player):
         for npos in range(G.SPACE_COUNT):
             piece = self.pieces[npos]
             if piece and piece.player == player and piece.pt == PieceType.King:
                 return npos
         assert False, f'Error: The Board contains no King for player {player}.'
-
-    # ========================================
 
     def get_layout_dict(self) -> Dict[Player, Dict[PieceType, List[HexPos]]]:
         layout_dict = G.get_layout_dict_empty()
@@ -325,39 +250,130 @@ class Board:
             layout_dict[player][pt].append(G.npos_to_pos(npos))
         return layout_dict
 
-    # This returns a string suitable for interpolation
-    # into an SVG template file, supporting SVG output of Boards.
-    # This is called by get_svg_str().
-    def get_layout_dict_str(self, fr_npos=None, to_npos=None,
-            king_check_npos=None, king_checkmate_npos=None) -> str:
-        PIECE_TYPES = [PieceType.King, PieceType.Queen, PieceType.Rook,
-                PieceType.Bishop, PieceType.Knight, PieceType.Pawn]
-        SVG_PLAYER_KEYS = { Player.Black: 'black', Player.White: 'white' }
-        layout_dict = self.get_layout_dict()
-        result = '\tLAYOUT = {\n'
-        for player in [Player.Black, Player.White]:
-            result += '\t\t"' + SVG_PLAYER_KEYS[player] + '": {\n'
-            for pt in PIECE_TYPES:
-                pos_str = ', '.join([G.pos_to_alg(pos).upper()
-                    for pos in layout_dict[player][pt]])
-                result += f'\t\t\t"{pt}": [{pos_str}],\n'
-            result += '\t\t},\n'
+    def get_piece(self, npos: Npos):
+        return self.pieces[npos]
 
-        from_coords_str = f'{G.npos_to_alg(fr_npos).upper() if fr_npos else "null"}'
-        to_coords_str = f'{G.npos_to_alg(to_npos).upper() if to_npos else "null"}'
-        check_str = f'{G.npos_to_alg(king_check_npos).upper() if king_check_npos else "null"}'
-        checkmate_str = f'{G.npos_to_alg(king_checkmate_npos).upper() if king_checkmate_npos else "null"}'
-
-        result += '\t}\n'
-        result += f'\tFROM_COORDS = {from_coords_str}\n'
-        result += f'\tTO_COORDS = {to_coords_str}\n'
-        result += '\n'
-        result += f'\tKING_CHECK_COORDS = {check_str}\n'
-        result += f'\tKING_CHECKMATE_COORDS = {checkmate_str}\n'
+    def get_pieces_at_file(self, f: str, player: Player=None, pt: PieceType=None):
+        result = []
+        for npos in BITBOARD_FILES[G.FILE_CHAR_TO_HEX0[f]]:
+            piece = self.pieces[npos]
+            if piece:
+                if ((player is None or piece.player == player)
+                        and (pt is None or piece.pt == pt)):
+                    result.append(piece)
         return result
 
-    # ========================================
+    def get_pieces_at_rank(self, r: int, player: Player=None, pt: PieceType=None):
+        result = []
+        for npos in G.BITBOARD_RANKS[r - 1].search(1):
+            piece = self.pieces[npos]
+            if piece:
+                if ((player is None or piece.player == player)
+                        and (pt is None or piece.pt == pt)):
+                    result.append(piece)
+        return result
 
+    def get_pieces_list(self, player: Player=None, pt: PieceType=None) -> List[Piece]:
+        result = []
+        for npos in range(G.SPACE_COUNT):
+            piece = self.pieces[npos]
+            if not piece:
+                continue
+            if ((player is None or piece.player == player)
+                    and (pt is None or piece.pt == pt)):
+                result.append(piece)
+        return result
+
+    # For each piece on the Board, there is a corresponding unique triple:
+    #   (Board position ID, player ID, piece_type ID).
+    # That is used to look up a value in the ZobristTable that
+    # corresponds to that triplet.
+    #   * The Board position ID (npos) selects a plane.
+    #   * The Player value (p_val) selects a row within that plane.
+    #   * The PieceType value (p_val) selects a column within that plane.
+    # All such values are XORed together to form the final result.
+    def get_zobrist_hash(self):
+        result = 0
+        for npos in range(G.SPACE_COUNT):
+            piece = self.get_piece(npos)
+            if piece is not None:
+                p_val = piece.player.value
+                pt_val = piece.pt.value
+                zobrist_index = (npos * PLAYER_COUNT * PIECE_TYPE_COUNT
+                    + p_val * PIECE_TYPE_COUNT + pt_val)
+                result ^= ZOBRIST_TABLE[zobrist_index]
+        return result
+
+    # --------------------
+
+    def is_empty(self, npos: Npos):
+        return self.pieces[npos] is None
+
+    def is_ep_target(self, npos: Npos):
+        return npos == self.ep_target
+
+    def is_in_court_zone(self, npos: Npos, player:Player=None):
+        if player is None:
+            player = self.cur_player
+        if self.cur_player == Player.Black:
+            result = BB_COURT_BLACK[npos]
+        else:
+            result = BB_COURT_WHITE[npos]
+        return result
+
+    def is_in_pawn_ep_target_zone(self, npos: Npos, player:Player=None):
+        if player is None:
+            player = self.cur_player
+        if player == Player.Black:
+            result = BB_PAWN_EP_TARGET_BLACK[npos]
+        else:
+            result = BB_PAWN_EP_TARGET_WHITE[npos]
+        return result
+
+    def is_in_pawn_home_zone(self, npos: Npos, player:Player=None):
+        if player is None:
+            player = self.cur_player
+        if self.cur_player == Player.Black:
+            result = BB_PAWN_HOME_BLACK[npos]
+        else:
+            result = BB_PAWN_HOME_WHITE[npos]
+        return result
+
+    def is_in_pawn_promo_zone(self, npos: Npos, player:Player=None):
+        if player is None:
+            player = self.cur_player
+        if self.cur_player == Player.Black:
+            result = BB_PAWN_PROMO_BLACK[npos]
+        else:
+            result = BB_PAWN_PROMO_WHITE[npos]
+        return result
+
+    # --------------------
+
+    # Note that piece addition is done via pos, but removal uses npos.
+    def piece_add(self, pos: HexPos, player: Player, pt: PieceType):
+        npos = G.pos_to_npos(pos)
+        self.pieces[npos] = Piece(player, pt)
+
+    def piece_move(self, fr_npos: Npos, to_npos: Npos):
+        assert not self.pieces[to_npos]
+        self.pieces[to_npos] = self.pieces[fr_npos]
+        self.pieces[fr_npos] = None
+
+    # Note that piece addition is done via pos, but removal uses npos.
+    def piece_remove(self, npos: Npos, player: Player=None, pt: PieceType=None):
+        if player:
+            assert self.pieces[npos].player == player
+        if pt:
+            assert self.pieces[npos].pt == pt
+        self.pieces[npos] = None
+
+    def piece_set_pt(self, npos: Npos, new_pt: PieceType):
+        self.pieces[npos].pt = new_pt
+
+    # ========================================
+    # SECTION: PIECE MOVEMENT
+    # ========================================
     def get_leap_pawn_adv(self, npos: Npos) -> Npos:
         if self.cur_player == Player.Black:
             result = G.LEAP_PAWN_ADV_BLACK[npos]
@@ -379,38 +395,6 @@ class Board:
             result = G.LEAP_PAWN_HOP_WHITE[npos]
         return result
 
-    # This is used to obtain the location of a Pawn being
-    # captured by en passant, given the e.p. target space.
-    def get_vec_pawn_reverse(self) -> HexVec:
-        if self.cur_player == Player.Black:
-            result = G.VEC_PAWN_ADV_WHITE
-        else:
-            result = G.VEC_PAWN_ADV_BLACK
-        return result
-
-    # ========================================
-    def get_max_repetition_count(self):
-        return max(Counter(self.history_zobrist_hash).values())
-
-    # ========================================
-    # TODO: Check legality of the move.
-    # Currently, we don't even check to see if sliders are blocked.
-    def get_moves_to(self, to_npos: Npos):
-        result = []
-        for fr_npos in range(G.SPACE_COUNT):
-            if not self.pieces[fr_npos]:
-                continue
-            piece = self.pieces[fr_npos]
-            if piece.player != self.cur_player:
-                continue
-            moves = self.get_moves_pseudolegal_from(fr_npos)
-            for move in moves:
-                move.pt = piece.pt
-                if move.to_npos == to_npos:
-                    result.append(move)
-        return result
-
-    # ========================================
     def get_moves_legal(self):
         result = []
         for move in self.get_moves_pseudolegal():
@@ -596,85 +580,22 @@ class Board:
                         yield move
                 break # Can't slide past piece
 
-    def get_piece(self, npos: Npos):
-        return self.pieces[npos]
-
-    def get_pieces_list(self, player: Player=None, pt: PieceType=None) -> List[Piece]:
+    # TODO: Check slider moves being blocked
+    # TODO: Check for move legality
+    def get_moves_to(self, to_npos: Npos):
         result = []
-        for npos in range(G.SPACE_COUNT):
-            piece = self.pieces[npos]
-            if not piece:
+        for fr_npos in range(G.SPACE_COUNT):
+            if not self.pieces[fr_npos]:
                 continue
-            if ((player is None or piece.player == player)
-                    and (pt is None or piece.pt == pt)):
-                result.append(piece)
+            piece = self.pieces[fr_npos]
+            if piece.player != self.cur_player:
+                continue
+            moves = self.get_moves_pseudolegal_from(fr_npos)
+            for move in moves:
+                move.pt = piece.pt
+                if move.to_npos == to_npos:
+                    result.append(move)
         return result
-
-    def get_pieces_at_file(self, f: str, player: Player=None, pt: PieceType=None):
-        result = []
-        for npos in BITBOARD_FILES[G.FILE_CHAR_TO_HEX0[f]]:
-            piece = self.pieces[npos]
-            if piece:
-                if ((player is None or piece.player == player)
-                        and (pt is None or piece.pt == pt)):
-                    result.append(piece)
-        return result
-
-    def get_pieces_at_rank(self, r: int, player: Player=None, pt: PieceType=None):
-        result = []
-        for npos in G.BITBOARD_RANKS[r - 1].search(1):
-            piece = self.pieces[npos]
-            if piece:
-                if ((player is None or piece.player == player)
-                        and (pt is None or piece.pt == pt)):
-                    result.append(piece)
-        return result
-
-    # ========================================
-
-    def get_print_str(self, indent_board=8, indent_incr=2, item_width=4):
-        result_rows = []
-
-        ROWS = [[                     40                     ],
-                [                 30,     51                 ],
-                [             21,     41,     61             ],
-                [         13,     31,     52,     70         ],
-                [      6,     22,     42,     62,     78     ],
-                [  0,     14,     32,     53,     71,     85 ],
-                [      7,     23,     43,     63,     79     ],
-                [  1,     15,     33,     54,     72,     86 ],
-                [      8,     24,     44,     64,     80     ],
-                [  2,     16,     34,     55,     73,     87 ],
-                [      9,     25,     45,     65,     81,    ],
-                [  3,     17,     35,     56,     74,     88 ],
-                [     10,     26,     46,     66,     82,    ],
-                [  4,     18,     36,     57,     75,     89 ],
-                [     11,     27,     47,     67,     83     ],
-                [  5,     19,     37,     58,     76,     90 ],
-                    [ 12 ,    28,     48,     68,     84 ],
-                        [ 20,     38,     59,     77 ],
-                            [ 29,     49,     69 ],
-                                [ 39,     60 ],
-                                    [ 50 ]]
-
-        def row_indent_size(row_num):
-            result = indent_board
-            rows_from_middle = abs(10 - row_num)
-            if rows_from_middle > 5:
-                result += (rows_from_middle - 5) * indent_incr
-            elif rows_from_middle % 2 == 0:
-                result += indent_incr
-            return result
-
-        for row_num, row in enumerate(ROWS):
-            row_str = row_indent_size(row_num) * ' '  # Indentation
-            for item in row:
-                index = int(item)
-                piece = self.pieces[index]
-                txt = str(piece) if piece else '-'
-                row_str += str(txt.ljust(item_width))
-            result_rows.append(row_str.rstrip())  # End of row
-        return '\n'.join(result_rows)
 
     def get_rays(self, npos: Npos, pt: PieceType):
         if pt == PieceType.Queen:
@@ -687,85 +608,16 @@ class Board:
             raise ValueError(f'Unrecognized slider type: {pt}')
         return rays
 
-    # For each piece on the Board, there is a corresponding unique triple:
-    #   (Board position ID, player ID, piece_type ID).
-    # That is used to look up a value in the ZobristTable that
-    # corresponds to that triplet.
-    #   * The Board position ID (npos) selects a plane.
-    #   * The Player value (p_val) selects a row within that plane.
-    #   * The PieceType value (p_val) selects a column within that plane.
-    # All such values are XORed together to form the final result.
-    def get_zobrist_hash(self):
-        result = 0
-        for npos in range(G.SPACE_COUNT):
-            piece = self.get_piece(npos)
-            if piece is not None:
-                p_val = piece.player.value
-                pt_val = piece.pt.value
-                zobrist_index = (npos * PLAYER_COUNT * PIECE_TYPE_COUNT
-                    + p_val * PIECE_TYPE_COUNT + pt_val)
-                result ^= ZOBRIST_TABLE[zobrist_index]
-        return result
-
-    # ========================================
-
-    # TODO: Fetch info cached at time move is made
-    def is_condition_dead_position(self):
-        raise NotImplementedError('board.is_condition_dead_position()')
-
-    # TODO: Fetch info cached at time move is made
-    def is_condition_insufficient_material(self):
-        raise NotImplementedError('board.is_condition_insufficient_material()')
-
-    # ========================================
-    # Tests on individual spaces or pieces
-    #
-    def is_empty(self, npos: Npos):
-        return self.pieces[npos] is None
-
-    def is_ep_target(self, npos: Npos):
-        return npos == self.ep_target
-
-    def is_in_court_zone(self, npos: Npos, player:Player=None):
-        if player is None:
-            player = self.cur_player
+    # This is used to obtain the location of a Pawn being
+    # captured by en passant, given the e.p. target space.
+    def get_vec_pawn_reverse(self) -> HexVec:
         if self.cur_player == Player.Black:
-            result = BB_COURT_BLACK[npos]
+            result = G.VEC_PAWN_ADV_WHITE
         else:
-            result = BB_COURT_WHITE[npos]
+            result = G.VEC_PAWN_ADV_BLACK
         return result
 
-    def is_in_pawn_ep_target_zone(self, npos: Npos, player:Player=None):
-        if player is None:
-            player = self.cur_player
-        if player == Player.Black:
-            result = BB_PAWN_EP_TARGET_BLACK[npos]
-        else:
-            result = BB_PAWN_EP_TARGET_WHITE[npos]
-        return result
-
-    def is_in_pawn_home_zone(self, npos: Npos, player:Player=None):
-        if player is None:
-            player = self.cur_player
-        if self.cur_player == Player.Black:
-            result = BB_PAWN_HOME_BLACK[npos]
-        else:
-            result = BB_PAWN_HOME_WHITE[npos]
-        return result
-
-    def is_in_pawn_promo_zone(self, npos: Npos, player:Player=None):
-        if player is None:
-            player = self.cur_player
-        if self.cur_player == Player.Black:
-            result = BB_PAWN_PROMO_BLACK[npos]
-        else:
-            result = BB_PAWN_PROMO_WHITE[npos]
-        return result
-
-    # ========================================
-
-    def is_move_pseudolegal(self, m: Move):
-        raise NotImplementedError('board.is_move_pseudolegal()')
+    # --------------------
 
     # Called by is_condition_check() / is_condition_checkmate()
     # When player=None, player=self.cur_player is assumed.
@@ -802,7 +654,10 @@ class Board:
         self.move_undo(m)
         return is_legal
 
-    # ========================================
+    def is_move_pseudolegal(self, m: Move):
+        raise NotImplementedError('board.is_move_pseudolegal()')
+
+    # --------------------
 
     # Note: This method does not (currently) perform a check for move legality.
     # Note: This board sets board_state. It is up to the caller to check this
@@ -959,6 +814,53 @@ class Board:
         raise NotImplementedError('board.moves_undo()')
 
     # ========================================
+    # SECTION: DETECT ENDGAME
+    # ========================================
+
+    def compute_board_state(self) -> BoardState:
+        moves = self.get_moves_pseudolegal()
+        is_king_attacked = self.is_king_attacked()
+        if is_king_attacked:
+            is_escapable = False
+            for protect_move in self.get_moves_pseudolegal():
+                self.move_make(protect_move)
+                if not self.is_king_attacked():
+                    is_escapable = True
+                self.make_undo()
+                if is_escapable:
+                    break
+            if is_escapable:
+                result = BoardState.Check
+            else:
+                result = BoardState.Checkmate
+        else:
+            if len(moves) == 0:
+                result = BoardState.Stalemate
+            else:
+                result = BoardState.Normal
+        return result
+
+    def get_max_repetition_count(self):
+        return max(Counter(self.history_zobrist_hash).values())
+
+    def is_condition_dead_position(self):
+        raise NotImplementedError('board.is_condition_dead_position()')
+
+    def is_condition_insufficient_material(self):
+        raise NotImplementedError('board.is_condition_insufficient_material()')
+
+    def set_game_state(self, game_state):
+        self.game_state = game_state
+
+    # ========================================
+    # SECTION: DETECT ERRORS
+    # ========================================
+    def get_board_errors(self):
+        raise NotImplementedError('board.get_board_errors()')
+
+    # ========================================
+    # SECTION: PLAYER NOTIFICATION
+    # ========================================
     # TODO: Implement
     # Notification should be done by Game & Player/Controller
     def notify_player(self, player: Player, msg: str):
@@ -966,33 +868,109 @@ class Board:
         # print(f'Attention {player}: {msg}')
 
     # ========================================
-    # TODO: Encapsulate Layout & GameState info.
+    # SECTION: PUZZLE SUPPORT
+    # ========================================
+    def find_mates_in_1(self) -> Iterator[Move]:
+        moves = self.board.get_moves_legal()
+        result = []
+        for move in moves:
+            self.move_make(move)
+            if self.is_checkmate():
+                result.append(move)
+            self.move_undo(move)
+        return result
 
-    # Note that piece addition is done via pos, but removal uses npos.
-    def piece_add(self, pos: HexPos, player: Player, pt: PieceType):
-        npos = G.pos_to_npos(pos)
-        self.pieces[npos] = Piece(player, pt)
+    # Assume the next player to move is White
+    # Returns a tree structure of moves, with depth 3:
+    #   mates_in_2[m_p][m_opp][
+    #   A first move, followed by a series of moves that brings about checkmate to the opponent.
+    def find_mates_in_2(self)-> Dict:
+        mates_in_2 = {}
+        moves_p = self.get_moves_legal()
+        for m_p in moves_p:
+            inevitable_mates = find_mates_in_2_starting_with(m_p)
+            if inevitable_mates:
+                mates_in_2[m_p] = inevitable_mates
+        return mates_in_2
 
-    def piece_move(self, fr_npos: Npos, to_npos: Npos):
-        assert not self.pieces[to_npos]
-        self.pieces[to_npos] = self.pieces[fr_npos]
-        self.pieces[fr_npos] = None
-
-    # Note that piece addition is done via pos, but removal uses npos.
-    def piece_remove(self, npos: Npos, player: Player=None, pt: PieceType=None):
-        if player:
-            assert self.pieces[npos].player == player
-        if pt:
-            assert self.pieces[npos].pt == pt
-        self.pieces[npos] = None
-
-    def piece_set_pt(self, npos: Npos, new_pt: PieceType):
-        self.pieces[npos].pt = new_pt
-
-    def set_game_state(self, game_state):
-        self.game_state = game_state
+    # p:   The Player who makes move m_p.
+    # opp: The opponent of Player p. Player opp makes move m_opp.
+    #
+    def find_mates_in_2_starting_with(self, m_p):
+        inevitable_mates = {}
+        self.move_make(m_p)
+        moves_opp = self.get_moves_legal()
+        for m_opp in moves_opp:
+            self.move_make(m_opp)
+            if self.is_game_over():
+                is_mate_avoidable = True
+                self.move_undo(m_p)
+                break
+            else:
+                mates_p = [m2_p for m2_p in self.get_moves_legal() if self.is_checkmate(m2_p)]
+                if len(mates_p) == 0:
+                    is_mate_avoidable = True
+                    self.move_undo(m_opp)
+                    break
+                if not m_p in inevitable_mates:
+                    inevitable_mates[m_opp] = mates_p
+                    self.move_undo(m_opp)
+        if is_mate_avoidable:
+            result = {}
+        else:
+            result = inevitable_mates
+        return result
 
     # ========================================
+    # SECTION: VISUAL REPRESENTATION
+    # ========================================
+
+    # --------------------
+    # Print methods
+    # --------------------
+    def get_print_str(self, indent_board=8, indent_incr=2, item_width=4):
+        result_rows = []
+
+        ROWS = [[                     40                     ],
+                [                 30,     51                 ],
+                [             21,     41,     61             ],
+                [         13,     31,     52,     70         ],
+                [      6,     22,     42,     62,     78     ],
+                [  0,     14,     32,     53,     71,     85 ],
+                [      7,     23,     43,     63,     79     ],
+                [  1,     15,     33,     54,     72,     86 ],
+                [      8,     24,     44,     64,     80     ],
+                [  2,     16,     34,     55,     73,     87 ],
+                [      9,     25,     45,     65,     81,    ],
+                [  3,     17,     35,     56,     74,     88 ],
+                [     10,     26,     46,     66,     82,    ],
+                [  4,     18,     36,     57,     75,     89 ],
+                [     11,     27,     47,     67,     83     ],
+                [  5,     19,     37,     58,     76,     90 ],
+                    [ 12 ,    28,     48,     68,     84 ],
+                        [ 20,     38,     59,     77 ],
+                            [ 29,     49,     69 ],
+                                [ 39,     60 ],
+                                    [ 50 ]]
+
+        def row_indent_size(row_num):
+            result = indent_board
+            rows_from_middle = abs(10 - row_num)
+            if rows_from_middle > 5:
+                result += (rows_from_middle - 5) * indent_incr
+            elif rows_from_middle % 2 == 0:
+                result += indent_incr
+            return result
+
+        for row_num, row in enumerate(ROWS):
+            row_str = row_indent_size(row_num) * ' '  # Indentation
+            for item in row:
+                index = int(item)
+                piece = self.pieces[index]
+                txt = str(piece) if piece else '-'
+                row_str += str(txt.ljust(item_width))
+            result_rows.append(row_str.rstrip())  # End of row
+        return '\n'.join(result_rows)
 
     def print(self, heading=None, indent_board=8, indent_incr=2, item_width=4):
         text = self.get_print_str(indent_board, indent_incr, item_width)
@@ -1015,7 +993,39 @@ class Board:
     def print_unicode(self, heading=None, indent_board=8, indent_incr=3, item_width=6):
         print(self, heading, indent_board, indent_incr, item_width, do_use_unicode=True)
 
-    # ========================================
+    # --------------------
+    # SVG methods
+    # --------------------
+    # This returns a string suitable for interpolation
+    # into an SVG template file, supporting SVG output of Boards.
+    # This is called by get_svg_str().
+    def svg_get_layout_dict_str(self, fr_npos=None, to_npos=None,
+            king_check_npos=None, king_checkmate_npos=None) -> str:
+        PIECE_TYPES = [PieceType.King, PieceType.Queen, PieceType.Rook,
+                PieceType.Bishop, PieceType.Knight, PieceType.Pawn]
+        SVG_PLAYER_KEYS = { Player.Black: 'black', Player.White: 'white' }
+        layout_dict = self.get_layout_dict()
+        result = '\tLAYOUT = {\n'
+        for player in [Player.Black, Player.White]:
+            result += '\t\t"' + SVG_PLAYER_KEYS[player] + '": {\n'
+            for pt in PIECE_TYPES:
+                pos_str = ', '.join([G.pos_to_alg(pos).upper()
+                    for pos in layout_dict[player][pt]])
+                result += f'\t\t\t"{pt}": [{pos_str}],\n'
+            result += '\t\t},\n'
+
+        from_coords_str = f'{G.npos_to_alg(fr_npos).upper() if fr_npos else "null"}'
+        to_coords_str = f'{G.npos_to_alg(to_npos).upper() if to_npos else "null"}'
+        check_str = f'{G.npos_to_alg(king_check_npos).upper() if king_check_npos else "null"}'
+        checkmate_str = f'{G.npos_to_alg(king_checkmate_npos).upper() if king_checkmate_npos else "null"}'
+
+        result += '\t}\n'
+        result += f'\tFROM_COORDS = {from_coords_str}\n'
+        result += f'\tTO_COORDS = {to_coords_str}\n'
+        result += '\n'
+        result += f'\tKING_CHECK_COORDS = {check_str}\n'
+        result += f'\tKING_CHECKMATE_COORDS = {checkmate_str}\n'
+        return result
 
     # This interpolates the output of get_layout_dict_str() into
     # an SVG template file to create the content of an SVG file
@@ -1023,7 +1033,7 @@ class Board:
     # slideshow or animation.
     # Note: The selenium package can open "data URLs", so this SVG
     #   content can be used even without ever being saved to disk.
-    def get_svg_str(self, fr_npos:Npos=None, to_npos:Npos=None,
+    def svg_get_str(self, fr_npos:Npos=None, to_npos:Npos=None,
             king_check_npos:Npos=None, king_checkmate_npos=None):
         glinski_home = os.getenv('GLINSKI_HOME')
         template_svg_dir = '/assets/'
@@ -1052,7 +1062,7 @@ class Board:
     #   of images of an entire game.
     # The suffix supports the addition of additional frames, which
     #   could be helpful in adding frames to a slideshow or animation.
-    def write_svg(self, out_dir:str=None,
+    def svg_write(self, out_dir:str=None,
             game_name:str=None, suffix:str=None,
             fr_npos:Npos=None, to_npos:Npos=None,
             king_check_npos:Npos=None, king_checkmate_npos:Npos=None):
