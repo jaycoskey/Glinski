@@ -6,7 +6,6 @@ import sys
 
 from src.geometry import Geometry as G
 from src.move_eval import MoveEval
-from src.move_regexp import MoveRegexp
 from src.piece_type import PieceType
 
 Npos = int
