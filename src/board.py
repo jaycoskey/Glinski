@@ -71,6 +71,14 @@ class Board:
         return self.history_ep_target[self.halfmove_count]
 
     @property
+    def is_50_move_rule_triggered(self):
+        return self.nonprogress_halfmove_count >= 100
+
+    @property
+    def is_75_move_rule_triggered(self):
+        return self.nonprogress_halfmove_count >= 150
+
+    @property
     def is_check(self):
         return self.history_is_check[self.halfmove_count]
 
