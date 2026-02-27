@@ -4,13 +4,15 @@
 from enum import auto, Enum
 
 
+# Wins are further detailed in class GameDraw
 class GameState(Enum):
-    Abandoned = auto()
-    InPlay = auto()
     Unstarted = auto()
+    InPlay = auto()
 
-    Draw = auto()  # Further detailed in class GameDraw
-    Stalemate_Win_Black = auto()
-    Stalemate_Win_White = auto()
-    Win_Black = auto()  # Further detailed in class GameWin
-    Win_White = auto()  # Further detailed in class GameWin
+    Abandoned = auto()
+    Draw = auto()
+    WinBlack = auto()
+    WinWhite = auto()
+    WinStalemateBlack = auto()
+    WinStalemateWhite = auto()
+
