@@ -691,7 +691,12 @@ class Board:
 
     # ========================================
 
-    # Note: This method does not perform a check for move legality.
+    # Note: This method does not (currently) perform a check for move legality.
+    # Note: This board sets board_state. It is up to the caller to check this
+    #   value to see if the game is over (e.g., Checkmate, Draw, Stalemate).
+    #   * game.play() will act on this by ending the game.
+    #   * another caller (e.g., move search) might handle it differently.
+    # TODO: Add an option "do_force" to allow an illegal move.
     def move_make(self, move):
         # Phase 0:
         assert(self.game_state in [GameState.Unstarted, GameState.InPlay])
