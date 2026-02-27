@@ -27,20 +27,20 @@ Npos = int
 
 class Board:
     # Different ways to initialize board:
-    #   * By data showing piece placements by color and piece type:
-    #         placements: Dict[Player, Dict[PieceType, List[Pos]]]
+    #   * By data showing piece layout by color and piece type:
+    #         layout: Dict[Player, Dict[PieceType, List[Pos]]]
     #   * By a FEN string:
-    #         placements: str
+    #         layout: str
     # Note: An e.p. move executed in halfmove N (in move.ep_target)
     #   creates a Board ep_target in halfmove N+1 (in board.ep_target).
-    def __init__(self, placements=None):
-        if placements is None:
-            placements = G.INIT_PIECES_DICT
+    def __init__(self, layout=None):
+        if layout is None:
+            layout = G.INIT_PIECES_DICT
 
         self.pieces = [None for k in range(G.SPACE_COUNT)]
-        for player in placements.keys():
-            for pt in placements[player].keys():
-                for pos in placements[player][pt]:
+        for player in layout.keys():
+            for pt in layout[player].keys():
+                for pos in layout[player][pt]:
                     # piece_name = f'{player.name} {pt.name}'
                     # space_name = f'{G.pos_to_alg(pos)}=HexPos{pos}'
                     # print(f'INFO: adding ({piece_name:<12}) to {space_name}')

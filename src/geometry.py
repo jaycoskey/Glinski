@@ -172,12 +172,12 @@ class Geometry:
 
         # ========================================
 
-        # Define initial placement of pieces,
+        # Define initial layout of pieces,
         #   using multiple representations.
         #
         PAWN_HOME_BLACK = [B7, C7, D7, E7, F7, G7, H7, I7, K7]
         PAWN_HOME_WHITE = [B1, C2, D3, E4, F5, G4, H3, I2, K1]
-        INIT_PIECES_DICT = {
+        INIT_LAYOUT_DICT = {
                 Player.Black: {
                     PieceType.King:   [G10],
                     PieceType.Queen:  [E10],
@@ -195,17 +195,17 @@ class Geometry:
                     PieceType.Pawn:   PAWN_HOME_WHITE,
                 }
                 }
-        setattr(cls, "INIT_PIECES_DICT", INIT_PIECES_DICT)
+        setattr(cls, "INIT_LAYOUT_DICT", INIT_LAYOUT_DICT)
 
 
         # Here is what FEN for an initial Board setup would look like
         # if the Spaces were arranged in row order:
         # b/qk/nbn/r2r/p1b1p/1p2p1/1p1p1/2pp2/2p2/6/5/6/2P2/2PP2/1P1P1/1P2P1/P1B1P/R2R/NBN/QK/B w - - 0 1
         #
-        INIT_PIECES_FEN = "6/p5P/rp4PR/n1p3P1N/q2p2P2Q/bbb1p1P1BBB/k2p2P2K/n1p3P1N/rp4PR/p5P/6 w - - 0 1"
-        setattr(cls, "INIT_PIECES_FEN", INIT_PIECES_FEN)
+        INIT_LAYOUT_FEN = "6/p5P/rp4PR/n1p3P1N/q2p2P2Q/bbb1p1P1BBB/k2p2P2K/n1p3P1N/rp4PR/p5P/6 w - - 0 1"
+        setattr(cls, "INIT_LAYOUT_FEN", INIT_LAYOUT_FEN)
 
-        INIT_PIECES_LIST = list("""
+        INIT_LAYOUT_LIST = list("""
                       -   -   -   -   -   -
                     p   -   -   -   -   -   P
                   r   p   -   -   -   -   P   R
@@ -218,7 +218,7 @@ class Geometry:
                     p   -   -   -   -   -   P
                       -   -   -   -   -   -
              """.split())
-        setattr(cls, "INIT_PIECES_LIST", INIT_PIECES_LIST)
+        setattr(cls, "INIT_LAYOUT_LIST", INIT_LAYOUT_LIST)
 
         # ========================================
 
@@ -500,3 +500,4 @@ class Geometry:
     def pos_to_npos(cls, pos: HexPos) -> Npos:
         npos = cls.COORDS_TO_NPOS[(pos.hex0, pos.hex1)]
         return npos
+
