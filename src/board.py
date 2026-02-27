@@ -6,6 +6,7 @@ from bitarray import bitarray
 from collections import Counter
 from copy import deepcopy
 import math
+import os
 from typing import Dict, Iterator, List, Union
 
 from src.bitboard import BB_COURT_BLACK, BB_COURT_WHITE
@@ -323,6 +324,37 @@ class Board:
             pt = piece.pt
             layout_dict[player][pt].append(G.npos_to_pos(npos))
         return layout_dict
+
+    # This returns a string suitable for interpolation
+    # into an SVG template file, supporting SVG output of Boards.
+    # This is called by get_svg_str().
+    def get_layout_dict_str(self, fr_npos=None, to_npos=None,
+            king_check_npos=None, king_checkmate_npos=None) -> str:
+        PIECE_TYPES = [PieceType.King, PieceType.Queen, PieceType.Rook,
+                PieceType.Bishop, PieceType.Knight, PieceType.Pawn]
+        SVG_PLAYER_KEYS = { Player.Black: 'black', Player.White: 'white' }
+        layout_dict = self.get_layout_dict()
+        result = '\tLAYOUT = {\n'
+        for player in [Player.Black, Player.White]:
+            result += '\t\t"' + SVG_PLAYER_KEYS[player] + '": {\n'
+            for pt in PIECE_TYPES:
+                pos_str = ', '.join([G.pos_to_alg(pos).upper()
+                    for pos in layout_dict[player][pt]])
+                result += f'\t\t\t"{pt}": [{pos_str}],\n'
+            result += '\t\t},\n'
+
+        from_coords_str = f'{G.npos_to_alg(fr_npos).upper() if fr_npos else "null"}'
+        to_coords_str = f'{G.npos_to_alg(to_npos).upper() if to_npos else "null"}'
+        check_str = f'{G.npos_to_alg(king_check_npos).upper() if king_check_npos else "null"}'
+        checkmate_str = f'{G.npos_to_alg(king_checkmate_npos).upper() if king_checkmate_npos else "null"}'
+
+        result += '\t}\n'
+        result += f'\tFROM_COORDS = {from_coords_str}\n'
+        result += f'\tTO_COORDS = {to_coords_str}\n'
+        result += '\n'
+        result += f'\tKING_CHECK_COORDS = {check_str}\n'
+        result += f'\tKING_CHECKMATE_COORDS = {checkmate_str}\n'
+        return result
 
     # ========================================
 
@@ -982,4 +1014,59 @@ class Board:
 
     def print_unicode(self, heading=None, indent_board=8, indent_incr=3, item_width=6):
         print(self, heading, indent_board, indent_incr, item_width, do_use_unicode=True)
+
+    # ========================================
+
+    # This interpolates the output of get_layout_dict_str() into
+    # an SVG template file to create the content of an SVG file
+    # that can be stored to disk and used standalone, or in a
+    # slideshow or animation.
+    # Note: The selenium package can open "data URLs", so this SVG
+    #   content can be used even without ever being saved to disk.
+    def get_svg_str(self, fr_npos:Npos=None, to_npos:Npos=None,
+            king_check_npos:Npos=None, king_checkmate_npos=None):
+        glinski_home = os.getenv('GLINSKI_HOME')
+        template_svg_dir = '/assets/'
+        svg_fname = 'glinski_game.svg'
+        svg_path = glinski_home + template_svg_dir + svg_fname
+
+        is_echoing = True
+        result = ''
+        layout_str = self.get_layout_dict_str(fr_npos, to_npos)
+        with open(svg_path, 'r') as f:
+            svg_lines = f.readlines()
+        for svg_line in svg_lines:
+            if 'END_LAYOUT' in svg_line:
+                result += layout_str
+                is_echoing = True
+            if is_echoing:
+                result += svg_line
+            if 'BEGIN_LAYOUT' in svg_line:
+                is_echoing = False
+        return result
+
+    # Write an SVG file of the form
+    #   <gamename>_<halfmovecount><suffix>.svg
+    # For example, foo_037b.svg
+    # The presence of the halfmove count supports recording
+    #   of images of an entire game.
+    # The suffix supports the addition of additional frames, which
+    #   could be helpful in adding frames to a slideshow or animation.
+    def write_svg(self, out_dir:str=None,
+            game_name:str=None, suffix:str=None,
+            fr_npos:Npos=None, to_npos:Npos=None,
+            king_check_npos:Npos=None, king_checkmate_npos:Npos=None):
+        if out_dir is None:
+            glinski_home = os.getenv('GLINSKI_HOME')
+            out_dir = glinski_home + '/assets/custom/'
+        if game_name is None:
+            game_name = 'glinski'
+        if suffix is None:
+            suffix = ''
+        out_fname = f'{game_name}_{self.halfmove_count:03}{suffix}.svg'
+        out_path = out_dir + out_fname
+        svg_content = self.get_svg_str(fr_npos, to_npos,
+                king_check_npos, king_checkmate_npos)
+        with open(out_path, 'w') as f:
+            f.write(svg_content)
 
