@@ -237,15 +237,23 @@
       const HEX_WIDTH  = 2 * HEX_WIDTH_HALF;
       const HEX_HEIGHT = 2 * HEX_HEIGHT_HALF;
 
+      const SPACE_BORDER_WIDTH   = 2;  // Note: Borders lie within spaces, not between them.
+
       // ========================================
       // Color constants
-      const COLOR_BLACK = "#000000";
-      const SPACE_BORDER_COLOR = COLOR_BLACK;
-      const SPACE_BORDER_WIDTH = 2;  // Note: Borders lie within spaces, not between them.
 
-      const LIGHT_YELLOW = "#ffff55";
-      const MED_GREEN =    "#33ee33";
-      const DARK_PURPLE =  "#a922a9";
+      const FROM_COLOR           = "#ADD8E6";  // Light blue
+      const TO_COLOR             = "#0096FF";  // Medium blue
+
+      const KING_CHECK_COLOR     = "#E55A1E";  // Blood orange
+      const KING_CHECKMATE_COLOR = "#FF2400";  // Scarlet
+
+      const COLOR_BLACK          = "#000000";
+      const SPACE_BORDER_COLOR   = COLOR_BLACK;
+
+      const LIGHT_YELLOW         = "#ffff55";
+      const MED_GREEN            = "#33ee33";
+      const DARK_PURPLE          = "#a922a9";
 
       const DEFAULT_PALETTE = {
         Light:  "#ffff77",  // Yellow
@@ -310,8 +318,15 @@
       K1=[4,-1];K2=[4,0];K3=[4,1];K4=[4,2];K5=[4,3];K6=[4,4];K7=[4,5]
       L1=[5,0];L2=[5,1];L3=[5,2];L4=[5,3];L5=[5,4];L6=[5,5]
 
-      // TODO: Add pieces
-      PIECE_COORDS = {
+      FROM_COORDS = null
+      TO_COORDS = null
+
+      KING_CHECK_COORDS = null
+      KING_CHECKMATE_COORDS = null
+
+      // BEGIN_LAYOUT
+
+      LAYOUT = {
         "black": {
           "K": [G10],
           "Q": [E10],
@@ -329,6 +344,14 @@
           "P": [B1, C2, D3, E4, F5, G4, H3, I2, K1],
           }
         }
+
+      FROM_COORDS = null
+      TO_COORDS = null
+
+      KING_CHECK_COORDS = null
+      KING_CHECKMATE_COORDS = null
+
+      // END_LAYOUT
 
       // ========================================
       /** Convert space coords (a, b) to pixel coords (x,y) for flat-topped hexes
@@ -378,6 +401,23 @@
       }
 
       function spaceColor(a, b) {
+        if (FROM_COORDS
+            && a == FROM_COORDS[0] && b == FROM_COORDS[1]) {
+          return FROM_COLOR;
+        }
+        if (TO_COORDS
+            && a == TO_COORDS[0] && b == TO_COORDS[1]) {
+          return TO_COLOR;
+        }
+        if (KING_CHECK_COORDS
+            && a == KING_CHECK_COORDS[0] && b == KING_CHECK_COORDS[1]) {
+          return KING_CHECK_COLOR;
+        }
+        if (KING_CHECKMATE_COORDS
+            && a == KING_CHECKMATE_COORDS[0] && b == KING_CHECKMATE_COORDS[1]) {
+          return KING_CHECKMATE_COLOR;
+        }
+
         let idx = (a - 2*b) % 3;
         if (idx < 0) idx += 3;
 
@@ -415,7 +455,7 @@
           addLabelsSpaces();
         }
         if (DO_ADD_PIECES) {
-          addPieces(PIECE_COORDS);
+          addPieces(LAYOUT);
         }
       }
       function addLabelsSpaces() {
