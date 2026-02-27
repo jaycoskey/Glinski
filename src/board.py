@@ -84,7 +84,7 @@ class Board:
                 self.history_is_repetition_5x = copy(nones)
                 self.history_is_stalemate = copy(nones)
 
-                self.game_state_set(GameState.InPlay)
+                self.set_game_state(GameState.InPlay)
 
     def init_defaults(self):
         # Board layout is addressed elsewhere.
@@ -99,7 +99,7 @@ class Board:
         ####################
         # Info not provided by a FEN string
         ####################
-        self.game_state_set(GameState.Unstarted)
+        self.set_game_state(GameState.Unstarted)
 
         self.history_move = [None]  # The move resulting in the current Board position
         self.history_zobrist_hash = [self.get_zobrist_hash()]
@@ -247,9 +247,6 @@ class Board:
         return result
 
     # ========================================
-
-    def game_state_set(self, game_state):
-        self.game_state = game_state
 
     def get_board_errors(self):
         raise NotImplementedError('board.get_board_errors()')
@@ -776,7 +773,7 @@ class Board:
         # Phase 0:
         assert(self.game_state in [GameState.Unstarted, GameState.InPlay])
         if self.game_state == GameState.Unstarted:
-            self.game_state = GameState.InPlay
+            self.set_game_state(GameState.InPlay)
 
         # Phase 1: Capture.
         #
@@ -825,14 +822,14 @@ class Board:
 
         if board_state == BoardState.Checkmate:
             if self.cur_player == Player.Black:
-                self.game_state = GameState.Over_Win_Black
+                self.set_game_state(GameState.WinBlack)
             else:
-                self.game_state = GameState.Over_Win_White
+                self.set_game_state(GameState.WinWhite)
         elif board_state == BoardState.Stalemate:
             if self.cur_player == Player.Black:
-                self.game_state = GameState.Over_Stalemate_Black
+                self.set_game_state(GameState.WinStalemateBlack)
             else:
-                self.game_state = GameState.Over_Stalemate_White
+                self.set_game_state(GameState.WinStalemateWhite)
         is_pending_draw = (
                 # Check for 75-moves of non-progress and/or 5x board repetition
                 (not move.is_progress() and self.nonprogress_halfmove_count == 149)
@@ -872,7 +869,7 @@ class Board:
         move = self.history_move[-1]
 
         # Restore Game state
-        self.game_state = GameState.InPlay
+        self.set_game_state(GameState.InPlay)
 
         # Restore piece positions
         mover = self.cur_player.opponent()
@@ -928,6 +925,7 @@ class Board:
         # print(f'Attention {player}: {msg}')
 
     # ========================================
+    # TODO: Encapsulate Layout & GameState info.
 
     # Note that piece addition is done via pos, but removal uses npos.
     def piece_add(self, pos: HexPos, player: Player, pt: PieceType):
@@ -949,6 +947,9 @@ class Board:
 
     def piece_set_pt(self, npos: Npos, new_pt: PieceType):
         self.pieces[npos].pt = new_pt
+
+    def set_game_state(self, game_state):
+        self.game_state = game_state
 
     # ========================================
 
