@@ -25,14 +25,16 @@ class TestBoard(unittest.TestCase):
         b1 = Board(fen_board)
         zh0 = b0.get_zobrist_hash()
         zh1 = b1.get_zobrist_hash()
-        if zh0 != zh1:
-            b0.print()
-            b1.print()
         self.assertEqual(b1.get_zobrist_hash(), b0.get_zobrist_hash())
+
         fen_board1 = b1.get_fen_board()
         self.assertEqual(fen_board1, fen_board)
         fen1 = b1.get_fen()
         self.assertEqual(fen1, fen_board + ' w - - 0 1')
+
+        b2 = Board(b1.get_layout_dict())
+        zh2 = b2.get_zobrist_hash()
+        self.assertEqual(zh2, zh1)
 
     def test_detect_check(self):
         pass

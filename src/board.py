@@ -37,7 +37,7 @@ class Board:
             layout_dict = deepcopy(G.INIT_LAYOUT_DICT)
             self.init_layout(layout_dict)
             self.init_defaults()
-        elif type(layout) == LayoutDict:
+        elif type(layout) == dict:
             layout_dict = deepcopy(layout)
             self.init_layout(layout_dict)
             self.init_defaults()
@@ -47,7 +47,7 @@ class Board:
                 msg = ('Board constructor: LayoutDict parameter appears '
                     + f'to be a FEN string with {len(fen_parts)} parts. '
                     + 'It should have 1 or 6.')
-                raise ValueError(f'Board.__init__(): {msg}')
+                raise ValueError(f'Board constructor: {msg}')
             if len(fen_parts) == 1:
                 fen_board_str = fen_parts[0]
                 layout_dict = G.fen_board_to_layout_dict(fen_board_str)
@@ -85,6 +85,9 @@ class Board:
                 self.history_is_stalemate = copy(nones)
 
                 self.set_game_state(GameState.InPlay)
+        else:
+            ValueError('Board constructor arg has unrecognized type: '
+                + f'{type(layout)}: {layout}')
 
     def init_defaults(self):
         # Board layout is addressed elsewhere.
@@ -318,8 +321,8 @@ class Board:
                 continue
             player = piece.player
             pt = piece.pt
-            layout[player][pt].append(G.npos_to_pos(npos))
-        return layout
+            layout_dict[player][pt].append(G.npos_to_pos(npos))
+        return layout_dict
 
     # ========================================
 
