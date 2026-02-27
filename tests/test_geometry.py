@@ -75,6 +75,11 @@ class TestGeometry(unittest.TestCase):
         self.assertEqual(G.npos_to_alg(85), "l6")
         self.assertEqual(G.npos_to_alg(90), "l1")
 
+    def test_board_contains_all_spaces(self):
+        for k in range(G.SPACE_COUNT):
+            pos = HexPos(G.COORD_HEX0[k], G.COORD_HEX1[k])
+            self.assertTrue(G.is_pos_on_board(pos))
+
     def test_conversion_pos_to_alg(self):
         NW = HexPos(-5, 0)
         SW = HexPos(-5, -5)

@@ -13,71 +13,38 @@ from src.player import Player
 
 
 class TestBoard(unittest.TestCase):
-    def test_board_contains_all_spaces(self):
+    def test_board_print(self):
+        expected = """
+                  b
+                q   k
+              n   b   n
+            r   -   -   r
+          p   -   b   -   p
+        -   p   -   -   p   -
+          -   p   -   p   -
+        -   -   p   p   -   -
+          -   -   p   -   -
+        -   -   -   -   -   -
+          -   -   -   -   -
+        -   -   -   -   -   -
+          -   -   P   -   -
+        -   -   P   P   -   -
+          -   P   -   P   -
+        -   P   -   -   P   -
+          P   -   B   -   P
+            R   -   -   R
+              N   B   N
+                Q   K
+                  B
+                  """
+
         b = Board()
-        for k in range(91):
-            pos = HexPos(G.COORD_HEX0[k], G.COORD_HEX1[k])
-            self.assertTrue(G.is_pos_on_board(pos))
+        returned_lines = [row.strip() for row in b.get_print_str().split('\n')]
+        expected_lines = [row.strip() for row in expected.split('\n') if len(row.strip()) > 0]
+        self.assertEqual(len(returned_lines), len(expected_lines))
 
-    def test_board_initialization(self):
-        b0 = Board()
-        fen_board = '6/p5P/rp4PR/n1p3P1N/q2p2P2Q/bbb1p1P1BBB/k2p2P2K/n1p3P1N/rp4PR/p5P/6'
-        b1 = Board(fen_board)
-        zh0 = b0.get_zobrist_hash()
-        zh1 = b1.get_zobrist_hash()
-        self.assertEqual(b1.get_zobrist_hash(), b0.get_zobrist_hash())
-
-        fen_board1 = b1.get_fen_board()
-        self.assertEqual(fen_board1, fen_board)
-        fen1 = b1.get_fen()
-        self.assertEqual(fen1, fen_board + ' w - - 0 1')
-
-        b2 = Board(b1.get_layout_dict())
-        zh2 = b2.get_zobrist_hash()
-        self.assertEqual(zh2, zh1)
-
-    def test_detect_check(self):
-        pass
-
-    def test_detect_checkmate(self):
-        pass
-
-    # Technically, insufficient material is a subset of dead game.
-    def test_detect_insufficient_material(self):
-        pass
-
-    def test_detect_mate_in_one(self):
-        pass
-
-    def test_detect_mate_in_two(self):
-        pass
-
-    def test_detect_stalemate(self):
-        pass
-
-    def test_detect_error_ep_target_location(self):
-        pass
-
-    def test_detect_error_excess_pieces(self):
-        pass
-
-    def test_detect_error_missing_king(self):
-        pass
-
-    def test_detect_error_pawn_in_court(self):
-        pass
-
-    def test_detect_nonprogress_moves_50(self):
-        pass
-
-    def test_detect_nonprogress_moves_75(self):
-        pass
-
-    def test_detect_repetition3x(self):
-        pass
-
-    def test_detect_repetition5x(self):
-        pass
+        for k in range(len(expected_lines)):
+            self.assertEqual(returned_lines[k], expected_lines[k])
 
     def test_fools_mate(self):
         # 1. Move('Qe1c3')
@@ -153,11 +120,32 @@ class TestBoard(unittest.TestCase):
         # self.assertEqual(b.get_zobrist_hash(), FOOLS_ZOBRIST_HASHES[-1])
         # self.assertTrue(b.is_checkmate)
 
-    def test_get_moves_legal(self):
+
+class TestBoardConstructor(unittest.TestCase):
+    @unittest.skip
+    def test_init_empty(self):
         pass
 
-    def test_get_moves_pseudolegal(self):
-        pass
+    def test_init_board_standard(self):
+        # Default initialization
+        b0 = Board()
+        fen_board = '6/p5P/rp4PR/n1p3P1N/q2p2P2Q/bbb1p1P1BBB/k2p2P2K/n1p3P1N/rp4PR/p5P/6'
+
+        # Initialization from FEN (board) string
+        b1 = Board(fen_board)
+        zh0 = b0.get_zobrist_hash()
+        zh1 = b1.get_zobrist_hash()
+        self.assertEqual(b1.get_zobrist_hash(), b0.get_zobrist_hash())
+
+        fen_board1 = b1.get_fen_board()
+        self.assertEqual(fen_board1, fen_board)
+        fen1 = b1.get_fen()
+        self.assertEqual(fen1, fen_board + ' w - - 0 1')
+
+        # Initialization from layout dict
+        b2 = Board(b1.get_layout_dict())
+        zh2 = b2.get_zobrist_hash()
+        self.assertEqual(zh2, zh1)
 
     # Moves per piece in their initial location. (Same for each player.)
     #     K:2,Q:6,R:6(3+3),B:12(2+8+2),N:8(4+4),P:17(2*8+1).
@@ -192,53 +180,82 @@ class TestBoard(unittest.TestCase):
         moves = b.get_moves_pseudolegal()
         self.assertionEqual(len(moves), 51)
 
-    def test_init_empty(self):
+    @unittest.skip
+    def test_piece_add(self):
         pass
 
-    def test_init_layout_data(self):
+    @unittest.skip
+    def test_piece_remove(self):
         pass
 
+
+class TestBoardDetectEndgame(unittest.TestCase):
+
+    @unittest.skip
+    def test_detect_check(self):
+        pass
+
+    @unittest.skip
+    def test_detect_checkmate(self):
+        pass
+
+    # Technically, insufficient material is a subset of dead game.
+    @unittest.skip
+    def test_detect_insufficient_material(self):
+        pass
+
+    @unittest.skip
+    def test_detect_nonprogress_moves_50(self):
+        pass
+
+    @unittest.skip
+    def test_detect_nonprogress_moves_75(self):
+        pass
+
+    @unittest.skip
+    def test_detect_repetition_3x(self):
+        pass
+
+    @unittest.skip
+    def test_detect_repetition_5x(self):
+        pass
+
+    @unittest.skip
+    def test_detect_stalemate(self):
+        pass
+
+
+class TestBoardDetectError(unittest.TestCase):
+
+    @unittest.skip
+    def test_detect_error_ep_target_location(self):
+        pass
+
+    @unittest.skip
+    def test_detect_error_excess_pieces(self):
+        pass
+
+    @unittest.skip
+    def test_detect_error_missing_king(self):
+        pass
+
+    @unittest.skip
+    def test_detect_error_pawn_in_court(self):
+        pass
+
+
+class TestBoardMoves(unittest.TestCase):
+    @unittest.skip
     def test_move_counts_by_piece_type(self):
         pass
 
-    def test_pieces_add(self):
+    @unittest.skip
+    def test_get_moves_legal(self):
         pass
 
-    def test_pieces_remove(self):
+    @unittest.skip
+    def test_get_moves_pseudolegal(self):
         pass
-
-    def test_printout(self):
-        expected = """
-                  b
-                q   k
-              n   b   n
-            r   -   -   r
-          p   -   b   -   p
-        -   p   -   -   p   -
-          -   p   -   p   -
-        -   -   p   p   -   -
-          -   -   p   -   -
-        -   -   -   -   -   -
-          -   -   -   -   -
-        -   -   -   -   -   -
-          -   -   P   -   -
-        -   -   P   P   -   -
-          -   P   -   P   -
-        -   P   -   -   P   -
-          P   -   B   -   P
-            R   -   -   R
-              N   B   N
-                Q   K
-                  B
-                  """
-
-        b = Board()
-        returned_lines = [row.strip() for row in b.get_print_str().split('\n')]
-        expected_lines = [row.strip() for row in expected.split('\n') if len(row.strip()) > 0]
-        self.assertEqual(len(returned_lines), len(expected_lines))
-
-        for k in range(len(expected_lines)):
-            self.assertEqual(returned_lines[k], expected_lines[k])
 
     def test_undo_moves_initial(self):
         b = Board()
@@ -249,7 +266,12 @@ class TestBoard(unittest.TestCase):
             b.move_undo()
             self.assertEqual(b.get_zobrist_hash(), zhash0)
 
-    def test_get_moves_legal(self):
+
+class TestBoardPuzzles(unittest.TestCase):
+    def test_detect_mate_in_one(self):
+        pass
+
+    def test_detect_mate_in_two(self):
         pass
 
 
