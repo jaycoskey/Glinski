@@ -8,4 +8,6 @@ class BoardState(Enum):
     Normal = auto()
     Check = auto()
     Checkmate = auto()
+    Draw = auto()
     Stalemate = auto()
+
