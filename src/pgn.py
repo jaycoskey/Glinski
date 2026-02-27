@@ -1,11 +1,11 @@
-#!/usr/bin/env python
-# by Jay M. Coskey, 2026
+#!/usr/bin/env python # by Jay M. Coskey, 2026
 
 from collections import OrderedDict
 import itertools
 import re
 from typing import Dict, List, Tuple
 
+from src.board import Board
 from src.game import Game
 from src.geometry import Geometry as G
 from src.move import Move
@@ -33,8 +33,9 @@ GameSpec = Tuple[GameTagPairSet, List[str]]
 # PGN parsing workflow:
 #  get_pgn_lines()
 #    -> pgn_lines_to_game_specs()
-#      -> move_lines_to_move_texts
-#        -> move_text_to_move()
+#      -> move_lines_to_move_texts()
+#        -> move_text_to_move_spec()
+#          -> get_moves_matching()
 class Pgn:
     RE_MOVE_END_SCORE = re.compile(r"^(0-1|1-0|1/2-1/2|draw)$")
     RE_PGN_COMMENT = re.compile(r"{[^}]*}")
@@ -59,7 +60,7 @@ class Pgn:
     #       such as score, or indications of how the game ended (agreement
     #       to a draw, or one player resigning).
     @classmethod
-    def alg_to_move_spec(cls, move_str, lang='en') -> MoveSpec:
+    def move_text_to_move_spec(cls, move_str, lang='en') -> MoveSpec:
         move_spec = MoveSpec()
 
         # TODO: Break up into one set for each Player
@@ -240,22 +241,22 @@ class Pgn:
             if move_text in ['', '0-1', '1-0', 'draw', 'remi', 'ź-ź', '...']:
                 # TODO: Insert info into Game
                 continue
-            move_spec = cls.alg_to_move_spec(move_text, lang)
+            move_spec = cls.move_text_to_move_spec(move_text, lang)
             moves = game.board.get_moves_matching(move_spec, move_text)
             if len(moves) != 1:
                 print(f'Game tag pairs={", ".join(f"({k}=>{v})" for k,v in game_spec[0].items())}')
                 print(f'Game moves={move_texts}')
                 game.board.print()
+                ep_str = f'{game.board.ep_target if game.board.ep_target else "None"}'
                 print(f'Halfmove_count={game.board.halfmove_count}, '
                         + f'move_text={move_text} '
-                        + f'(ep_target={G.npos_to_alg(game.board.ep_target) if game.board.ep_target else "None"}, '
-                        , f'lang={lang})'
+                        + f'(ep_target={ep_str}, lang={lang})'
                         )
-            if len(moves) == 0:
-                print(f'No moves available')
-            elif len(moves) > 1:
-                print(f'Multiple moves available: {moves}')
-            assert len(moves) == 1
+                if len(moves) == 0:
+                    print(f'No moves available')
+                elif len(moves) > 1:
+                    print(f'Multiple moves available: {moves}')
+                assert len(moves) == 1
             move = moves[0]
             game.board.move_make(move)
         return game
@@ -333,10 +334,17 @@ class Pgn:
         move_texts = [move_text for turn_text in turn_texts for move_text in turn_text.split(' ')]
         return move_texts
 
+    @classmethod
+    def move_text_to_move(cls, board: Board, move_text: str):
+        move_spec = cls.move_text_to_move_spec(move_text)
+        moves = board.get_moves_matching(move_spec, move_text)
+        assert len(moves) == 1
+        return moves[0]
+
     # PGN files specify games. Each game has tags which specify attributes of the game,
     # and text that specifies the moves of the game.
     #
-    # TODO: Remove comments that span multiple lines.
+    # TODO: Remove PGN comments that span multiple lines.
     @classmethod
     def pgn_lines_to_game_specs(cls, lines: List[str], tag_filter: Dict[str, str]=None) -> List[GameSpec]:
         game_specs = []
@@ -405,3 +413,4 @@ class Pgn:
     @classmethod
     def uci_to_move(cls, move_str, lang='en') -> Move:
         raise NotImplementedError('Pgn.uci_to_move')
+

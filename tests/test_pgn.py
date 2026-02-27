@@ -23,7 +23,7 @@ class TestPgn(unittest.TestCase):
         fields_seen = bitarray(12)
 
         for _, move_str in enumerate(move_strs):
-            move_spec = Pgn.alg_to_move_spec(move_str, lang)
+            move_spec = Pgn.move_text_to_move_spec(move_str, lang)
             move_sig = move_spec.to_move_sig()
             fields_seen |= move_sig
             if move_sig not in move_sig_map.keys():
@@ -76,7 +76,7 @@ class TestPgn(unittest.TestCase):
             for move_text in move_texts:
                 if move_text in ['0-1', '1-0', 'draw', 'remi', 'ź-ź', '...']:
                     continue
-                move_spec = Pgn.alg_to_move_spec(move_text, lang='hu')
+                move_spec = Pgn.move_text_to_move_spec(move_text, lang='hu')
 
     def test_move_text_coverage(self):
         cls = self.__class__
