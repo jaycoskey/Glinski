@@ -860,6 +860,11 @@ class Board:
         npos = G.pos_to_npos(pos)
         self.pieces[npos] = Piece(player, pt)
 
+    def piece_move(self, fr_npos: Npos, to_npos: Npos):
+        assert not self.pieces[to_npos] 
+        self.pieces[to_npos] = self.pieces[fr_npos]
+        self.pieces[fr_npos] = None
+
     # Note that piece addition is done via pos, but removal uses npos.
     def piece_remove(self, npos: Npos, player: Player=None, pt: PieceType=None):
         if player:
@@ -867,6 +872,9 @@ class Board:
         if pt:
             assert self.pieces[npos].pt == pt
         self.pieces[npos] = None
+
+    def piece_set_pt(self, npos: Npos, new_pt: PieceType):
+        self.pieces[npos].pt = new_pt
 
     # ========================================
 
