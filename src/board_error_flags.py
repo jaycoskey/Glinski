@@ -4,7 +4,7 @@
 from enum import IntFlag
 
 
-class BoardErrorFlag(IntFlag):
+class BoardErrorFlags(IntFlag):
     ExcessKings = 1
     ExcessPawns = 2
     ExcessPieces = 4

@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
+from copy import deepcopy
 import unittest
 
 from src.board import Board
+from src.board_error_flags import BoardErrorFlags
 from src.geometry import Geometry as G
 from src.geometry import *
 from src.hex_pos import HexPos
@@ -231,17 +233,39 @@ class TestBoardDetectError(unittest.TestCase):
     def test_detect_error_ep_target_location(self):
         pass
 
-    @unittest.skip
     def test_detect_error_excess_pieces(self):
-        pass
+        layout1 = deepcopy(G.INIT_LAYOUT_DICT)
+        layout1[Player.Black][PieceType.Queen].append(G.E9)
+        b1 = Board(layout1)    
+        errors1: BoardErrorFlags = b1.get_board_errors()
+        self.assertTrue(errors1 & BoardErrorFlags.ExcessPieces)
 
-    @unittest.skip
+        layout2 = deepcopy(G.INIT_LAYOUT_DICT)
+        layout2[Player.White][PieceType.Queen].append(G.E2)
+        b2 = Board(layout2)
+        errors2: BoardErrorFlags = b2.get_board_errors()
+        self.assertTrue(errors2 & BoardErrorFlags.ExcessPieces)
+
+        layout3 = deepcopy(G.INIT_LAYOUT_DICT)
+        layout3[Player.Black][PieceType.King].append(G.G9)
+
+        b3 = Board(layout3)  
+        errors3: BoardErrorFlags = b3.get_board_errors()
+        self.assertTrue(errors3 & BoardErrorFlags.ExcessKings)
+
     def test_detect_error_missing_king(self):
-        pass
+        layout1 = deepcopy(G.INIT_LAYOUT_DICT)
+        layout1[Player.Black][PieceType.King] = []
+        b1 = Board(layout1)
+        errors1: BoardErrorFlags = b1.get_board_errors()
+        self.assertTrue(errors1 & BoardErrorFlags.MissingKing)
 
-    @unittest.skip
     def test_detect_error_pawn_in_court(self):
-        pass
+        layout_dict = deepcopy(G.INIT_LAYOUT_DICT)
+        layout_dict[Player.Black][PieceType.Pawn].append(G.F8)
+        b = Board(layout_dict)
+        errors: BoardErrorFlags = b.get_board_errors()
+        self.assertTrue(errors & BoardErrorFlags.PawnInCourt)
 
 
 class TestBoardMoves(unittest.TestCase):

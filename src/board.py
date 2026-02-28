@@ -13,6 +13,7 @@ from src.bitboard import BB_COURT_BLACK, BB_COURT_WHITE
 from src.bitboard import BB_PAWN_HOME_BLACK, BB_PAWN_HOME_WHITE
 from src.bitboard import BB_PAWN_PROMO_BLACK, BB_PAWN_PROMO_WHITE
 from src.bitboard import BITBOARD_FILES
+from src.board_error_flags import BoardErrorFlags
 from src.board_state import BoardState
 from src.game_state import GameState
 from src.geometry import Geometry as G
@@ -319,40 +320,40 @@ class Board:
     def is_ep_target(self, npos: Npos):
         return npos == self.ep_target
 
-    def is_in_court_zone(self, npos: Npos, player:Player=None):
-        if player is None:
-            player = self.cur_player
-        if self.cur_player == Player.Black:
-            result = BB_COURT_BLACK[npos]
-        else:
-            result = BB_COURT_WHITE[npos]
-        return result
-
-    def is_in_pawn_ep_target_zone(self, npos: Npos, player:Player=None):
+    def is_in_court_zone(self, npos: Npos, player:Player=None) -> bool:
         if player is None:
             player = self.cur_player
         if player == Player.Black:
-            result = BB_PAWN_EP_TARGET_BLACK[npos]
+            result = bool(BB_COURT_BLACK[npos])
         else:
-            result = BB_PAWN_EP_TARGET_WHITE[npos]
+            result = bool(BB_COURT_WHITE[npos])
         return result
 
-    def is_in_pawn_home_zone(self, npos: Npos, player:Player=None):
+    def is_in_pawn_ep_target_zone(self, npos: Npos, player:Player=None) -> bool:
         if player is None:
             player = self.cur_player
-        if self.cur_player == Player.Black:
-            result = BB_PAWN_HOME_BLACK[npos]
+        if player == Player.Black:
+            result = bool(BB_PAWN_EP_TARGET_BLACK[npos])
         else:
-            result = BB_PAWN_HOME_WHITE[npos]
+            result = bool(BB_PAWN_EP_TARGET_WHITE[npos])
         return result
 
-    def is_in_pawn_promo_zone(self, npos: Npos, player:Player=None):
+    def is_in_pawn_home_zone(self, npos: Npos, player:Player=None) -> bool:
         if player is None:
             player = self.cur_player
-        if self.cur_player == Player.Black:
-            result = BB_PAWN_PROMO_BLACK[npos]
+        if player == Player.Black:
+            result = bool(BB_PAWN_HOME_BLACK[npos])
         else:
-            result = BB_PAWN_PROMO_WHITE[npos]
+            result = bool(BB_PAWN_HOME_WHITE[npos])
+        return result
+
+    def is_in_pawn_promo_zone(self, npos: Npos, player:Player=None) -> bool:
+        if player is None:
+            player = self.cur_player
+        if player == Player.Black:
+            result = bool(BB_PAWN_PROMO_BLACK[npos])
+        else:
+            result = bool(BB_PAWN_PROMO_WHITE[npos])
         return result
 
     # --------------------
@@ -869,7 +870,40 @@ class Board:
     # SECTION: DETECT ERRORS
     # ========================================
     def get_board_errors(self):
-        raise NotImplementedError('board.get_board_errors()')
+        result = 0
+        layout_dict = self.get_layout_dict()
+
+        if (len(layout_dict[Player.Black][PieceType.King]) > 1
+                or len(layout_dict[Player.White][PieceType.King]) > 1):
+            result |= BoardErrorFlags.ExcessKings
+
+        if (len(layout_dict[Player.Black][PieceType.Pawn]) > 9
+                or len(layout_dict[Player.White][PieceType.Pawn]) > 9):
+            result |= BoardErrorFlags.ExcessPawns
+
+        if (sum([len(ps) for ps in layout_dict[Player.Black].values()]) > 18
+                or sum([len(ps) for ps in layout_dict[Player.White].values()]) > 18):
+            result |= BoardErrorFlags.ExcessPieces
+
+        if self.ep_target and not self.is_in_pawn_ep_target_zone(self.ep_target):
+            result |= BoardErrorFlags.InvalidEpTarget
+
+        if (len(layout_dict[Player.Black][PieceType.King]) == 0
+                or len(layout_dict[Player.White][PieceType.King]) == 0):
+            result |= BoardErrorFlags.MissingKing
+
+        if (any([self.is_in_court_zone(G.pos_to_npos(p), Player.Black)
+                for p in layout_dict[Player.Black][PieceType.Pawn]])
+            or any([self.is_in_court_zone(G.pos_to_npos(p), Player.Black)
+                for p in layout_dict[Player.White][PieceType.Pawn]])):
+            result |= BoardErrorFlags.PawnInCourt
+
+        if (any([self.is_in_pawn_promo_zone(G.pos_to_npos(p), Player.Black)
+                for p in layout_dict[Player.Black][PieceType.Pawn]])
+            or any([self.is_in_pawn_promo_zone(G.pos_to_npos(p), Player.White)
+                for p in layout_dict[Player.White][PieceType.Pawn]])):
+            result |= BoardErrorFlags.PawnOnBackRank
+        return result
 
     # ========================================
     # SECTION: PLAYER NOTIFICATION
