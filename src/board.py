@@ -37,6 +37,7 @@ class Board:
     # Note: An e.p. move executed in halfmove N (in move.ep_target)
     #   creates a Board ep_target in halfmove N+1 (in board.ep_target).
     def __init__(self, layout:Union[str, LayoutDict]=None):
+        self.do_check_repetition = True
         if layout is None:
             layout_dict = deepcopy(G.INIT_LAYOUT_DICT)
             self.init_layout(layout_dict)
@@ -157,11 +158,17 @@ class Board:
 
     @property
     def is_repetition_3x(self):
-        return self.history_is_repetition_3x[self.halfmove_count]
+        result = False
+        if self.do_check_repetition:
+            result = self.history_is_repetition_3x[self.halfmove_count]
+        return result
 
     @property
     def is_repetition_5x(self):
-        return self.history_is_repetition_5x[self.halfmove_count]
+        result = False
+        if self.do_check_repetition:
+            result = self.history_is_repetition_5x[self.halfmove_count]
+        return result
 
     @property
     def is_stalemate(self):
@@ -729,8 +736,10 @@ class Board:
         is_pending_draw = (
                 # Check for 75-moves of non-progress and/or 5x board repetition
                 (not move.is_progress() and self.nonprogress_halfmove_count == 149)
-                or len([z for z in self.history_zobrist_hash
-                    if z == next_zobrist_hash]) == 4
+                or
+                (self.do_check_repetition
+                    and (len([z for z in self.history_zobrist_hash
+                        if z == next_zobrist_hash]) == 4))
                 )
         if board_state in [BoardState.Checkmate, BoardState.Stalemate] or is_pending_draw:
             raise NotImplementedError('board: Termination of Game')
@@ -839,6 +848,10 @@ class Board:
             else:
                 result = BoardState.Normal
         return result
+
+    # To simplify testing of 50-move and 75-move rules
+    def disable_check_repetition(self):
+        self.do_check_repetition = False
 
     def get_max_repetition_count(self):
         return max(Counter(self.history_zobrist_hash).values())
