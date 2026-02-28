@@ -1,20 +1,26 @@
 #!/usr/bin/env python
 
 from copy import deepcopy
+import os
 import unittest
 
 from src.board import Board
 from src.board_error_flags import BoardErrorFlags
+from src.game_state import GameState
 from src.geometry import Geometry as G
 from src.geometry import *
 from src.hex_pos import HexPos
 from src.hex_vec import HexVec
 from src.move import Move
+from src.pgn import Pgn
 from src.piece_type import PieceType
 from src.player import Player
 
 
 class TestBoard(unittest.TestCase):
+    def setUp(self):
+        print(f'===== Running Board test: {self.id()} =====')
+
     def test_board_print(self):
         expected = """
                   b
@@ -174,13 +180,12 @@ class TestBoardConstructor(unittest.TestCase):
             actual_count = len(list(b.get_moves_pseudolegal_from(npos)))
             expected_count = INIT_LAYOUT_MOVE_COUNTS[npos]
             self.assertEqual(actual_count, expected_count,
-                f'At {G.npos_to_alg(npos)}: {actual_count} != {expected_count}')
+                f'At {G.npos_to_alg(npos)}: legal move count {actual_count} != {expected_count}')
 
-    @unittest.skip("b.get_moves_pseudolegal() not yet implemented")
     def test_init_piece_move_counts_total(self):
         b = Board()
         moves = b.get_moves_pseudolegal()
-        self.assertionEqual(len(moves), 51)
+        self.assertEqual(len(moves), 51)
 
     @unittest.skip
     def test_piece_add(self):
@@ -197,46 +202,182 @@ class TestBoardDetectEndgame(unittest.TestCase):
     def test_detect_check(self):
         pass
 
-    @unittest.skip
     def test_detect_checkmate(self):
-        pass
+        # Minimal layout
+        layout_dict1 = {
+                Player.Black: {
+                    PieceType.King:  [G.F11],
+                    },
+                Player.White: {
+                    PieceType.Queen:  [G.E8],
+                    PieceType.Knight: [G.K6]
+                    }
+                }
+        b1 = Board(layout_dict1)
+        m1 = Move(G.alg_to_npos('k6'), G.alg_to_npos('g8'))
+        m1.pt = PieceType.Knight
+        b1.move_make(m1)
+        # TODO: self.assertTrue(b1.is_checkmate)
+
+        # Layout from the penultimate position of Fool's Mate
+        layout_dict2 = {
+                Player.Black: {
+                    PieceType.King:   [G.G10],
+                    PieceType.Queen:  [G.C6],
+                    PieceType.Rook:   [G.C8, G.I8],
+                    PieceType.Bishop: [G.F11, G.F10, G.F9],
+                    PieceType.Knight: [G.D9, G.H9],
+                    PieceType.Pawn:   [G.B6, G.C7, G.D7, G.E6,
+                        G.F7,
+                        G.G7, G.H7, G.I7, G.K7]
+                },
+                Player.White: {
+                    PieceType.King:   [G.G1],
+                    PieceType.Queen:  [G.C3],
+                    PieceType.Rook:   [G.C1, G.I1],
+                    PieceType.Bishop: [G.B1, G.F2, G.F1],
+                    PieceType.Knight: [G.D1, G.H1],
+                    PieceType.Pawn:   [G.B2, G.C2, G.D3, G.E4,
+                        G.F5,
+                        G.G4, G.H3, G.I2, G.K1]
+                }
+                }
+        b2 = Board(layout_dict2)
+        m2 = Move(G.alg_to_npos('c3'), G.alg_to_npos('f9'))
+        m2.pt = PieceType.Queen
+        b2.move_make(m2)
+        # TODO: self.assertTrue(b2.is_checkmate)
 
     # Technically, insufficient material is a subset of dead game.
     @unittest.skip
     def test_detect_insufficient_material(self):
         pass
 
-    @unittest.skip
-    def test_detect_nonprogress_moves_50(self):
-        pass
+    def test_detect_nonprogress(self):
+        MOVE_TEXTS_REPEATING = {
+            Player.Black: ['Kg10g9', 'Kg9g10'],
+            Player.White: ['Kg1g2', 'Kg2g1']
+            }
 
-    @unittest.skip
-    def test_detect_nonprogress_moves_75(self):
-        pass
+        b = Board()
 
-    @unittest.skip
-    def test_detect_repetition_3x(self):
-        pass
+        # TODO: Use move diverse moves, such as inserting Pawn moves
+        #   to reset non-progress counter, thereby avoiding the need
+        #   to disable repetition checks.
+        b.disable_check_repetition()
 
-    @unittest.skip
-    def test_detect_repetition_5x(self):
-        pass
+        move_nums = {}
+        move_nums[Player.Black] = 0
+        move_nums[Player.White] = 0
 
-    @unittest.skip
+        def get_next_move(b: Board):
+            player = b.cur_player
+            move_ind = move_nums[player] % 2
+            move_nums[player] += 1
+            move_text = MOVE_TEXTS_REPEATING[player][move_ind]
+            move_spec = Pgn.move_text_to_move_spec(move_text)
+            moves = b.get_moves_matching(move_spec, move_text)
+            self.assertEqual(len(moves), 1)
+            move = moves[0]
+            self.assertTrue(move.fr_npos)
+            self.assertTrue(move.to_npos)
+            self.assertTrue(b.pieces[move.fr_npos])
+            return move
+
+        for k in range(1, 100):
+            next_move = get_next_move(b)
+            b.move_make(next_move)
+            self.assertFalse(b.is_50_move_rule_triggered)
+            self.assertFalse(b.is_75_move_rule_triggered)
+
+        # Make the 100th non-progress halfmove
+        b.move_make(get_next_move(b))
+        self.assertTrue(b.is_50_move_rule_triggered)
+        self.assertFalse(b.is_75_move_rule_triggered)
+
+        for k in range(100, 149):
+            b.move_make(get_next_move(b))
+            self.assertTrue(b.is_50_move_rule_triggered)
+            self.assertFalse(b.is_75_move_rule_triggered)
+
+        # Make the 150th non-progress halfmove
+        # TODO: b.move_make(get_next_move(b))
+        # TODO: self.assertTrue(b.is_50_move_rule_triggered)
+        # TODO: self.assertTrue(b.is_75_move_rule_triggered)
+
+    def test_detect_repetition(self):
+        MOVE_TEXTS_REPEATING = {
+            Player.Black: ['Kg10g9', 'Kg9g10'],
+            Player.White: ['Kg1g2', 'Kg2g1']
+            }
+
+        b = Board()
+        move_nums = {}
+        move_nums[Player.Black] = 0
+        move_nums[Player.White] = 0
+
+        def get_next_move():
+            player = b.cur_player
+            move_ind = move_nums[player] % 2
+            move_nums[player] += 1
+            move_text = MOVE_TEXTS_REPEATING[player][move_ind]
+            move_spec = Pgn.move_text_to_move_spec(move_text)
+            moves = b.get_moves_matching(move_spec, move_text)
+            self.assertEqual(len(moves), 1)
+            return moves[0]
+
+        for k in range(0, 6 + 1):
+            m = get_next_move()
+            # print(f'JMC: test_detect_repetition: next move={m}')
+            b.move_make(m)
+            self.assertFalse(b.is_repetition_3x)
+            self.assertFalse(b.is_repetition_5x)
+
+        # Create the 3rd duplicate
+        b.move_make(get_next_move())
+        self.assertTrue(b.is_repetition_3x)
+        self.assertFalse(b.is_repetition_5x)
+
+        for k in range(8, 14 + 1):
+            b.move_make(get_next_move())
+            self.assertTrue(b.is_repetition_3x)
+            self.assertFalse(b.is_repetition_5x)
+
+        # Create the 5th duplicate
+        # TODO: b.move_make(get_next_move())
+        # TODO: self.assertTrue(b.is_repetition_3x)
+        # TODO: self.assertTrue(b.is_repetition_5x)
+
     def test_detect_stalemate(self):
-        pass
+        layout = {
+            Player.Black: {
+                PieceType.King: [G.F11],
+                PieceType.Queen: [G.D2, G.H9]
+                },
+            Player.White: {
+                PieceType.King: [G.G2]
+                }
+            }
+        b = Board(layout)
+        move_w = Pgn.move_text_to_move(b, 'Kg2h1')
+        b.move_make(move_w)
+        move_b = Pgn.move_text_to_move(b, 'Qh9h2')
+        b.move_make(move_b)
+        # TODO: self.assertEqual(b.game_state, GameState.WinStalemateBlack)
 
 
 class TestBoardDetectError(unittest.TestCase):
 
-    @unittest.skip
     def test_detect_error_ep_target_location(self):
-        pass
+        b = Board()
+        m = Pgn.move_text_to_move(b, 'b1b3')
+        b.move_make(m)
+        self.assertEqual(b.ep_target, G.alg_to_npos('b2'))
 
     def test_detect_error_excess_pieces(self):
         layout1 = deepcopy(G.INIT_LAYOUT_DICT)
         layout1[Player.Black][PieceType.Queen].append(G.E9)
-        b1 = Board(layout1)    
+        b1 = Board(layout1)
         errors1: BoardErrorFlags = b1.get_board_errors()
         self.assertTrue(errors1 & BoardErrorFlags.ExcessPieces)
 
@@ -249,7 +390,7 @@ class TestBoardDetectError(unittest.TestCase):
         layout3 = deepcopy(G.INIT_LAYOUT_DICT)
         layout3[Player.Black][PieceType.King].append(G.G9)
 
-        b3 = Board(layout3)  
+        b3 = Board(layout3)
         errors3: BoardErrorFlags = b3.get_board_errors()
         self.assertTrue(errors3 & BoardErrorFlags.ExcessKings)
 
@@ -284,7 +425,9 @@ class TestBoardMoves(unittest.TestCase):
     def test_undo_moves_initial(self):
         b = Board()
         zhash0 = b.get_zobrist_hash()
-        for k, move in enumerate(b.get_moves_pseudolegal()):
+        initial_moves = b.get_moves_pseudolegal()
+        self.assertEqual(len(initial_moves), 51)
+        for k, move in enumerate(initial_moves):
             b.move_make(move)
             self.assertNotEqual(b.get_zobrist_hash(), zhash0)
             b.move_undo()
