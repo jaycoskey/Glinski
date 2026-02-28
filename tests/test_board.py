@@ -141,8 +141,12 @@ class TestBoardConstructor(unittest.TestCase):
                 continue
             actual_count = len(list(b.get_moves_pseudolegal_from(npos)))
             expected_count = INIT_LAYOUT_MOVE_COUNTS[npos]
-            self.assertEqual(actual_count, expected_count,
-                f'At {G.npos_to_alg(npos)}: legal move count {actual_count} != {expected_count}')
+            if actual_count != expected_count:
+                alg = f'G.npos_to_alg(npos)'
+                act = {actual_count}
+                exp = {expected_count}
+                self.assertEqual(actual_count, expected_count,
+                        f'At {alg}: legal move count {act} != {exp}')
 
     def test_init_piece_move_counts_total(self):
         b = Board()
@@ -290,7 +294,6 @@ class TestBoardDetectEndgame(unittest.TestCase):
 
         for k in range(0, 6 + 1):
             m = get_next_move()
-            # print(f'JMC: test_detect_repetition: next move={m}')
             b.move_make(m)
             self.assertFalse(b.is_repetition_3x)
             self.assertFalse(b.is_repetition_5x)
