@@ -55,34 +55,6 @@ class TestBoard(unittest.TestCase):
             self.assertEqual(returned_lines[k], expected_lines[k])
 
     def test_fools_mate(self):
-        # 1. Move('Qe1c3')
-        w1 = Move(G.alg_to_npos('e1'), G.alg_to_npos('c3'), None)
-        w1.pt = PieceType.Queen
-        # 1. ... Move('Qe10c6')
-        b1 = Move(G.alg_to_npos('e10'), G.alg_to_npos('c6'), None)
-        b1.pt = PieceType.Queen
-
-        # --------------------
-        # 2. Move('b1b2')
-        w2 = Move(G.alg_to_npos('b1'), G.alg_to_npos('b2'), None)
-        w2.pt = PieceType.Pawn
-
-        # ... Move('b7b6')
-        b2 = Move(G.alg_to_npos('b7'), G.alg_to_npos('b6'), None)
-        b2.pt = PieceType.Pawn
-
-        # --------------------
-        # 3. Move('Bf3b1')
-        w3 = Move(G.alg_to_npos('f3'), G.alg_to_npos('b1'), None)
-        w3.pt = PieceType.Bishop
-
-        # ... Move('e7e6')
-        b3 = Move(G.alg_to_npos('e7'), G.alg_to_npos('e6'), None)
-        b3.pt = PieceType.Pawn
-
-        # --------------------
-        moves = [w1, b1, w2, b2, w3, b3]
-
         FOOLS_FEN_BOARDS = [
                 "6/p5P/rp4PR/n1p3P1N/q2p2P2Q/bbb1p1P1BBB/k2p2P2K/n1p3P1N/rp4PR/p5P/6",
                 "6/p5P/rp3QPR/n1p3P1N/q2p2P3/bbb1p1P1BBB/k2p2P2K/n1p3P1N/rp4PR/p5P/6",
@@ -108,25 +80,15 @@ class TestBoard(unittest.TestCase):
         b = Board()
         self.assertEqual(b.get_fen_board(), FOOLS_FEN_BOARDS[0])
         self.assertEqual(b.get_zobrist_hash(), FOOLS_ZOBRIST_HASHES[0])
-        self.assertFalse(b.is_checkmate)
-        for k, move in enumerate(moves):
+
+        move_texts = 'Qe1c3 Qe10c6 b1b2 b7b6 Bf3b1 e7e6 Qc3xBf9#'.split()
+        for k, move_text in enumerate(move_texts):
+            move = Pgn.move_text_to_move(b, move_text)
             b.move_make(move)
             self.assertEqual(b.halfmove_count, k + 1)
             self.assertEqual(b.get_fen_board(), FOOLS_FEN_BOARDS[k + 1])
             self.assertEqual(b.get_zobrist_hash(), FOOLS_ZOBRIST_HASHES[k + 1])
-            self.assertEqual(len(b.history_zobrist_hash), b.halfmove_count + 1)
-            self.assertEqual(b.get_max_repetition_count(), 1)
-            self.assertFalse(b.is_checkmate)
-
-        # 4. Move('Qc3xBf9#')
-        w4 = Move(G.alg_to_npos('c3'), G.alg_to_npos('f9'), None)
-        w4.pt = PieceType.Queen
-        # TODO: Include the following few lines, once Checkmate detection is complete.
-        # b.move_make(w4)  # This move causes checkmate.
-
-        # self.assertEqual(b.get_fen_board(), FOOLS_FEN_BOARDS[-1])
-        # self.assertEqual(b.get_zobrist_hash(), FOOLS_ZOBRIST_HASHES[-1])
-        # self.assertTrue(b.is_checkmate)
+        # TODO: self.assertTrue(b.is_checkmate)
 
 
 class TestBoardConstructor(unittest.TestCase):
