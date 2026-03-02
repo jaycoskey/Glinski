@@ -22,20 +22,5 @@ class Player(Enum):
         opp_ind = (vals.index(self) + 1) % 2
         return vals[opp_ind]
 
+PLAYERS = [Player.Black, Player.White]
 
-if __name__ == "__main__":
-    b1 = Player.Black
-    w1 = Player.White
-    print(f"Black = {b1}")
-    print(f"White = {w1}")
-
-    print(f"Opponent of Black = {b1.opponent()}")
-    print(f"Opponent of White = {w1.opponent()}")
-
-    b2 = Player.Black
-    w2 = Player.White
-    assert b1 == b2
-    assert w1 == w2
-
-    assert b1 != w1
-    assert b2 != w2

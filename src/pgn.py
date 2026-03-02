@@ -12,8 +12,8 @@ from src.hex_pos import HexPos
 from src.move import Move
 from src.move_spec import MoveSpec
 from src.move_parse_phase import MoveParsePhase
-from src.piece_type import PieceType
-from src.player import Player
+from src.piece_type import PieceType, PIECE_TYPES
+from src.player import Player, PLAYERS
 
 
 GameTagPair = Tuple[str, str]
@@ -89,9 +89,6 @@ class Pgn:
 
     @classmethod
     def get_layout_dict_empty(cls) -> Dict[Player, Dict[PieceType, List[HexPos]]]:
-        PLAYERS = [Player.Black, Player.White]
-        PIECE_TYPES = [PieceType.King, PieceType.Queen, PieceType.Rook,
-                PieceType.Bishop, PieceType.Knight, PieceType.Pawn]
         layout = {}
         for player in PLAYERS:
             layout[player] = {}

@@ -23,7 +23,7 @@ from src.hex_vec import HexVec
 from src.move import Move
 from src.move_spec import MoveSpec
 from src.piece import Piece
-from src.piece_type import PieceType, PIECE_TYPE_COUNT
+from src.piece_type import PieceType, PIECE_TYPES, PIECE_TYPE_COUNT
 from src.player import Player, PLAYER_COUNT
 from src.zobrist import ZOBRIST_TABLE
 
@@ -1048,12 +1048,10 @@ class Board:
     # This is called by get_svg_str().
     def svg_get_layout_dict_str(self, fr_npos=None, to_npos=None,
             king_check_npos=None, king_checkmate_npos=None) -> str:
-        PIECE_TYPES = [PieceType.King, PieceType.Queen, PieceType.Rook,
-                PieceType.Bishop, PieceType.Knight, PieceType.Pawn]
         SVG_PLAYER_KEYS = { Player.Black: 'black', Player.White: 'white' }
         layout_dict = self.get_layout_dict()
         result = '\tLAYOUT = {\n'
-        for player in [Player.Black, Player.White]:
+        for player in PLAYERS:
             result += '\t\t"' + SVG_PLAYER_KEYS[player] + '": {\n'
             for pt in PIECE_TYPES:
                 pos_str = ', '.join([G.pos_to_alg(pos).upper()

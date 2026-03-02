@@ -9,8 +9,8 @@ from src.board_color import BoardColor
 from src.hex_pos import HexPos
 from src.hex_vec import HexVec
 from src.piece import Piece
-from src.piece_type import PieceType
-from src.player import Player
+from src.piece_type import PieceType, PIECE_TYPES
+from src.player import Player, PLAYERS
 
 from src.util import static_init
 
@@ -479,9 +479,6 @@ class Geometry:
 
     @classmethod
     def get_layout_dict_empty(cls) -> LayoutDict:
-        PLAYERS = [Player.Black, Player.White]
-        PIECE_TYPES = [PieceType.King, PieceType.Queen, PieceType.Rook,
-                PieceType.Bishop, PieceType.Knight, PieceType.Pawn]
         layout = {}
         for player in PLAYERS:
             layout[player] = {}
