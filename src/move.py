@@ -11,8 +11,7 @@ from src.piece_type import PieceType
 Npos = int
 
 
-# TODO: Integrate actions that can take besides Moves. (See class MoveOptionFlags.)
-# TODO: Moves are instantiated with only 3 arguments (from, to, promotion type),
+# TODO: Moves are instantiated with only 3 arguments (from, to, promo type),
 # TODO: but non-core attributes (e.g., move evaluation) can be updated later.
 class Move:
     def __init__(self, fr_npos: Npos, to_npos: Npos, promotion_pt: PieceType=None):
