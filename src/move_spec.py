@@ -74,11 +74,11 @@ class MoveSpec:
         return frozenbitarray(sig)
 
     def to_str(self, lang='en'):
-        return '{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}'.format(
+        return 'ms:{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}'.format(
 
-            self.pt.to_symbol(lang) if self.pt else '',
-            self.fr_file if self.fr_file else '',
-            self.fr_rank if self.fr_rank else '',
+            self.pt.to_symbol(lang) if self.pt else '?',
+            self.fr_file if self.fr_file else '-',
+            self.fr_rank if self.fr_rank else '-',
             'x' if self.is_capture else '',
             self.capture_pt.to_symbol(lang) if self.capture_pt else '',
 
@@ -90,3 +90,4 @@ class MoveSpec:
 
             self.checkness_str,
             self.move_eval_str)
+

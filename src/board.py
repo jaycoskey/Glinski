@@ -24,7 +24,8 @@ from src.hex_vec import HexVec
 from src.move import Move
 from src.move_spec import MoveSpec
 from src.piece import Piece
-from src.piece_type import PieceType, PIECE_TYPES, PIECE_TYPE_COUNT
+from src.piece_type import PieceType
+from src.piece_type import PIECE_TYPES, PIECE_TYPE_COUNT, PROMO_PTS
 from src.player import Player, PLAYER_COUNT
 from src.zobrist import ZobristHash, ZOBRIST_TABLE
 
@@ -453,7 +454,8 @@ class Board:
             # Filter on PieceType. The Piece on the Board matches the spec.
             moves = [move for move in moves
                     if (self.get_pt_at(move.fr_npos) == ms.pt)
-                    or (ms.pt is None and self.get_pt_at(move.fr_npos) == PieceType.Pawn)]
+                    or (ms.pt is None
+                        and self.get_pt_at(move.fr_npos) == PieceType.Pawn)]
             if not moves:
                 return []
 
@@ -480,9 +482,10 @@ class Board:
                 if not moves:
                     return []
 
-            for move in moves:
-                if ms.promotion_pt:
-                    move.promotion_pt = ms.promotion_pt
+            if ms.promotion_pt:
+                moves = [move for move in moves
+                        if move.promotion_pt == ms.promotion_pt]
+
             return moves
 
         # TODO: Consider expanding to handle capture by non-Pawn pieces
@@ -530,7 +533,7 @@ class Board:
             moves = self.get_moves_pseudolegal_leaper(npos, pt)
         elif PieceType.is_slider_type(pt):
             moves = self.get_moves_pseudolegal_slider(npos, pt)
-        else:
+        else:  # pt == Piece.Pawn
             moves = self.get_moves_pseudolegal_pawn(npos)
         return moves
 
@@ -551,30 +554,42 @@ class Board:
 
     # TODO: Allow for selection of promotion_pt on Pawn promotion
     def get_moves_pseudolegal_pawn(self, npos: Npos) -> Iterator[Move]:
+        is_verbose = (npos == 11
+                and self.get_player_at(npos) == Player.Black
+                and self.get_pt_at(npos) == PieceType.Pawn)
+
         fwd1_npos = self.get_leap_pawn_adv(npos)
         fwd1_piece = self.get_piece_at(fwd1_npos)
-        if not fwd1_piece:
-            is_promotion = self.is_in_pawn_promo_zone(fwd1_npos)
-            yield Move(npos, fwd1_npos, PieceType.King if is_promotion else None)
+        if not fwd1_piece:  # ADV1
+            if self.is_in_pawn_promo_zone(fwd1_npos):
+                for promo_pt in PROMO_PTS:
+                    yield Move(npos, fwd1_npos, promo_pt)  # ADV1 w/ PROMOTION
+            else:
+                yield Move(npos, fwd1_npos, None)  # ADV1 w/o promotion
             if self.is_in_pawn_home_zone(npos):
                 fwd2_npos = self.get_leap_pawn_hop(npos)
                 fwd2_piece = self.get_piece_at(fwd2_npos)
-                if not fwd2_piece:
-                    yield Move(npos, fwd2_npos, None)
+                if not fwd2_piece:  # ADV2
+                    yield Move(npos, fwd2_npos, None)  # ADV2 w/o promotion
+
         for capt_npos in self.get_leap_pawn_capt(npos):
             if capt_npos == self.ep_target:
-                move = Move(npos, capt_npos, None)
+                move = Move(npos, capt_npos, None)  # E.P. CAPTURE
                 move.capture_pt = PieceType.Pawn
-                # Note: ep capture will be available on the next half-move
+                move.ep_target = self.ep_target
                 yield move
             else:
-                is_promotion = self.is_in_pawn_promo_zone(capt_npos)
                 capt_piece = self.get_piece_at(capt_npos)
                 if capt_piece and capt_piece.player == self.cur_player.opponent():
-                    move = Move(npos, capt_npos, PieceType.King
-                            if is_promotion else None)
-                    move.capture_pt = capt_piece.pt
-                    yield move
+                    if self.is_in_pawn_promo_zone(capt_npos):
+                        for promo_pt in PROMO_PTS:
+                            move = Move(npos, capt_npos, promo_pt)  # Capture with PROMOTION
+                            move.capture_pt = capt_piece.pt
+                            yield move
+                    else:
+                        move = Move(npos, capt_npos, None)  # Capture w/o promotion
+                        move.capture_pt = capt_piece.pt
+                        yield move
 
     def get_moves_pseudolegal_slider(self, npos: Npos, pt: PieceType) -> Iterator[Move]:
         rays = G.get_rays(npos, pt)
@@ -595,6 +610,8 @@ class Board:
     # TODO: Check for move legality
     def get_moves_to(self, to_npos: Npos) -> Iterable[Move]:
         result = []
+
+        # TODO: Greatly improve efficiency with move selective checking.
         for fr_npos in range(G.SPACE_COUNT):
             if self.is_empty(fr_npos):
                 continue
@@ -602,8 +619,8 @@ class Board:
                 continue
             moves = self.get_moves_pseudolegal_from(fr_npos)
             for move in moves:
-                move.pt = self.get_pt_at(fr_npos)
                 if move.to_npos == to_npos:
+                    move.pt = self.get_pt_at(fr_npos)
                     result.append(move)
         return result
 
@@ -611,9 +628,9 @@ class Board:
     # captured by en passant, given the e.p. target space.
     def get_vec_pawn_reverse(self) -> HexVec:
         if self.cur_player == Player.Black:
-            result = G.VEC_PAWN_ADV_WHITE
+            result = G.VECS_PAWN_ADV_WHITE
         else:
-            result = G.VEC_PAWN_ADV_BLACK
+            result = G.VECS_PAWN_ADV_BLACK
         return result
 
     # --------------------
@@ -672,9 +689,11 @@ class Board:
         # Phase 1: Capture.
         #
         if move.ep_target:
-            assert move.ep_target != move.to_npos
             move.capture_pt = PieceType.Pawn
-            self.piece_remove(move.ep_target)
+            ep_target_pos = G.npos_to_pos(move.ep_target)
+            captured_pawn_pos = ep_target_pos + self.get_vec_pawn_reverse()
+            captured_pawn_npos = G.pos_to_npos(captured_pawn_pos)
+            self.piece_remove(captured_pawn_npos)
         else:
             to_piece = self.pieces[move.to_npos]
             if not self.is_empty(move.to_npos):

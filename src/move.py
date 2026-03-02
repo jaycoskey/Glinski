@@ -5,33 +5,32 @@ import re
 import sys
 
 from src.geometry import Geometry as G
+from src.geometry import Npos
 from src.move_eval import MoveEval
 from src.piece_type import PieceType
-
-Npos = int
 
 
 # TODO: Moves are instantiated with only 3 arguments (from, to, promo type),
 # TODO: but non-core attributes (e.g., move evaluation) can be updated later.
 class Move:
-    def __init__(self, fr_npos: Npos, to_npos: Npos, promotion_pt: PieceType=None):
+    def __init__(self, fr_npos: Npos, to_npos: Npos, promotion_pt:PieceType=None):
         self._fr_npos: int = fr_npos
         self._to_npos: int = to_npos
-        self.promotion_pt = None
+        self.promotion_pt: PieceType = promotion_pt
 
         self.pt: PieceType = None
         self.is_check: bool = None
         self.is_checkmate: bool = None
-        self.ep_target: Npos = None
         self.capture_pt: PieceType = None
+        self.ep_target: Npos = None
 
         # Subjective attributes
         self.move_eval = None
 
     def set_dependent_attributes(self, pt: PieceType, capture_pt: PieceType, ep_target: Npos):
         self.pt: PieceType = pt
-        self.ep_target: Npos = ep_target
         self.capture_pt: PieceType = capture_pt
+        self.ep_target: Npos = ep_target
 
     def set_computed_attributes(self, is_check, is_checkmate):
         self.is_check: bool = is_check

@@ -40,13 +40,15 @@ class PieceType(Enum):
 
         return SYMBOL_TO_PT[symbol]
 
-    def is_promo_type(self):
-        PROMO_TYPES = [Queen, Rook, Bishop, Knight]
-        return self in self.PROMO_TYPES
+    @classmethod
+    def is_promo_type(cls, pt):
+        PROMO_TYPES = [cls.Queen, cls.Rook, cls.Bishop, cls.Knight]
+        return pt in PROMO_TYPES
 
-    def is_slider_type(self):
-        SLIDERS = [Queen, Rook, Bishop]
-        return self in self.SLIDERS
+    @classmethod
+    def is_slider_type(cls, pt):
+        SLIDERS = [cls.Queen, cls.Rook, cls.Bishop]
+        return pt in SLIDERS
 
     def to_symbol(self, lang='en'):
         if lang == 'en':
@@ -96,4 +98,7 @@ class PieceType(Enum):
 PIECE_TYPES = [PieceType.King, PieceType.Queen, PieceType.Rook,
         PieceType.Bishop, PieceType.Knight, PieceType.Pawn]
 PIECE_TYPE_COUNT = 6
+
+PROMO_PTS = [PieceType.Queen, PieceType.Rook,
+        PieceType.Bishop, PieceType.Knight]
 
