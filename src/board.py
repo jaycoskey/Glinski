@@ -7,7 +7,7 @@ from collections import Counter
 from copy import deepcopy
 import math
 import os
-from typing import Dict, Iterator, List, Union
+from typing import Dict, Iterable, Iterator, List, Union
 
 from src.bitboard import BB_COURT_BLACK, BB_COURT_WHITE
 from src.bitboard import BB_PAWN_HOME_BLACK, BB_PAWN_HOME_WHITE
@@ -26,7 +26,7 @@ from src.move_spec import MoveSpec
 from src.piece import Piece
 from src.piece_type import PieceType, PIECE_TYPES, PIECE_TYPE_COUNT
 from src.player import Player, PLAYER_COUNT
-from src.zobrist import ZOBRIST_TABLE
+from src.zobrist import ZobristHash, ZOBRIST_TABLE
 
 
 class Board:
@@ -96,7 +96,7 @@ class Board:
             ValueError('Board constructor arg has unrecognized type: '
                 + f'{type(layout)}: {layout}')
 
-    def init_defaults(self):
+    def init_defaults(self) -> None:
         # Board layout is addressed elsewhere.
         ####################
         # Info that is provided by a FEN string.
@@ -124,7 +124,7 @@ class Board:
         self.history_is_repetition_5x = [False]
         self.history_is_stalemate = [False]
 
-    def init_layout(self, layout_dict: LayoutDict):
+    def init_layout(self, layout_dict: LayoutDict) -> None:
         self.pieces = [None for k in range(G.SPACE_COUNT)]
         for player in layout_dict.keys():
             for pt in layout_dict[player].keys():
@@ -139,7 +139,7 @@ class Board:
     # The current values of these attributes are accessed via properties.
 
     @property
-    def ep_target(self):
+    def ep_target(self) -> Npos:
         return self.history_ep_target[self.halfmove_count]
 
     @property
@@ -177,19 +177,19 @@ class Board:
         return self.history_is_stalemate[self.halfmove_count]
 
     @property
-    def last_move(self):
+    def last_move(self) -> Move:
         return self.history_move[self.halfmove_count]
 
     @property
-    def nonprogress_halfmove_count(self):
+    def nonprogress_halfmove_count(self) -> int:
         return self.history_nonprogress_halfmove_count[self.halfmove_count]
 
     @property
-    def zobrist_hash(self):
+    def zobrist_hash(self) -> ZobristHash:
         return self.history_zobrist_hash[self.halfmove_count]
 
     # TODO: Convert to property
-    def get_halfmove_count(self):
+    def get_halfmove_count(self) -> int:
         # Don't count moves[0], which is None.
         halfmove_count = len(self.history_move) - 1
 
@@ -207,7 +207,7 @@ class Board:
     #     En passant target space (in alg. notation), or '-'
     #     Halfmove clock
     #     Fullmove number (= floor(halfmove_count / 2))
-    def get_fen(self):
+    def get_fen(self) -> str:
         fen = self.get_fen_board()
         player = 'b' if self.cur_player == Player.Black else 'w'
         castling = '-'  # No castling in Glinski's hexagonal chess
@@ -216,7 +216,7 @@ class Board:
         fullmove = str(1 + math.floor(self.halfmove_count / 2))
         return f'{fen} {player} {castling} {ep} {nonprogress} {fullmove}'
 
-    def get_fen_board(self):
+    def get_fen_board(self) -> str:
         result = ''
         blank_count = 0
 
@@ -240,14 +240,14 @@ class Board:
                 result += '/'
         return result
 
-    def get_king_npos(self, player: Player):
+    def get_king_npos(self, player: Player) -> Npos:
         for npos in range(G.SPACE_COUNT):
             piece = self.pieces[npos]
             if piece and piece.player == player and piece.pt == PieceType.King:
                 return npos
         raise MissingKingException(msg)
 
-    def get_layout_dict(self) -> Dict[Player, Dict[PieceType, List[HexPos]]]:
+    def get_layout_dict(self) -> LayoutDict:
         layout_dict = G.get_layout_dict_empty()
 
         for npos in range(G.SPACE_COUNT):
@@ -259,10 +259,11 @@ class Board:
             layout_dict[player][pt].append(G.npos_to_pos(npos))
         return layout_dict
 
-    def get_piece(self, npos: Npos):
+    def get_piece(self, npos: Npos) -> Piece:
         return self.pieces[npos]
 
-    def get_pieces_at_file(self, f: str, player: Player=None, pt: PieceType=None):
+    def get_pieces_at_file(self, f: str,
+            player:Player=None, pt:PieceType=None) -> Iterable[Piece]:
         result = []
         for npos in BITBOARD_FILES[G.FILE_CHAR_TO_HEX0[f]]:
             piece = self.pieces[npos]
@@ -272,7 +273,8 @@ class Board:
                     result.append(piece)
         return result
 
-    def get_pieces_at_rank(self, r: int, player: Player=None, pt: PieceType=None):
+    def get_pieces_at_rank(self, r: int,
+            player:Player=None, pt:PieceType=None) -> Iterable[Piece]:
         result = []
         for npos in G.BITBOARD_RANKS[r - 1].search(1):
             piece = self.pieces[npos]
@@ -282,7 +284,8 @@ class Board:
                     result.append(piece)
         return result
 
-    def get_pieces_list(self, player: Player=None, pt: PieceType=None) -> List[Piece]:
+    def get_pieces_list(self,
+            player:Player=None, pt:PieceType=None) -> List[Piece]:
         result = []
         for npos in range(G.SPACE_COUNT):
             piece = self.pieces[npos]
@@ -301,7 +304,7 @@ class Board:
     #   * The Player value (p_val) selects a row within that plane.
     #   * The PieceType value (p_val) selects a column within that plane.
     # All such values are XORed together to form the final result.
-    def get_zobrist_hash(self):
+    def get_zobrist_hash(self) -> ZobristHash:
         result = 0
         for npos in range(G.SPACE_COUNT):
             piece = self.get_piece(npos)
@@ -321,7 +324,7 @@ class Board:
     def is_ep_target(self, npos: Npos):
         return npos == self.ep_target
 
-    def is_in_court_zone(self, npos: Npos, player:Player=None) -> bool:
+    def is_in_court_zone(self, npos: Npos, player:Player=None):
         if player is None:
             player = self.cur_player
         if player == Player.Black:
@@ -330,7 +333,7 @@ class Board:
             result = bool(BB_COURT_WHITE[npos])
         return result
 
-    def is_in_pawn_ep_target_zone(self, npos: Npos, player:Player=None) -> bool:
+    def is_in_pawn_ep_target_zone(self, npos: Npos, player:Player=None):
         if player is None:
             player = self.cur_player
         if player == Player.Black:
@@ -339,7 +342,7 @@ class Board:
             result = bool(BB_PAWN_EP_TARGET_WHITE[npos])
         return result
 
-    def is_in_pawn_home_zone(self, npos: Npos, player:Player=None) -> bool:
+    def is_in_pawn_home_zone(self, npos: Npos, player:Player=None):
         if player is None:
             player = self.cur_player
         if player == Player.Black:
@@ -348,7 +351,7 @@ class Board:
             result = bool(BB_PAWN_HOME_WHITE[npos])
         return result
 
-    def is_in_pawn_promo_zone(self, npos: Npos, player:Player=None) -> bool:
+    def is_in_pawn_promo_zone(self, npos: Npos, player:Player=None):
         if player is None:
             player = self.cur_player
         if player == Player.Black:
@@ -360,17 +363,18 @@ class Board:
     # --------------------
 
     # Note that piece addition is done via pos, but removal uses npos.
-    def piece_add(self, pos: HexPos, player: Player, pt: PieceType):
+    def piece_add(self, pos: HexPos, player: Player, pt: PieceType) -> None:
         npos = G.pos_to_npos(pos)
         self.pieces[npos] = Piece(player, pt)
 
-    def piece_move(self, fr_npos: Npos, to_npos: Npos):
+    def piece_move(self, fr_npos: Npos, to_npos: Npos) -> None:
         assert not self.pieces[to_npos]
         self.pieces[to_npos] = self.pieces[fr_npos]
         self.pieces[fr_npos] = None
 
     # Note that piece addition is done via pos, but removal uses npos.
-    def piece_remove(self, npos: Npos, player: Player=None, pt: PieceType=None):
+    def piece_remove(self, npos: Npos,
+            player:Player=None, pt:PieceType=None) -> None:
         if player:
             assert self.pieces[npos].player == player
         if pt:
@@ -404,7 +408,7 @@ class Board:
             result = G.LEAP_PAWN_HOP_WHITE[npos]
         return result
 
-    def get_moves_legal(self):
+    def get_moves_legal(self) -> Iterable[Move]:
         result = []
         for move in self.get_moves_pseudolegal():
             player = self.cur_player
@@ -422,7 +426,7 @@ class Board:
     #   moved there, we should probably give priority to the Pawn.
     # Possible alternate approach: Find all legal moves, and( apply filter.
     # Note: The "move_text" arg is not needed, but can be helpful for debugging.
-    def get_moves_matching(self, ms: MoveSpec, move_text):
+    def get_moves_matching(self, ms: MoveSpec, move_text) -> Iterable[Move]:
         moves = []
 
         if ms.fr_file and ms.fr_rank and ms.to_file and ms.to_rank:
@@ -438,7 +442,9 @@ class Board:
                 move.promotion_pt = ms.promotion_pt
             move.is_checkmate = ms.checkness_str and ms.checkness_str == '#'
             if move.pt == PieceType.Pawn and move.to_npos == self.ep_target:
-                if G.npos_to_file_char(to_npos) != G.npos_to_file_char(fr_npos):
+                to_file_char = G.npos_to_file_char(to_npos)
+                fr_file_char = G.npos_to_file_char(fr_npos)
+                if to_file_char != fr_file_char:
                     move.ep_target = self.ep_target
             # TODO: move_eval
             return [move]
@@ -454,15 +460,18 @@ class Board:
             # Filter on PieceType
             moves = [move for move in moves
                     if (self.pieces[move.fr_npos].pt == ms.pt)
-                    or (ms.pt is None and self.pieces[move.fr_npos].pt == PieceType.Pawn)]
+                    or (ms.pt is None
+                        and self.pieces[move.fr_npos].pt == PieceType.Pawn)]
             if not moves:
                 return []
 
             if ms.is_capture:
                 opponent = self.cur_player.opponent()
                 moves = [move for move in moves
-                        if ((self.pieces[move.to_npos] and self.pieces[move.to_npos].player == opponent)
-                            or (move.to_npos == self.ep_target and self.pieces[self.ep_target] is None))
+                        if ((self.pieces[move.to_npos]
+                            and self.pieces[move.to_npos].player == opponent)
+                            or (move.to_npos == self.ep_target
+                                and self.pieces[self.ep_target] is None))
                             ]
                 if not moves:
                     return []
@@ -470,12 +479,14 @@ class Board:
             if ms.fr_file:
                 for z, move in enumerate(moves):
                     file_char = G.npos_to_file_char(move.fr_npos)
-                moves = [move for move in moves if G.npos_to_file_char(move.fr_npos) == ms.fr_file]
+                moves = [move for move in moves
+                        if G.npos_to_file_char(move.fr_npos) == ms.fr_file]
                 if not moves:
                     return []
 
             if ms.fr_rank:
-                moves = [move for move in moves if G.npos_to_rank(move.fr_npos) == ms.fr_rank]
+                moves = [move for move in moves
+                        if G.npos_to_rank(move.fr_npos) == ms.fr_rank]
                 if not moves:
                     return []
 
@@ -487,7 +498,8 @@ class Board:
         # TODO: Consider expanding to handle capture by non-Pawn pieces
         if (ms.pt is None and ms.fr_file and ms.is_capture and ms.to_file
                 and (not ms.fr_rank and not ms.to_rank)):
-            for fr_npos in BITBOARD_FILES[G.FILE_CHAR_TO_HEX0[ms.fr_file] + 5].search(bitarray('1')):
+            bb_file = BITBOARD_FILES[G.FILE_CHAR_TO_HEX0[ms.fr_file] + 5]
+            for fr_npos in bb_file.search(bitarray('1')):
                 if not self.pieces[fr_npos]:
                     continue
                 fr_piece = self.pieces[fr_npos]
@@ -510,7 +522,7 @@ class Board:
             return moves
         raise NotImplementedError('board.get_moves_matching(). Move pattern not recognized')
 
-    def get_moves_pseudolegal(self):
+    def get_moves_pseudolegal(self) -> Iterable[Move]:
         moves = []
         for npos in range(G.SPACE_COUNT):
             piece = self.pieces[npos]
@@ -518,7 +530,7 @@ class Board:
                 moves.extend(self.get_moves_pseudolegal_from(npos))
         return moves
 
-    def get_moves_pseudolegal_from(self, npos: Npos) -> Iterator[Move]:
+    def get_moves_pseudolegal_from(self, npos: Npos) -> Iterable[Move]:
         piece = self.pieces[npos]
         if piece is None or piece.player != self.cur_player:
             return []
@@ -572,7 +584,7 @@ class Board:
                     move.capture_pt = capt_piece.pt
                     yield move
 
-    def get_moves_pseudolegal_slider(self, npos: Npos, pt: PieceType):
+    def get_moves_pseudolegal_slider(self, npos: Npos, pt: PieceType) -> Iterator[Move]:
         rays = G.get_rays(npos, pt)
         for ray in rays:
             for to_npos in ray:
@@ -591,7 +603,7 @@ class Board:
 
     # TODO: Check slider moves being blocked
     # TODO: Check for move legality
-    def get_moves_to(self, to_npos: Npos):
+    def get_moves_to(self, to_npos: Npos) -> Iterable[Move]:
         result = []
         for fr_npos in range(G.SPACE_COUNT):
             if not self.pieces[fr_npos]:
@@ -663,7 +675,7 @@ class Board:
     #   * game.play() will act on this by ending the game.
     #   * another caller (e.g., move search) might handle it differently.
     # TODO: Add an option "do_force" to allow an illegal move.
-    def move_make(self, move):
+    def move_make(self, move) -> None:
         # Phase 0:
         assert(self.game_state in [GameState.Unstarted, GameState.InPlay])
         if self.game_state == GameState.Unstarted:
@@ -760,7 +772,7 @@ class Board:
         self.cur_player = self.cur_player.opponent()
         self.notify_player(self.cur_player, 'Your move')
 
-    def move_undo(self):
+    def move_undo(self) -> None:
         assert(self.game_state != GameState.Unstarted)
         move = self.history_move[-1]
 
@@ -807,10 +819,10 @@ class Board:
         assert len(self.history_is_stalemate) == self.halfmove_count + 1
         self.cur_player = self.cur_player.opponent()
 
-    def moves_make(self, moves):
+    def moves_make(self, moves) -> None:
         raise NotImplementedError('board.moves_make()')
 
-    def moves_undo(self, moves):
+    def moves_undo(self, moves) -> None:
         raise NotImplementedError('board.moves_undo()')
 
     # ========================================
@@ -841,10 +853,10 @@ class Board:
         return result
 
     # To simplify testing of 50-move and 75-move rules
-    def disable_check_repetition(self):
+    def disable_check_repetition(self) -> None:
         self.do_check_repetition = False
 
-    def get_max_repetition_count(self):
+    def get_max_repetition_count(self) -> int:
         return max(Counter(self.history_zobrist_hash).values())
 
     def is_condition_dead_position(self):
@@ -853,13 +865,16 @@ class Board:
     def is_condition_insufficient_material(self):
         raise NotImplementedError('board.is_condition_insufficient_material()')
 
-    def set_game_state(self, game_state):
+    def set_board_state(self, board_state) -> None:
+        self.board_state = board_state
+
+    def set_game_state(self, game_state) -> None:
         self.game_state = game_state
 
     # ========================================
     # SECTION: DETECT ERRORS
     # ========================================
-    def get_board_errors(self):
+    def get_board_errors(self) -> BoardErrorFlags:
         result = 0
         layout_dict = self.get_layout_dict()
 
@@ -907,8 +922,8 @@ class Board:
     # ========================================
     # SECTION: PUZZLE SUPPORT
     # ========================================
-    def find_mates_in_1(self) -> Iterator[Move]:
-        moves = self.board.get_moves_legal()
+    def find_mates_in_1(self) -> Iterable[Move]:
+        moves = self.get_moves_legal()
         result = []
         for move in moves:
             self.move_make(move)
@@ -933,7 +948,7 @@ class Board:
     # p:   The Player who makes move m_p.
     # opp: The opponent of Player p. Player opp makes move m_opp.
     #
-    def find_mates_in_2_starting_with(self, m_p):
+    def find_mates_in_2_starting_with(self, m_p) -> Dict:
         inevitable_mates = {}
         self.move_make(m_p)
         moves_opp = self.get_moves_legal()
@@ -1040,12 +1055,12 @@ class Board:
         print()
 
     def print_ascii(self, heading=None, indent_board=8,
-            indent_incr=3, item_width=6, do_print_info=True):
+            indent_incr=3, item_width=6, do_print_info=True) -> None:
         self.print(heading, indent_board,
                 indent_incr, item_width,
                 False, do_print_info)
 
-    def print_info(self):
+    def print_info(self) -> None:
         ep_tgt = self.ep_target
         ep_str = (f'{G.npos_to_alg(ep_tgt) if ep_tgt else "None"}')
         opp_name = self.cur_player.opponent().name
@@ -1102,7 +1117,7 @@ class Board:
     # Note: The selenium package can open "data URLs", so this SVG
     #   content can be used even without ever being saved to disk.
     def svg_get_str(self, fr_npos:Npos=None, to_npos:Npos=None,
-            king_check_npos:Npos=None, king_checkmate_npos=None):
+            king_check_npos:Npos=None, king_checkmate_npos=None) -> str:
         glinski_home = os.getenv('GLINSKI_HOME')
         template_svg_dir = '/assets/'
         svg_fname = 'glinski_game.svg'
@@ -1133,7 +1148,7 @@ class Board:
     def svg_write(self, out_dir:str=None,
             game_name:str=None, suffix:str=None,
             fr_npos:Npos=None, to_npos:Npos=None,
-            king_check_npos:Npos=None, king_checkmate_npos:Npos=None):
+            king_check_npos:Npos=None, king_checkmate_npos:Npos=None) -> None:
         if out_dir is None:
             glinski_home = os.getenv('GLINSKI_HOME')
             out_dir = glinski_home + '/assets/custom/'

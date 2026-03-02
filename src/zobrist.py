@@ -16,6 +16,8 @@
 #   * The PieceType value selects a column within that plane.
 # All such values are XORed together to form the final result.
 
+ZobristHash = int
+
 ZOBRIST_TABLE = [
     0x6C0271C745CE8842,
     0xCEF3BBA2E932D1FD,
