@@ -12,3 +12,7 @@ class BoardErrorFlags(IntFlag):
     MissingKing = 16
     PawnInCourt = 32
     PawnOnBackRank = 64
+
+class MissingKingException(Exception):
+    pass
+
