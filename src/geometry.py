@@ -392,7 +392,7 @@ class Geometry:
         # until the piece moves off the board or contacts a piece.
         # Called by get_moves_pseudolegal_slider().
         # Pre-compute this, so rays can be found by lookup.
-        def get_ray(pos: HexPos, vec: HexVec) -> List[Npos]:
+        def compute_ray(pos: HexPos, vec: HexVec) -> List[Npos]:
             result = []
             cursor = pos
             for _ in range(11):
@@ -402,10 +402,10 @@ class Geometry:
                 else:
                     return result
 
-        def get_rays(pos: HexPos, vecs: List[HexVec]) -> List[List[Npos]]:
+        def compute_rays(pos: HexPos, vecs: List[HexVec]) -> List[List[Npos]]:
             result = []
             for vec in vecs:
-                ray = get_ray(pos, vec)
+                ray = compute_ray(pos, vec)
                 if ray:  # Do not append zero-length rays.
                     result.append(ray)
             return result
@@ -413,19 +413,19 @@ class Geometry:
         RAYS_BISHOP = {}
         for npos in range(SPACE_COUNT):
             pos = HexPos(COORD_HEX0[npos], COORD_HEX1[npos])
-            RAYS_BISHOP[npos] = get_rays(pos, VECS_DIAG)
+            RAYS_BISHOP[npos] = compute_rays(pos, VECS_DIAG)
         setattr(cls, "RAYS_BISHOP", RAYS_BISHOP)
 
         RAYS_QUEEN = {}
         for npos in range(SPACE_COUNT):
             pos = HexPos(COORD_HEX0[npos], COORD_HEX1[npos])
-            RAYS_QUEEN[npos] = get_rays(pos, VECS_12)
+            RAYS_QUEEN[npos] = compute_rays(pos, VECS_12)
         setattr(cls, "RAYS_QUEEN", RAYS_QUEEN)
 
         RAYS_ROOK = {}
         for npos in range(SPACE_COUNT):
             pos = HexPos(COORD_HEX0[npos], COORD_HEX1[npos])
-            RAYS_ROOK[npos] = get_rays(pos, VECS_ORTHO)
+            RAYS_ROOK[npos] = compute_rays(pos, VECS_ORTHO)
         setattr(cls, "RAYS_ROOK", RAYS_ROOK)
 
     # ========================================
@@ -485,6 +485,20 @@ class Geometry:
             for pt in PIECE_TYPES:
                 layout[player][pt] = []
         return layout
+
+    # Note: Geometry.get_rays() populates the "pre-computed" RAYS_*.
+    #       This method retrives them.
+    @classmethod
+    def get_rays(cls, npos: Npos, pt: PieceType) -> List[List[Npos]]:
+        if pt == PieceType.Queen:
+            rays = cls.RAYS_QUEEN[npos]
+        elif pt == PieceType.Rook:
+            rays = cls.RAYS_ROOK[npos]
+        elif pt == PieceType.Bishop:
+            rays = cls.RAYS_BISHOP[npos]
+        else:
+            raise ValueError(f'Unrecognized slider type: {pt}')
+        return rays
 
     @classmethod
     def is_pos_on_board(cls, pos: HexPos):

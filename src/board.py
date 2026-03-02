@@ -572,7 +572,7 @@ class Board:
                     yield move
 
     def get_moves_pseudolegal_slider(self, npos: Npos, pt: PieceType):
-        rays = self.get_rays(npos, pt)
+        rays = G.get_rays(npos, pt)
         for ray in rays:
             for to_npos in ray:
                 dest_piece = self.pieces[to_npos]
@@ -604,17 +604,6 @@ class Board:
                 if move.to_npos == to_npos:
                     result.append(move)
         return result
-
-    def get_rays(self, npos: Npos, pt: PieceType):
-        if pt == PieceType.Queen:
-            rays = G.RAYS_QUEEN[npos]
-        elif pt == PieceType.Rook:
-            rays = G.RAYS_ROOK[npos]
-        elif pt == PieceType.Bishop:
-            rays = G.RAYS_BISHOP[npos]
-        else:
-            raise ValueError(f'Unrecognized slider type: {pt}')
-        return rays
 
     # This is used to obtain the location of a Pawn being
     # captured by en passant, given the e.p. target space.
