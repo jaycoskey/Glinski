@@ -224,7 +224,7 @@ class Board:
         file_count = len(G.RANK_COUNT_PER_FILE)
         for file_num in range(file_count):
             for _ in range(G.RANK_COUNT_PER_FILE[file_num]):
-                cur_piece = self.pieces[npos]
+                cur_piece = self.get_piece_at(npos)
                 npos += 1
                 if cur_piece:
                     if blank_count > 0:
@@ -242,7 +242,7 @@ class Board:
 
     def get_king_npos(self, player: Player) -> Npos:
         for npos in range(G.SPACE_COUNT):
-            piece = self.pieces[npos]
+            piece = self.get_piece_at(npos)
             if piece and piece.player == player and piece.pt == PieceType.King:
                 return npos
         raise MissingKingException(msg)
@@ -251,7 +251,7 @@ class Board:
         layout_dict = G.get_layout_dict_empty()
 
         for npos in range(G.SPACE_COUNT):
-            piece = self.pieces[npos]
+            piece = self.get_piece_at(npos)
             if not piece:
                 continue
             player = piece.player
@@ -259,14 +259,14 @@ class Board:
             layout_dict[player][pt].append(G.npos_to_pos(npos))
         return layout_dict
 
-    def get_piece(self, npos: Npos) -> Piece:
+    def get_piece_at(self, npos: Npos) -> Piece:
         return self.pieces[npos]
 
     def get_pieces_at_file(self, f: str,
             player:Player=None, pt:PieceType=None) -> Iterable[Piece]:
         result = []
         for npos in BITBOARD_FILES[G.FILE_CHAR_TO_HEX0[f]]:
-            piece = self.pieces[npos]
+            piece = self.get_piece_at(npos)
             if piece:
                 if ((player is None or piece.player == player)
                         and (pt is None or piece.pt == pt)):
@@ -277,7 +277,7 @@ class Board:
             player:Player=None, pt:PieceType=None) -> Iterable[Piece]:
         result = []
         for npos in G.BITBOARD_RANKS[r - 1].search(1):
-            piece = self.pieces[npos]
+            piece = self.get_piece_at(npos)
             if piece:
                 if ((player is None or piece.player == player)
                         and (pt is None or piece.pt == pt)):
@@ -288,13 +288,19 @@ class Board:
             player:Player=None, pt:PieceType=None) -> List[Piece]:
         result = []
         for npos in range(G.SPACE_COUNT):
-            piece = self.pieces[npos]
+            piece = self.get_piece_at(npos)
             if not piece:
                 continue
             if ((player is None or piece.player == player)
                     and (pt is None or piece.pt == pt)):
                 result.append(piece)
         return result
+
+    def get_player_at(self, npos: Npos) -> Player:
+        return self.pieces[npos].player
+
+    def get_pt_at(self, npos: Npos) -> PieceType:
+        return self.pieces[npos].pt
 
     # For each piece on the Board, there is a corresponding unique triple:
     #   (Board position ID, player ID, piece_type ID).
@@ -307,7 +313,7 @@ class Board:
     def get_zobrist_hash(self) -> ZobristHash:
         result = 0
         for npos in range(G.SPACE_COUNT):
-            piece = self.get_piece(npos)
+            piece = self.get_piece_at(npos)
             if piece is not None:
                 p_val = piece.player.value
                 pt_val = piece.pt.value
@@ -319,7 +325,7 @@ class Board:
     # --------------------
 
     def is_empty(self, npos: Npos):
-        return self.pieces[npos] is None
+        return self.get_piece_at(npos) is None
 
     def is_ep_target(self, npos: Npos):
         return npos == self.ep_target
@@ -362,27 +368,26 @@ class Board:
 
     # --------------------
 
-    # Note that piece addition is done via pos, but removal uses npos.
     def piece_add(self, pos: HexPos, player: Player, pt: PieceType) -> None:
         npos = G.pos_to_npos(pos)
+        self.piece_add_at(npos, player, pt)
+
+    def piece_add_at(self, npos: Npos, player: Player, pt: PieceType) -> None:
         self.pieces[npos] = Piece(player, pt)
 
     def piece_move(self, fr_npos: Npos, to_npos: Npos) -> None:
-        assert not self.pieces[to_npos]
-        self.pieces[to_npos] = self.pieces[fr_npos]
-        self.pieces[fr_npos] = None
+        assert self.is_empty(to_npos)
+        fr_piece = self.get_piece_at(fr_npos)
+        self.piece_add_at(to_npos, fr_piece.player, fr_piece.pt)
+        self.piece_remove(fr_npos)
 
-    # Note that piece addition is done via pos, but removal uses npos.
-    def piece_remove(self, npos: Npos,
-            player:Player=None, pt:PieceType=None) -> None:
-        if player:
-            assert self.pieces[npos].player == player
-        if pt:
-            assert self.pieces[npos].pt == pt
+    def piece_remove(self, npos: Npos) -> None:
         self.pieces[npos] = None
 
-    def piece_set_pt(self, npos: Npos, new_pt: PieceType):
-        self.pieces[npos].pt = new_pt
+    def piece_set_pt(self, npos: Npos, pt: PieceType) -> None:
+        player = self.get_player_at(npos)
+        self.piece_remove(npos)
+        self.piece_add_at(npos, player, pt)
 
     # ========================================
     # SECTION: PIECE MOVEMENT
@@ -457,21 +462,20 @@ class Board:
             if not moves:
                 return []
 
-            # Filter on PieceType
+            # Filter on PieceType. The Piece on the Board matches the spec.
             moves = [move for move in moves
-                    if (self.pieces[move.fr_npos].pt == ms.pt)
-                    or (ms.pt is None
-                        and self.pieces[move.fr_npos].pt == PieceType.Pawn)]
+                    if (self.get_pt_at(move.fr_npos) == ms.pt)
+                    or (ms.pt is None and self.get_pt_at(move.fr_npos) == PieceType.Pawn)]
             if not moves:
                 return []
 
             if ms.is_capture:
                 opponent = self.cur_player.opponent()
                 moves = [move for move in moves
-                        if ((self.pieces[move.to_npos]
-                            and self.pieces[move.to_npos].player == opponent)
+                        if ((self.get_piece_at(move.to_npos)
+                            and self.get_player_at(move.to_npos) == opponent)
                             or (move.to_npos == self.ep_target
-                                and self.pieces[self.ep_target] is None))
+                                and self.is_empty(self.ep_target)))
                             ]
                 if not moves:
                     return []
@@ -500,10 +504,11 @@ class Board:
                 and (not ms.fr_rank and not ms.to_rank)):
             bb_file = BITBOARD_FILES[G.FILE_CHAR_TO_HEX0[ms.fr_file] + 5]
             for fr_npos in bb_file.search(bitarray('1')):
-                if not self.pieces[fr_npos]:
+                if self.is_empty(fr_npos):
                     continue
-                fr_piece = self.pieces[fr_npos]
-                if fr_piece.player != self.cur_player or fr_piece.pt != PieceType.Pawn:
+                fr_piece = self.get_piece_at(fr_npos)
+                if (self.get_player_at(fr_npos) != self.cur_player
+                        or self.get_pt_at(fr_npos) != PieceType.Pawn):
                     continue
                 if self.is_in_pawn_promo_zone(fr_npos):
                     assert False  # TODO: There shouldn't be a Pawn in the last rank.
@@ -525,13 +530,13 @@ class Board:
     def get_moves_pseudolegal(self) -> Iterable[Move]:
         moves = []
         for npos in range(G.SPACE_COUNT):
-            piece = self.pieces[npos]
+            piece = self.get_piece_at(npos)
             if piece and piece.player == self.cur_player:
                 moves.extend(self.get_moves_pseudolegal_from(npos))
         return moves
 
     def get_moves_pseudolegal_from(self, npos: Npos) -> Iterable[Move]:
-        piece = self.pieces[npos]
+        piece = self.get_piece_at(npos)
         if piece is None or piece.player != self.cur_player:
             return []
         pt = piece.pt
@@ -551,7 +556,7 @@ class Board:
             leaps_npos = G.LEAPS_KNIGHT[npos]
 
         for to_npos in leaps_npos:
-            to_piece = self.pieces[to_npos]
+            to_piece = self.get_piece_at(to_npos)
             if to_piece is None:
                 yield Move(npos, to_npos, None)
             elif to_piece.player == self.cur_player.opponent():
@@ -561,13 +566,13 @@ class Board:
     # TODO: Allow for selection of promotion_pt on Pawn promotion
     def get_moves_pseudolegal_pawn(self, npos: Npos) -> Iterator[Move]:
         fwd1_npos = self.get_leap_pawn_adv(npos)
-        fwd1_piece = self.pieces[fwd1_npos]
+        fwd1_piece = self.get_piece_at(fwd1_npos)
         if not fwd1_piece:
             is_promotion = self.is_in_pawn_promo_zone(fwd1_npos)
             yield Move(npos, fwd1_npos, PieceType.King if is_promotion else None)
             if self.is_in_pawn_home_zone(npos):
                 fwd2_npos = self.get_leap_pawn_hop(npos)
-                fwd2_piece = self.pieces[fwd2_npos]
+                fwd2_piece = self.get_piece_at(fwd2_npos)
                 if not fwd2_piece:
                     yield Move(npos, fwd2_npos, None)
         for capt_npos in self.get_leap_pawn_capt(npos):
@@ -578,7 +583,7 @@ class Board:
                 yield move
             else:
                 is_promotion = self.is_in_pawn_promo_zone(capt_npos)
-                capt_piece = self.pieces[capt_npos]
+                capt_piece = self.get_piece_at(capt_npos)
                 if capt_piece and capt_piece.player == self.cur_player.opponent():
                     move = Move(npos, capt_npos, PieceType.King if is_promotion else None)
                     move.capture_pt = capt_piece.pt
@@ -588,16 +593,14 @@ class Board:
         rays = G.get_rays(npos, pt)
         for ray in rays:
             for to_npos in ray:
-                dest_piece = self.pieces[to_npos]
-                if dest_piece is None:
+                if self.is_empty(to_npos):
                     yield Move(npos, to_npos)
                     continue
                 else:
-                    dest_player = dest_piece.player
-                    if dest_player == self.cur_player.opponent():
+                    if self.get_player_at(to_npos) == self.cur_player.opponent():
                         # Capture opponent's piece
                         move = Move(npos, to_npos)
-                        move.capture_pt = dest_piece.pt
+                        move.capture_pt = self.get_pt_at(to_npos)
                         yield move
                 break # Can't slide past piece
 
@@ -606,14 +609,13 @@ class Board:
     def get_moves_to(self, to_npos: Npos) -> Iterable[Move]:
         result = []
         for fr_npos in range(G.SPACE_COUNT):
-            if not self.pieces[fr_npos]:
+            if self.is_empty(fr_npos):
                 continue
-            piece = self.pieces[fr_npos]
-            if piece.player != self.cur_player:
+            if self.get_player_at(fr_npos) != self.cur_player:
                 continue
             moves = self.get_moves_pseudolegal_from(fr_npos)
             for move in moves:
-                move.pt = piece.pt
+                move.pt = self.get_pt_at(fr_npos)
                 if move.to_npos == to_npos:
                     result.append(move)
         return result
@@ -641,11 +643,10 @@ class Board:
         king_npos = self.get_king_npos(opponent)
         for attacker_npos in range(G.SPACE_COUNT):
             attacker_piece = self.pieces[attacker_npos]
-            if (attacker_piece
-                    and attacker_piece.pt == PieceType.Queen
-                    and attacker_piece.player == player):
-                attacks = [attack for attack in self.get_moves_pseudolegal_from(attacker_npos)
-                        if attack.to_npos == king_npos]
+            if attacker_piece and attacker_piece.player == player:
+                moves = self.get_moves_pseudolegal_from(attacker_npos)
+                attacks = [attack for attack in moves
+                            if attack.to_npos == king_npos]
                 if attacks:
                     return True
         return False
@@ -686,24 +687,23 @@ class Board:
         if move.ep_target:
             assert move.ep_target != move.to_npos
             move.capture_pt = PieceType.Pawn
-            self.pieces[move.ep_target] = None
+            self.piece_remove(move.ep_target)
         else:
             to_piece = self.pieces[move.to_npos]
-            if to_piece:
-                move.capture_pt = to_piece.pt
-                self.pieces[move.to_npos] = None
+            if not self.is_empty(move.to_npos):
+                move.capture_pt = self.get_pt_at(move.to_npos)
+                self.piece_remove(move.to_npos)
 
         # Phase 2: Move piece
         #
-        move.pt = self.pieces[move.fr_npos].pt
-        self.piece_move(move.fr_npos, move.to_npos)
-
-        if (move.pt == PieceType.Pawn
+        if (self.get_pt_at(move.fr_npos) == PieceType.Pawn
                 and self.is_in_pawn_home_zone(move.fr_npos)
                 and move.to_npos == self.get_leap_pawn_hop(move.fr_npos)):
             next_ep_target = self.get_leap_pawn_adv(move.fr_npos)
         else:
             next_ep_target = None
+
+        self.piece_move(move.fr_npos, move.to_npos)
 
         # Phase 3: Pawn promotion.
         #
@@ -783,17 +783,17 @@ class Board:
         mover = self.cur_player.opponent()
         opponent = self.cur_player
 
-        assert not self.pieces[move.fr_npos]
+        assert self.is_empty(move.fr_npos)
         self.piece_move(move.to_npos, move.fr_npos)
-        assert self.pieces[move.fr_npos]
+        assert not self.is_empty(move.fr_npos)
 
         # Restore captured piece, if any
         if move.capture_pt:
             if move.is_en_passant:
                 ep_targ = self.history_ep_target[-2]
-                self.pieces[ep_targ] = Piece(opponent, PieceType.Pawn)
+                self.piece_add(ep_targ, opponent, PieceType.Pawn)
             else:
-                self.pieces[move.to_npos] = Piece(opponent, move.pt)
+                self.piece_add(move.to_npos, opponent, move.pt)
 
         # Remove last value from each of the history stacks
         self.history_ep_target.pop()
