@@ -5,6 +5,7 @@ from enum import Enum
 
 
 class BoardColor(Enum):
-    Light  = 0
-    Medium = 1
+    Medium = 0
+    Light  = 1
     Dark   = 2
+
