@@ -1,23 +1,24 @@
 #!/usr/bin/env python
 # by Jay M. Coskey, 2026
 
-from enum import IntFlag
+from enum import Enum
 
-__STR__ = {
-            "Claim_NonProgress50": "Claim draw after 50 non-progress moves (100 half-moves)",
-            "Claim_Repetition3x": "Claim draw after 3x board position repetition",
-            "OfferDraw": "Offer draw",
-            "Resign": "Resign",
-            "SuggestResignation": "Suggest that the opponent resigns"
-            }
 
-class MoveOptionsFlags(IntFlag):
-    Claim_NonProgress50 = 1
-    Claim_Repetition3x = 2
-    OfferDraw = 4
-    Resign = 8
-    SuggestResignation = 16
+class MoveAlternative(Enum):
+    ClaimNonProgress50 = 0
+    ClaimRepetition3x = 1
+    OfferDraw = 2
+    Resign = 3
 
-    def to_str(self):
+    def __repr__(self):
+        return self.__str__()
 
-        return __STR__[self.name]
+    def __str__(self):
+        strs = [
+            'Claim draw after 50 non-progress moves (100 half-moves)',
+            'Claim draw after 3x board position repetition',
+            'Offer draw to opponent',
+            'Resign'
+            ]
+        return strs[self.value]
+
