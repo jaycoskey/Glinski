@@ -857,7 +857,57 @@ class Board:
         raise NotImplementedError('board.is_condition_dead_position()')
 
     def is_condition_insufficient_material(self):
-        raise NotImplementedError('board.is_condition_insufficient_material()')
+        def get_pt_histo(player, Player):
+            pt_histo = [0] * 6
+            for npos in range(G.SPACE_COUNT):
+                piece = self.pieces[npos]
+                if piece:
+                    if piece.player == player:
+                        pt_histo[piece.pt.value] += 1
+
+        # Turns a vector of length-6 integers (digits 0-9) into an int.
+        # Example: [1, 1, 2, 3, 1, 6] -> 112316
+        # Since the first digit of pt_histo_* represent the count of Kings,
+        # there should always be a leading '1'.
+        def pt_histo_to_pt_sig(vec: List[int]):
+            sig = 0
+            for k in range(6):
+                sig += vec[k] * 10**(5-k)
+
+        pt_histo_black = get_pt_histo(Player.Black)
+        pt_sig_black = histo_to_sig(pt_histo_black)
+
+        pt_histo_white = get_pt_histo(Player.White)
+        pt_sig_white = histo_to_sig(pt_histo_white)
+
+        # K vs K
+        if pt_sig_black == 100_000 and pt_sig_white == 100_000:
+            return True
+
+        # KB vs K
+        if ((pt_sig_black == 100_100 and pt_sig_white == 100_000)
+                or (pt_sig_black == 100_000 and pt_sig_white == 100_100)):
+            return True
+
+        # KN vs K
+        if ((pt_sig_black == 100_010 and pt_sig_white == 100_000)
+                or (pt_sig_black == 100_000 and pt_sig_white == 100_010)):
+            return True
+
+        # KNN vs K
+        if ((pt_sig_black == 100_020 and pt_sig_white == 100_000)
+                or (pt_sig_black == 100_000 and pt_sig_white == 100_020)):
+            return True
+
+        # KB vs K
+        if ((pt_sig_black == 100_100 and pt_sig_white == 100_000)
+                or (pt_sig_black == 100_000 and pt_sig_white == 100_100)):
+            return True
+
+        # KBB vs K
+        if ((pt_sig_black == 100_200 and pt_sig_white == 100_000)
+                or (pt_sig_black == 100_000 and pt_sig_white == 100_200)):
+            return True
 
     def set_board_state(self, board_state) -> None:
         self.board_state = board_state
