@@ -244,7 +244,7 @@ class Board:
             piece = self.pieces[npos]
             if piece and piece.player == player and piece.pt == PieceType.King:
                 return npos
-        assert False, f'Error: The Board contains no King for player {player}.'
+        raise MissingKingException(msg)
 
     def get_layout_dict(self) -> Dict[Player, Dict[PieceType, List[HexPos]]]:
         layout_dict = G.get_layout_dict_empty()
