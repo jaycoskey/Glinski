@@ -12,7 +12,7 @@ class GameState(Enum):
     Abandoned = auto()
     Draw = auto()
     WinBlack = auto()
+    WinBlackStalemate = auto()
     WinWhite = auto()
-    WinStalemateBlack = auto()
-    WinStalemateWhite = auto()
+    WinWhiteStalemate = auto()
 

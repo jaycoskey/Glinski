@@ -328,7 +328,7 @@ class TestBoardDetectEndgame(unittest.TestCase):
         b.move_make(move_w)
         move_b = Pgn.move_text_to_move(b, 'Qh9h2')
         b.move_make(move_b)
-        # TODO: self.assertEqual(b.game_state, GameState.WinStalemateBlack)
+        # TODO: self.assertEqual(b.game_state, GameState.WinBlackStalemate)
 
 
 class TestBoardDetectError(unittest.TestCase):

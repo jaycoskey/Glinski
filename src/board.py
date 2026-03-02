@@ -731,9 +731,9 @@ class Board:
                 self.set_game_state(GameState.WinWhite)
         elif board_state == BoardState.Stalemate:
             if self.cur_player == Player.Black:
-                self.set_game_state(GameState.WinStalemateBlack)
+                self.set_game_state(GameState.WinBlackStalemate)
             else:
-                self.set_game_state(GameState.WinStalemateWhite)
+                self.set_game_state(GameState.WinWhiteStalemate)
         is_pending_draw = (
                 # Check for 75-moves of non-progress and/or 5x board repetition
                 (not move.is_progress() and self.nonprogress_halfmove_count == 149)
