@@ -13,6 +13,7 @@ from src.bitboard import BB_COURT_BLACK, BB_COURT_WHITE
 from src.bitboard import BB_PAWN_HOME_BLACK, BB_PAWN_HOME_WHITE
 from src.bitboard import BB_PAWN_PROMO_BLACK, BB_PAWN_PROMO_WHITE
 from src.bitboard import BITBOARD_FILES
+from src.board_color import BoardColor
 from src.board_error_flags import BoardErrorFlags
 from src.board_state import BoardState
 from src.game_state import GameState
@@ -964,7 +965,8 @@ class Board:
     # --------------------
     # Print methods
     # --------------------
-    def get_print_str(self, indent_board=8, indent_incr=2, item_width=4):
+    def get_print_str(self, indent_board=8,
+            indent_incr=3, item_width=6, do_use_unicode=False) -> None:
         result_rows = []
 
         ROWS = [[                     40                     ],
@@ -989,7 +991,21 @@ class Board:
                                 [ 39,     60 ],
                                     [ 50 ]]
 
-        def row_indent_size(row_num):
+        def empty_space(npos: Npos) -> str:
+            bullet = '\u2022'
+            center_dot = '\xB7'
+            # em_dash = '\u2014'
+            # en_dash = '\u2013'
+
+            color = G.get_board_color(npos)
+            if color == BoardColor.Light:
+                return center_dot
+            if color == BoardColor.Medium:
+                return '-'
+            else:  # color == BoardColor.Dark:
+                return bullet
+
+        def row_indent_size(row_num) -> int:
             result = indent_board
             rows_from_middle = abs(10 - row_num)
             if rows_from_middle > 5:
@@ -1001,33 +1017,51 @@ class Board:
         for row_num, row in enumerate(ROWS):
             row_str = row_indent_size(row_num) * ' '  # Indentation
             for item in row:
-                index = int(item)
-                piece = self.pieces[index]
-                txt = str(piece) if piece else '-'
+                npos = int(item)
+                piece = self.pieces[npos]
+                if do_use_unicode:
+                    txt = (pt.to_unicode(player.value)
+                            if piece else empty_space(npos))
+                else:
+                    txt = str(piece) if piece else empty_space(npos)
                 row_str += str(txt.ljust(item_width))
             result_rows.append(row_str.rstrip())  # End of row
         return '\n'.join(result_rows)
 
-    def print(self, heading=None, indent_board=8, indent_incr=2, item_width=4):
+    def print(self, heading=None, indent_board=8,
+            indent_incr=3, item_width=6,
+            do_use_unicode=False, do_print_info=True) -> None:
         text = self.get_print_str(indent_board, indent_incr, item_width)
         if heading:
             print(heading + ':')
         print(text)
+        if do_print_info:
+            self.print_info()
+        print()
 
-    def print_ascii(self, heading=None, indent_board=8, indent_incr=3,
-            item_width=6):
-        print(self, heading, indent_board, indent_incr, item_width, do_use_unicode=False)
+    def print_ascii(self, heading=None, indent_board=8,
+            indent_incr=3, item_width=6, do_print_info=True):
+        self.print(heading, indent_board,
+                indent_incr, item_width,
+                False, do_print_info)
 
     def print_info(self):
-        ep_tgt = game.board.ep_target
+        ep_tgt = self.ep_target
         ep_str = (f'{G.npos_to_alg(ep_tgt) if ep_tgt else "None"}')
-        print(f'Halfmove_count={game.board.halfmove_count}, '
-                + f'cur_player={self.cur_player} '
-                + f'last_move_text={self.last_move} '
-                + f'(ep_target={ep_str})')
+        opp_name = self.cur_player.opponent().name
+        rep_count = f'{max(Counter(self.history_zobrist_hash).values())}'
+        print(f'1/2-moves={self.halfmove_count}. '
+                + f'{opp_name}\'s last move: {self.last_move}. '
+                + f'{self.cur_player.name}\'s turn. '
+                + f'(Non-progress={self.nonprogress_halfmove_count}, '
+                + f'Rep-count={rep_count}, '
+                + f'EP-tgt={ep_str})')
 
-    def print_unicode(self, heading=None, indent_board=8, indent_incr=3, item_width=6):
-        print(self, heading, indent_board, indent_incr, item_width, do_use_unicode=True)
+    def print_unicode(self, heading=None, indent_board=8,
+            indent_incr=3, item_width=6, do_print_info=True) -> None:
+        self.print(heading, indent_board,
+                indent_incr, item_width,
+                True, do_print_info)
 
     # --------------------
     # SVG methods

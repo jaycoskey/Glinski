@@ -23,29 +23,28 @@ class TestBoard(unittest.TestCase):
 
     def test_board_print(self):
         expected = """
-                  b
-                q   k
-              n   b   n
-            r   -   -   r
-          p   -   b   -   p
-        -   p   -   -   p   -
-          -   p   -   p   -
-        -   -   p   p   -   -
-          -   -   p   -   -
-        -   -   -   -   -   -
-          -   -   -   -   -
-        -   -   -   -   -   -
-          -   -   P   -   -
-        -   -   P   P   -   -
-          -   P   -   P   -
-        -   P   -   -   P   -
-          P   -   B   -   P
-            R   -   -   R
-              N   B   N
-                Q   K
-                  B
+                       b
+                    q     k
+                 n     b     n
+              r     •     •     r
+           p     -     b     -     p
+        ·     p     ·     ·     p     ·
+           •     p     •     p     •
+        -     -     p     p     -     -
+           ·     ·     p     ·     ·
+        •     •     •     •     •     •
+           -     -     -     -     -
+        ·     ·     ·     ·     ·     ·
+           •     •     P     •     •
+        -     -     P     P     -     -
+           ·     P     ·     P     ·
+        •     P     •     •     P     •
+           P     -     B     -     P
+              R     ·     ·     R
+                 N     B     N
+                    Q     K
+                       B
                   """
-
         b = Board()
         returned_lines = [row.strip() for row in b.get_print_str().split('\n')]
         expected_lines = [row.strip() for row in expected.split('\n') if len(row.strip()) > 0]
