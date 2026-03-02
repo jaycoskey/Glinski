@@ -61,7 +61,7 @@ class Board:
                 self.init_layout(layout_dict)
                 self.init_defaults()
             else:  # len(layout_chunks) == 6, so layout should be a full FEN string
-                (fen_board_str, cur_player, ep_tgt_npos,
+                (fen_board_str, cur_player, ep_tgt_str,
                         nonprogress_ctr, fullmove_count,
                         halfmove_count) = Pgn.fen_to_fen_info(layout_fen)
                 nones = [None] * (self.halfmove_count + 1)
@@ -284,18 +284,6 @@ class Board:
                     result.append(piece)
         return result
 
-    def get_pieces_list(self,
-            player:Player=None, pt:PieceType=None) -> List[Piece]:
-        result = []
-        for npos in range(G.SPACE_COUNT):
-            piece = self.get_piece_at(npos)
-            if not piece:
-                continue
-            if ((player is None or piece.player == player)
-                    and (pt is None or piece.pt == pt)):
-                result.append(piece)
-        return result
-
     def get_player_at(self, npos: Npos) -> Player:
         return self.pieces[npos].player
 
@@ -431,7 +419,7 @@ class Board:
     #   moved there, we should probably give priority to the Pawn.
     # Possible alternate approach: Find all legal moves, and( apply filter.
     # Note: The "move_text" arg is not needed, but can be helpful for debugging.
-    def get_moves_matching(self, ms: MoveSpec, move_text) -> Iterable[Move]:
+    def get_moves_matching(self, ms: MoveSpec, move_text) -> Iterable[Move]:  # pylint: disable=unused-argument
         moves = []
 
         if ms.fr_file and ms.fr_rank and ms.to_file and ms.to_rank:
@@ -453,7 +441,7 @@ class Board:
                     move.ep_target = self.ep_target
             # TODO: move_eval
             return [move]
-        elif ms.to_file and ms.to_rank:
+        if ms.to_file and ms.to_rank:
             # We know the moving Piece's destination
             to_npos = G.alg_to_npos(ms.to_file + str(ms.to_rank))
             if ms.promotion_pt:
@@ -481,8 +469,6 @@ class Board:
                     return []
 
             if ms.fr_file:
-                for z, move in enumerate(moves):
-                    file_char = G.npos_to_file_char(move.fr_npos)
                 moves = [move for move in moves
                         if G.npos_to_file_char(move.fr_npos) == ms.fr_file]
                 if not moves:
@@ -542,7 +528,7 @@ class Board:
         pt = piece.pt
         if pt in [PieceType.King, PieceType.Knight]:
             moves = self.get_moves_pseudolegal_leaper(npos, pt)
-        elif pt in [PieceType.Bishop, PieceType.Queen, PieceType.Rook]:
+        elif PieceType.is_slider_type(pt):
             moves = self.get_moves_pseudolegal_slider(npos, pt)
         else:
             moves = self.get_moves_pseudolegal_pawn(npos)
@@ -585,7 +571,8 @@ class Board:
                 is_promotion = self.is_in_pawn_promo_zone(capt_npos)
                 capt_piece = self.get_piece_at(capt_npos)
                 if capt_piece and capt_piece.player == self.cur_player.opponent():
-                    move = Move(npos, capt_npos, PieceType.King if is_promotion else None)
+                    move = Move(npos, capt_npos, PieceType.King
+                            if is_promotion else None)
                     move.capture_pt = capt_piece.pt
                     yield move
 
@@ -678,8 +665,8 @@ class Board:
     # TODO: Add an option "do_force" to allow an illegal move.
     def move_make(self, move) -> None:
         # Phase 0:
-        assert(self.game_state in [GameState.Unstarted, GameState.InPlay])
-        if self.game_state == GameState.Unstarted:
+        assert self.get_game_state() in [GameState.Unstarted, GameState.InPlay]
+        if self.get_game_state() == GameState.Unstarted:
             self.set_game_state(GameState.InPlay)
 
         # Phase 1: Capture.
@@ -751,8 +738,9 @@ class Board:
         #
         self.history_zobrist_hash.append(next_zobrist_hash)
         zobrist_counter = Counter(self.history_zobrist_hash)
-        next_is_board_repetition_3x = self.get_max_repetition_count() >= 3
-        next_is_board_repetition_5x = self.get_max_repetition_count() >= 5
+        max_reps = max(zobrist_counter.values())
+        next_is_board_repetition_3x = max_reps >= 3
+        next_is_board_repetition_5x = max_reps >= 5
         next_nonprogress_count = (0 if move.is_progress()
                 else self.history_nonprogress_halfmove_count[-1] + 1)
 
@@ -773,7 +761,7 @@ class Board:
         self.notify_player(self.cur_player, 'Your move')
 
     def move_undo(self) -> None:
-        assert(self.game_state != GameState.Unstarted)
+        assert self.get_game_state() != GameState.Unstarted
         move = self.history_move[-1]
 
         # Restore Game state
@@ -789,7 +777,7 @@ class Board:
 
         # Restore captured piece, if any
         if move.capture_pt:
-            if move.is_en_passant:
+            if move.ep_target:
                 ep_targ = self.history_ep_target[-2]
                 self.piece_add(ep_targ, opponent, PieceType.Pawn)
             else:
@@ -855,6 +843,12 @@ class Board:
     # To simplify testing of 50-move and 75-move rules
     def disable_check_repetition(self) -> None:
         self.do_check_repetition = False
+
+    def get_board_state(self) -> BoardState:
+        return self.board_state
+
+    def get_game_state(self) -> GameState:
+        return self.game_state
 
     def get_max_repetition_count(self) -> int:
         return max(Counter(self.history_zobrist_hash).values())
@@ -935,7 +929,7 @@ class Board:
     # Assume the next player to move is White
     # Returns a tree structure of moves, with depth 3:
     #   mates_in_2[m_p][m_opp][
-    #   A first move, followed by a series of moves that brings about checkmate to the opponent.
+    #   A first move, followed by a series of moves leading to checkmate.
     def find_mates_in_2(self)-> Dict:
         mates_in_2 = {}
         moves_p = self.get_moves_legal()
@@ -954,19 +948,19 @@ class Board:
         moves_opp = self.get_moves_legal()
         for m_opp in moves_opp:
             self.move_make(m_opp)
-            if self.is_game_over():
+            if self.get_game_state() == GameState.InPlay():
                 is_mate_avoidable = True
                 self.move_undo(m_p)
                 break
-            else:
-                mates_p = [m2_p for m2_p in self.get_moves_legal() if self.is_checkmate(m2_p)]
-                if len(mates_p) == 0:
-                    is_mate_avoidable = True
-                    self.move_undo(m_opp)
-                    break
-                if not m_p in inevitable_mates:
-                    inevitable_mates[m_opp] = mates_p
-                    self.move_undo(m_opp)
+            mates_p = [m2_p for m2_p in self.get_moves_legal()
+                    if self.is_checkmate(m2_p)]
+            if len(mates_p) == 0:
+                is_mate_avoidable = True
+                self.move_undo(m_opp)
+                break
+            if not m_p in inevitable_mates:
+                inevitable_mates[m_opp] = mates_p
+                self.move_undo(m_opp)
         if is_mate_avoidable:
             result = {}
         else:
@@ -1083,7 +1077,7 @@ class Board:
     # --------------------
     # This returns a string suitable for interpolation
     # into an SVG template file, supporting SVG output of Boards.
-    # This is called by get_svg_str().
+    # This is called by svg_get_str().
     def svg_get_layout_dict_str(self, fr_npos=None, to_npos=None,
             king_check_npos=None, king_checkmate_npos=None) -> str:
         SVG_PLAYER_KEYS = { Player.Black: 'black', Player.White: 'white' }
@@ -1110,7 +1104,7 @@ class Board:
         result += f'\tKING_CHECKMATE_COORDS = {checkmate_str}\n'
         return result
 
-    # This interpolates the output of get_layout_dict_str() into
+    # This interpolates the output of svg_get_layout_dict_str() into
     # an SVG template file to create the content of an SVG file
     # that can be stored to disk and used standalone, or in a
     # slideshow or animation.
@@ -1125,7 +1119,7 @@ class Board:
 
         is_echoing = True
         result = ''
-        layout_str = self.get_layout_dict_str(fr_npos, to_npos)
+        layout_str = self.svg_get_layout_dict_str(fr_npos, to_npos)
         with open(svg_path, 'r') as f:
             svg_lines = f.readlines()
         for svg_line in svg_lines:
@@ -1158,7 +1152,7 @@ class Board:
             suffix = ''
         out_fname = f'{game_name}_{self.halfmove_count:03}{suffix}.svg'
         out_path = out_dir + out_fname
-        svg_content = self.get_svg_str(fr_npos, to_npos,
+        svg_content = self.svg_get_str(fr_npos, to_npos,
                 king_check_npos, king_checkmate_npos)
         with open(out_path, 'w') as f:
             f.write(svg_content)
