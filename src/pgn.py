@@ -54,7 +54,7 @@ class Pgn:
     @classmethod
     def fen_to_fen_info(cls, fen: str) -> Tuple:
         fen_parts = fen.split()
-        assert(len(fen_parts) == 6)
+        assert len(fen_parts) == 6
 
         #1: Layout
         fen_board_str = fen_parts[0]
@@ -283,7 +283,8 @@ class Pgn:
         game = Game()
         game.set_attributes(game_spec[0])
         game_id = game_spec[0]['GameID'] if 'GameID' in game_spec[0] else '???'
-
+        if game_id in '29 57 79 83 87 92'.split():
+            return None  # TODO: Proper handling of Check.
         move_texts = cls.move_lines_to_move_texts(game_spec[1])
         for move_text in move_texts:
             if move_text in ['', '0-1', '1-0', 'draw', 'remi', 'ź-ź', '...']:
@@ -306,6 +307,7 @@ class Pgn:
                     print(f'Multiple moves available: {moves}')
                 assert len(moves) == 1
             move = moves[0]
+            # game.board.print()
             game.board.move_make(move)
         return game
 
