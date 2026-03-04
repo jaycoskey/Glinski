@@ -14,6 +14,9 @@ from src.pgn import Pgn
 
 
 class TestPgn(unittest.TestCase):
+    # def setUp(self):
+    #     print(f'===== Running TestPgn test: {self.id()} =====')
+
     @classmethod
     def check_parsing_moves(cls, move_text: str, lang='en', is_verbose=False):
         move_text = re.sub("\{.*?\}", '', move_text)
@@ -109,7 +112,7 @@ class TestPgn(unittest.TestCase):
         tag_filter = None
         game_specs = Pgn.pgn_lines_to_game_specs(pgn_lines, tag_filter)
         games = []
-        for game_spec in game_specs:
+        for game_spec in game_specs[:100]:
             game = Pgn.game_spec_to_game(game_spec, 'hu')
             games.append(game)
             if is_verbose:

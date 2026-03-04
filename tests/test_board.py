@@ -18,8 +18,8 @@ from src.player import Player
 
 
 class TestBoard(unittest.TestCase):
-    def setUp(self):
-        print(f'===== Running Board test: {self.id()} =====')
+    # def setUp(self):
+    #     print(f'===== Running TestBoard test: {self.id()} =====')
 
     def test_board_print(self):
         expected = """
@@ -91,6 +91,9 @@ class TestBoard(unittest.TestCase):
 
 
 class TestBoardConstructor(unittest.TestCase):
+    # def setUp(self):
+    #     print(f'===== Running TestBoardConstructor test: {self.id()} =====')
+
     @unittest.skip
     def test_init_empty(self):
         pass
@@ -162,6 +165,8 @@ class TestBoardConstructor(unittest.TestCase):
 
 
 class TestBoardDetectEndgame(unittest.TestCase):
+    # def setUp(self):
+    #     print(f'===== Running TestBoardDetectEndgame test: {self.id()} =====')
 
     @unittest.skip
     def test_detect_check(self):
@@ -174,6 +179,7 @@ class TestBoardDetectEndgame(unittest.TestCase):
                     PieceType.King:  [G.F11],
                     },
                 Player.White: {
+                    PieceType.King:   [G.F1],
                     PieceType.Queen:  [G.E8],
                     PieceType.Knight: [G.K6]
                     }
@@ -331,6 +337,8 @@ class TestBoardDetectEndgame(unittest.TestCase):
 
 
 class TestBoardDetectError(unittest.TestCase):
+    # def setUp(self):
+    #     print(f'===== Running TestBoardDetectError test: {self.id()} =====')
 
     def test_detect_error_ep_target_location(self):
         b = Board()
@@ -374,6 +382,9 @@ class TestBoardDetectError(unittest.TestCase):
 
 
 class TestBoardMoves(unittest.TestCase):
+    # def setUp(self):
+    #     print(f'===== Running TestBoardMoves test: {self.id()} =====')
+
     @unittest.skip
     def test_move_counts_by_piece_type(self):
         pass
@@ -399,6 +410,9 @@ class TestBoardMoves(unittest.TestCase):
 
 
 class TestBoardPuzzles(unittest.TestCase):
+    # def setUp(self):
+    #     print(f'===== Running TestBoardPuzzles test: {self.id()} =====')
+
     def test_detect_mate_in_one(self):
         pass
 
