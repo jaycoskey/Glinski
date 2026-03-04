@@ -4,7 +4,7 @@
 
 from bitarray import bitarray
 from collections import Counter
-from copy import deepcopy
+from copy import copy, deepcopy
 import math
 import os
 from typing import Dict, Iterable, Iterator, List, Union
@@ -14,7 +14,7 @@ from src.bitboard import BB_PAWN_HOME_BLACK, BB_PAWN_HOME_WHITE
 from src.bitboard import BB_PAWN_PROMO_BLACK, BB_PAWN_PROMO_WHITE
 from src.bitboard import BITBOARD_FILES
 from src.board_color import BoardColor
-from src.board_error_flags import BoardErrorFlags
+from src.board_error_flags import BoardErrorFlags, MissingKingException
 from src.board_state import BoardState
 from src.game_state import GameState
 from src.geometry import Geometry as G
@@ -246,6 +246,9 @@ class Board:
             piece = self.get_piece_at(npos)
             if piece and piece.player == player and piece.pt == PieceType.King:
                 return npos
+        # Missing King
+        self.print()
+        msg = f'Error: The Board has no King for player {player.name}.'
         raise MissingKingException(msg)
 
     def get_layout_dict(self) -> LayoutDict:
@@ -261,7 +264,7 @@ class Board:
         return layout_dict
 
     def get_piece_at(self, npos: Npos) -> Piece:
-        return self.pieces[npos]
+        return copy(self.pieces[npos])
 
     def get_pieces_at_file(self, f: str,
             player:Player=None, pt:PieceType=None) -> Iterable[Piece]:
@@ -303,7 +306,7 @@ class Board:
         result = 0
         for npos in range(G.SPACE_COUNT):
             piece = self.get_piece_at(npos)
-            if piece is not None:
+            if not self.is_empty(npos):
                 p_val = piece.player.value
                 pt_val = piece.pt.value
                 zobrist_index = (npos * PLAYER_COUNT * PIECE_TYPE_COUNT
@@ -366,11 +369,13 @@ class Board:
 
     def piece_move(self, fr_npos: Npos, to_npos: Npos) -> None:
         assert self.is_empty(to_npos)
-        fr_piece = self.get_piece_at(fr_npos)
-        self.piece_add_at(to_npos, fr_piece.player, fr_piece.pt)
-        self.piece_remove(fr_npos)
+        self.pieces[to_npos] = self.pieces[fr_npos]
+        assert not self.is_empty(to_npos)
+        self.pieces[fr_npos] = None
+        assert self.is_empty(fr_npos)
 
     def piece_remove(self, npos: Npos) -> None:
+        assert self.get_pt_at(npos) != PieceType.King
         self.pieces[npos] = None
 
     def piece_set_pt(self, npos: Npos, pt: PieceType) -> None:
@@ -381,22 +386,28 @@ class Board:
     # ========================================
     # SECTION: PIECE MOVEMENT
     # ========================================
-    def get_leap_pawn_adv(self, npos: Npos) -> Npos:
-        if self.cur_player == Player.Black:
+    def get_leap_pawn_adv(self, npos: Npos, player=None) -> Npos:
+        if player is None:
+            player = self.cur_player
+        if player == Player.Black:
             result = G.LEAP_PAWN_ADV_BLACK[npos]
         else:
             result = G.LEAP_PAWN_ADV_WHITE[npos]
         return result
 
-    def get_leap_pawn_capt(self, npos: Npos) -> List[Npos]:
-        if self.cur_player == Player.Black:
+    def get_leap_pawn_capt(self, npos: Npos, player=None) -> List[Npos]:
+        if player is None:
+            player = self.cur_player
+        if player == Player.Black:
             result = G.LEAP_PAWN_CAPT_BLACK[npos]
         else:
             result = G.LEAP_PAWN_CAPT_WHITE[npos]
         return result
 
-    def get_leap_pawn_hop(self, npos: Npos) -> Npos:
-        if self.cur_player == Player.Black:
+    def get_leap_pawn_hop(self, npos: Npos, player=None) -> Npos:
+        if player is None:
+            player = self.cur_player
+        if player == Player.Black:
             result = G.LEAP_PAWN_HOP_BLACK[npos]
         else:
             result = G.LEAP_PAWN_HOP_WHITE[npos]
@@ -406,10 +417,10 @@ class Board:
         result = []
         for move in self.get_moves_pseudolegal():
             player = self.cur_player
-            self.move_make(move)
+            self.move_make(move, do_partial_only=True)
             if not self.is_king_attacked():
                 result.append(move)
-            self.move_undo()
+            self.move_undo(do_partial_only=True)
         return result
 
     # Move specifications (in text, or in a MoveSpec object) can be:
@@ -434,6 +445,7 @@ class Board:
             move.is_checkmate = ms.checkness_str and ms.checkness_str == '#'
             if ms.promotion_pt:
                 move.promotion_pt = ms.promotion_pt
+                assert move.pt == PieceType.Pawn
             move.is_checkmate = ms.checkness_str and ms.checkness_str == '#'
             if move.pt == PieceType.Pawn and move.to_npos == self.ep_target:
                 to_file_char = G.npos_to_file_char(to_npos)
@@ -445,8 +457,6 @@ class Board:
         if ms.to_file and ms.to_rank:
             # We know the moving Piece's destination
             to_npos = G.alg_to_npos(ms.to_file + str(ms.to_rank))
-            if ms.promotion_pt:
-                assert self.is_in_pawn_promo_zone(to_npos)
             moves = self.get_moves_to(to_npos)
             if not moves:
                 return []
@@ -485,7 +495,9 @@ class Board:
             if ms.promotion_pt:
                 moves = [move for move in moves
                         if move.promotion_pt == ms.promotion_pt]
-
+                for move in moves:
+                    assert move.pt == PieceType.Pawn
+                    assert self.is_in_pawn_promo_zone(to_npos)
             return moves
 
         # TODO: Consider expanding to handle capture by non-Pawn pieces
@@ -545,36 +557,40 @@ class Board:
             leaps_npos = G.LEAPS_KNIGHT[npos]
 
         for to_npos in leaps_npos:
-            to_piece = self.get_piece_at(to_npos)
-            if to_piece is None:
-                yield Move(npos, to_npos, None)
-            elif to_piece.player == self.cur_player.opponent():
+            if self.is_empty(to_npos):
                 move = Move(npos, to_npos, None)
+                move.pt = pt
+                yield move
+            elif self.get_player_at(to_npos) == self.cur_player.opponent():
+                move = Move(npos, to_npos, None)
+                move.pt = pt
+                move.capt_pt = self.get_pt_at(to_npos)
                 yield move
 
     # TODO: Allow for selection of promotion_pt on Pawn promotion
     def get_moves_pseudolegal_pawn(self, npos: Npos) -> Iterator[Move]:
-        is_verbose = (npos == 11
-                and self.get_player_at(npos) == Player.Black
-                and self.get_pt_at(npos) == PieceType.Pawn)
-
         fwd1_npos = self.get_leap_pawn_adv(npos)
         fwd1_piece = self.get_piece_at(fwd1_npos)
         if not fwd1_piece:  # ADV1
             if self.is_in_pawn_promo_zone(fwd1_npos):
                 for promo_pt in PROMO_PTS:
-                    yield Move(npos, fwd1_npos, promo_pt)  # ADV1 w/ PROMOTION
+                    move = Move(npos, fwd1_npos, promo_pt)  # ADV1 w/ PROMOTION
+                    move.pt = PieceType.Pawn
+                    yield move
             else:
                 yield Move(npos, fwd1_npos, None)  # ADV1 w/o promotion
             if self.is_in_pawn_home_zone(npos):
                 fwd2_npos = self.get_leap_pawn_hop(npos)
                 fwd2_piece = self.get_piece_at(fwd2_npos)
                 if not fwd2_piece:  # ADV2
-                    yield Move(npos, fwd2_npos, None)  # ADV2 w/o promotion
+                    move = Move(npos, fwd2_npos, None)  # ADV2 w/o promotion
+                    move.pt = PieceType.Pawn
+                    yield move
 
         for capt_npos in self.get_leap_pawn_capt(npos):
             if capt_npos == self.ep_target:
                 move = Move(npos, capt_npos, None)  # E.P. CAPTURE
+                move.pt = PieceType.Pawn
                 move.capture_pt = PieceType.Pawn
                 move.ep_target = self.ep_target
                 yield move
@@ -596,12 +612,15 @@ class Board:
         for ray in rays:
             for to_npos in ray:
                 if self.is_empty(to_npos):
-                    yield Move(npos, to_npos)
+                    move = Move(npos, to_npos)
+                    move.pt = pt
+                    yield move
                     continue
                 else:
                     if self.get_player_at(to_npos) == self.cur_player.opponent():
                         # Capture opponent's piece
                         move = Move(npos, to_npos)
+                        move.pt = pt
                         move.capture_pt = self.get_pt_at(to_npos)
                         yield move
                 break # Can't slide past piece
@@ -626,12 +645,15 @@ class Board:
 
     # This is used to obtain the location of a Pawn being
     # captured by en passant, given the e.p. target space.
-    def get_vec_pawn_reverse(self) -> HexVec:
-        if self.cur_player == Player.Black:
-            result = G.VECS_PAWN_ADV_WHITE
-        else:
-            result = G.VECS_PAWN_ADV_BLACK
-        return result
+    def ep_target_to_captured_pawn_npos(self, ep_target_npos, player=None):
+        if player is None:
+            player = self.cur_player
+        adv1_reverse_vec = (G.VECS_PAWN_ADV_WHITE if player == Player.Black
+                            else G.VECS_PAWN_ADV_BLACK)
+        ep_target_pos = G.npos_to_pos(ep_target_npos)
+        captured_pawn_pos = ep_target_pos + adv1_reverse_vec
+        captured_pawn_npos = G.pos_to_npos(captured_pawn_pos)
+        return captured_pawn_npos
 
     # --------------------
 
@@ -642,12 +664,12 @@ class Board:
     #   the player moving is already in 'check'.
     # See FIDE rule 3.9.1: Psuedolegal attacks suffice to bring mate.
     def is_king_attacked(self):
-        player = self.cur_player
-        opponent = player.opponent()
+        mover = self.cur_player
+        opponent = mover.opponent()
         king_npos = self.get_king_npos(opponent)
         for attacker_npos in range(G.SPACE_COUNT):
-            attacker_piece = self.pieces[attacker_npos]
-            if attacker_piece and attacker_piece.player == player:
+            if (not self.is_empty(attacker_npos)
+                    and self.get_player_at(attacker_npos) == mover):
                 moves = self.get_moves_pseudolegal_from(attacker_npos)
                 attacks = [attack for attack in moves
                             if attack.to_npos == king_npos]
@@ -680,7 +702,7 @@ class Board:
     #   * game.play() will act on this by ending the game.
     #   * another caller (e.g., move search) might handle it differently.
     # TODO: Add an option "do_force" to allow an illegal move.
-    def move_make(self, move) -> None:
+    def move_make(self, move, do_partial_only:bool=False) -> None:
         # Phase 0:
         assert self.get_game_state() in [GameState.Unstarted, GameState.InPlay]
         if self.get_game_state() == GameState.Unstarted:
@@ -689,14 +711,11 @@ class Board:
         # Phase 1: Capture.
         #
         if move.ep_target:
-            move.capture_pt = PieceType.Pawn
-            ep_target_pos = G.npos_to_pos(move.ep_target)
-            captured_pawn_pos = ep_target_pos + self.get_vec_pawn_reverse()
-            captured_pawn_npos = G.pos_to_npos(captured_pawn_pos)
+            captured_pawn_npos = self.ep_target_to_captured_pawn_npos(move.ep_target)
             self.piece_remove(captured_pawn_npos)
         else:
-            to_piece = self.pieces[move.to_npos]
             if not self.is_empty(move.to_npos):
+                assert self.get_player_at(move.to_npos) == self.cur_player.opponent()
                 move.capture_pt = self.get_pt_at(move.to_npos)
                 self.piece_remove(move.to_npos)
 
@@ -715,18 +734,23 @@ class Board:
         #
         # TODO: Implement Pawn promotion
         if move.promotion_pt:
-            assert move.pt == PieceType.Pawn
             assert self.is_in_pawn_promo_zone(move.to_npos)
+            move.pt = PieceType.Pawn
             self.piece_set_pt(move.to_npos, move.promotion_pt)
+
+        if do_partial_only:
+            # Adjust final few attributes for a minimal piece move,
+            # such as when checking to see if the movement of a piece
+            # gets a King out of check.
+            self.cur_player = self.cur_player.opponent()   # Who
+            self.history_ep_target.append(next_ep_target)  # Where
+            self.halfmove_count += 1                       # When
+            self.history_move.append(move)                 # History
+            return
 
         # Phase 4: Check for end of Game
 
-        # TODO: Uncomment. Method compute_board_state() is in progress.
-        TODO_is_compute_board_state_complete = False
-        if TODO_is_compute_board_state_complete:
-            board_state = self.compute_board_state()
-        else:
-            board_state = BoardState.Normal
+        board_state = self.compute_board_state()
 
         if board_state == BoardState.Check:
             self.notify_player(self.cur_player.opponent(), 'Check')
@@ -750,8 +774,8 @@ class Board:
                     and (len([z for z in self.history_zobrist_hash
                         if z == next_zobrist_hash]) == 4))
                 )
-        if board_state in [BoardState.Checkmate, BoardState.Stalemate] or is_pending_draw:
-            raise NotImplementedError('board: Termination of Game')
+        if is_pending_draw:
+            self.game_state = GameState.Draw
 
         # Phase 5: Update counters & history
         #
@@ -779,7 +803,7 @@ class Board:
         self.cur_player = self.cur_player.opponent()
         self.notify_player(self.cur_player, 'Your move')
 
-    def move_undo(self) -> None:
+    def move_undo(self, do_partial_only:bool=False) -> None:
         assert self.get_game_state() != GameState.Unstarted
         move = self.history_move[-1]
 
@@ -797,10 +821,18 @@ class Board:
         # Restore captured piece, if any
         if move.capture_pt:
             if move.ep_target:
-                ep_targ = self.history_ep_target[-2]
-                self.piece_add(ep_targ, opponent, PieceType.Pawn)
+                ep_tgt_npos = self.history_ep_target[-2]
+                captured_pawn_npos = self.ep_target_to_captured_pawn_npos(ep_tgt_npos)
+                self.piece_add_at(ep_tgt_npos, opponent, PieceType.Pawn)
             else:
-                self.piece_add(move.to_npos, opponent, move.pt)
+                self.piece_add_at(move.to_npos, opponent, move.capture_pt)
+
+        if do_partial_only:
+            self.cur_player = self.cur_player.opponent()  # Who
+            self.history_ep_target.pop()                  # Where
+            self.halfmove_count -= 1                      # When
+            self.history_move.pop()                       # History
+            return
 
         # Remove last value from each of the history stacks
         self.history_ep_target.pop()
@@ -836,27 +868,26 @@ class Board:
     # SECTION: DETECT ENDGAME
     # ========================================
 
+    # This is called from move_make, after piece movement,
+    #   but before history updates.
     def compute_board_state(self) -> BoardState:
+        result = BoardState.Normal
         moves = self.get_moves_pseudolegal()
-        is_king_attacked = self.is_king_attacked()
-        if is_king_attacked:
+        if self.is_king_attacked():
             is_escapable = False
             for protect_move in self.get_moves_pseudolegal():
-                self.move_make(protect_move)
+                self.move_make(protect_move, do_partial_only=True)
                 if not self.is_king_attacked():
                     is_escapable = True
-                self.make_undo()
+                self.move_undo(do_partial_only=True)
                 if is_escapable:
                     break
             if is_escapable:
                 result = BoardState.Check
             else:
                 result = BoardState.Checkmate
-        else:
-            if len(moves) == 0:
-                result = BoardState.Stalemate
-            else:
-                result = BoardState.Normal
+        elif len(moves) == 0:
+            result = BoardState.Stalemate
         return result
 
     # To simplify testing of 50-move and 75-move rules
