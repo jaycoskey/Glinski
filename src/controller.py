@@ -211,13 +211,15 @@ class HumanPlayer(Controller):
                     to_rank = match.group(4)
                     promo_str = match.group(5)
 
+                    print(f'move is {fr_file}{fr_rank}-{to_file}{to_rank}')
+                    print(f'move is {fr_file}{fr_rank}-{to_file}{to_rank}')
                     assert(fr_file in G.FILE_CHARS)
                     fr_hex0 = G.FILE_CHAR_TO_HEX0[fr_file]
-                    assert(1 <= int(fr_rank) <= G.RANK_COUNT_PER_FILE[fr_hex0])
+                    assert(1 <= int(fr_rank) <= G.RANK_COUNT_PER_FILE[fr_hex0] + 5)
 
                     assert(to_file in G.FILE_CHARS)
                     to_hex0 = G.FILE_CHAR_TO_HEX0[to_file]
-                    assert(1 <= int(to_rank) <= G.RANK_COUNT_PER_FILE[to_hex0])
+                    assert(1 <= int(to_rank) <= G.RANK_COUNT_PER_FILE[to_hex0] + 5)
                 except Exception as e:
                     print(f'Move text has invalid values: {uci}')
                     print(f'Exception: {e}')
@@ -253,15 +255,12 @@ class HumanPlayer(Controller):
 
 class RandomPlayer(Controller):
     @classmethod
-    def choose_move(cls, board: Board) -> Move:
-        is_verbose: bool = True
-        moves_possible = board.get_moves_legal()
-        rand_index = randint(0, len(moves_possible) - 1)
-        move = moves_possible[rand_index]
-        if is_verbose:
-            board.print()
-            print(f'Random player ({board.cur_player.name}) making move: {move}')
-        return moves_possible[rand_index]
+    def choose_move(cls, board: Board) -> Union[Move, MoveAlternative]:
+        moves = board.get_moves_legal()
+        assert moves, 'RandomPlayer {board.cur_player.name} has no moves'
+        choice_index = randint(0, len(moves) - 1)
+        print('*', end='')
+        return moves[choice_index]
 
     @classmethod
     def do_accept_offer_draw(cls, board: Board) -> bool:
