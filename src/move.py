@@ -88,10 +88,6 @@ class Move:
 
     # ========================================
 
-    # TODO: Ensure that other Move instance attributes are copied over.
-    def copy(self):
-        return Move(self._fr_npos, self._to_npos, self._promotion_pt)
-
     def is_progress(self):
         return self.capture_pt or self.pt == PieceType.Pawn
 
