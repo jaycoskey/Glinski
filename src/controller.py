@@ -18,7 +18,6 @@ from src.move import Move
 from src.move_alternative import MoveAlternative
 
 
-# Note: This class is stateless. It does not contain instance data.
 class Controller(ABC):
     @classmethod
     def choose_move(cls, board: Board) -> Union[Move, MoveAlternative]:
@@ -29,8 +28,6 @@ class Controller(ABC):
         pass
 
 
-# TODO: Support human play through a GUI.
-# TODO: Support play between two human players at different devices.
 class HumanPlayer(Controller):
     @classmethod
     def choose_move(cls, board: Board) -> Union[Move, MoveAlternative]:
@@ -156,7 +153,6 @@ class HumanPlayer(Controller):
                 print('Help sub-command unrecognized')
                 continue
 
-            # TODO: Implement other board sub-commands: jpg, png, video
             if cmd == CMD_BOARD_EN:
                 if len(cmds) == 1:
                     print_strs(HELP_BOARD_ERROR_ARGS_0_EN,
@@ -241,11 +237,10 @@ class HumanPlayer(Controller):
             if cmd == CMD_RESIGN_EN:
                 return MoveAlternative.Resign
             if cmd == CMD_UNDO_EN:
-                # TODO: Notify opponent (human or stateful AI)
                 board.move_undo()  # Undo the opponents most recent move.
                 board.move_undo()  # Undo this player's most recent move.
                 continue
-            assert False  # Should not reach here: Cmd validated @ top of loop.
+            assert False  # Should not reach here, after cmd validation @ top of loop.
 
     @classmethod
     def do_accept_offer_draw(cls, board: Board) -> bool:

@@ -190,7 +190,7 @@ class Board:
     def zobrist_hash(self) -> ZobristHash:
         return self.history_zobrist_hash[self.halfmove_count]
 
-    # TODO: Convert to property
+    # TODO: Consider converting to property
     def get_halfmove_count(self) -> int:
         # Don't count moves[0], which is None.
         halfmove_count = len(self.history_move) - 1
@@ -436,7 +436,6 @@ class Board:
         moves = []
 
         if ms.fr_file and ms.fr_rank and ms.to_file and ms.to_rank:
-            # TODO: Find fr_npos & to_npos more efficiently.
             fr_npos = G.alg_to_npos(ms.fr_file + str(ms.fr_rank))
             to_npos = G.alg_to_npos(ms.to_file + str(ms.to_rank))
             move = Move(fr_npos, to_npos, ms.promotion_pt)
@@ -630,7 +629,6 @@ class Board:
     def get_moves_to(self, to_npos: Npos) -> Iterable[Move]:
         result = []
 
-        # TODO: Greatly improve efficiency with move selective checking.
         for fr_npos in range(G.SPACE_COUNT):
             if self.is_empty(fr_npos):
                 continue
@@ -701,7 +699,6 @@ class Board:
     #   value to see if the game is over (e.g., Checkmate, Draw, Stalemate).
     #   * game.play() will act on this by ending the game.
     #   * another caller (e.g., move search) might handle it differently.
-    # TODO: Add an option "do_force" to allow an illegal move.
     def move_make(self, move, do_partial_only:bool=False) -> None:
         # Phase 0:
         assert self.get_game_state() in [GameState.Unstarted, GameState.InPlay]

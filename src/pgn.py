@@ -21,23 +21,25 @@ GameTagPairSet = OrderedDict[str, str]
 GameSpec = Tuple[GameTagPairSet, List[str]]
 
 # Overview of parsing a PGN file:
-#   * TODO: Address comment handling, and handling of turns split across lines.
 #   * Split the PGN file into a series of GameSpecs.
-#   * Each GameSpec has a series of GameTagPairs, and a list of movetext lines.
-#   * Each line has a series of turns, with turn number and "turntext", like so:
+#   * Each GameSpec has form (Game tag pairs, movetext lines).
+#   * Each line has one or more turns, w/ turn number and "turntext", like so:
 #   *     1. g6 Ng9 2. Ni3 e5 3. fxe Qxe5 4. Rg4 Ql3
-#   * The turntext is often a pair of moves, but consist of the movetext of a
-#     or could repressent two moves plus some trailing text, such the final score.
+#   * The turntext is often a pair of moves, but it could include some
+#     trailing text, such the final score, or the word "draw".
 #   * The parsing of a PGN file involves a local Game object, which tracks the
 #     state of the board, to infer the correct piece movement from Game/Board state
-#     (e.g., exf). As a last (inefficient) resort, movetext can be disambiguating
-#     by searching through a list of all legal moves found from the Game/Board object.
+#     (e.g., terse Pawn captures, such as dxe5). When needed, movetext can be
+#     disambiguating by filtering legal moves obtained from the Game object.
 # PGN parsing workflow:
 #  get_pgn_lines()
 #    -> pgn_lines_to_game_specs()
 #      -> move_lines_to_move_texts()
-#        -> move_text_to_move_spec()
-#          -> get_moves_matching()
+#        -> move_text_to_move()
+#           [which calls move_text_to_move_spec()
+#            and get_moves_matching(move_spec)]
+# TODO: Carry over file line_num from the calling context
+# TODO: Handle post-move text, such as "draw" or a score, etc.
 class Pgn:
     RE_MOVE_END_SCORE = re.compile(r"^(0-1|1-0|1/2-1/2|draw)$")
     RE_PGN_COMMENT = re.compile(r"{[^}]*}")
@@ -340,14 +342,7 @@ class Pgn:
         return line[0].isdigit()
 
     # Note: Currently, each turn is expected to be contained within a single line.
-    def move_lines_to_turn_texts(lines: List[str], lang='en') -> List[List[Move]]:
-        raise NotImplementedError('Pgn.move_lines_to_turn_texts()')
-
-    # Note: Currently, each turn is expected to be contained within a single line.
     def move_lines_to_move_texts(lines: List[str], lang='en') -> List[str]:
-        # TODO: Remove comments
-        # TODO: Carry over file line_num from the calling context
-        # TODO: Handle post-move text, such as "draw" or a score, etc.
         expected_turn_num = 1
         turn_texts = []
 
@@ -384,6 +379,8 @@ class Pgn:
         move_texts = [move_text for turn_text in turn_texts for move_text in turn_text.split(' ')]
         return move_texts
 
+    # As indicated by the assert within, this method expects a uniquely
+    # determined move_text argument.
     @classmethod
     def move_text_to_move(cls, board: Board, move_text: str):
         move_spec = cls.move_text_to_move_spec(move_text)
@@ -391,10 +388,9 @@ class Pgn:
         assert len(moves) == 1
         return moves[0]
 
-    # PGN files specify games. Each game has tags which specify attributes of the game,
-    # and text that specifies the moves of the game.
-    #
-    # TODO: Remove PGN comments that span multiple lines.
+    # PGN files specify one or more games.
+    # Each game has tags which specify Game attributes,
+    #   and text that specifies the turns/moves of the game.
     @classmethod
     def pgn_lines_to_game_specs(cls, lines: List[str], tag_filter: Dict[str, str]=None) -> List[GameSpec]:
         game_specs = []

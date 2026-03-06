@@ -34,3 +34,26 @@ This repository is intended to be a minimal chess engine for this variant. Top g
 2. Store and load games, either as PGN files for full games, or as FEN strings for just the board layouts.
 3. For any Board position and move, determine whether a game has ended. If it has not, find the set of legal moves available, which can be used to validate a human player's move, or can be used by a computer Player to select its next move.
 4. Solve Glinski's Hexagonal Chess mate-in-two (or three, etc.) puzzles. This is a straightforward extension of a chess engine programmed with the rules of the game, and the ability to list available moves.
+
+## Possible future features
+* API
+    * Design more user-friendly method names.
+* Board
+    * Add a "force" option to allow execution of an illegal move, perhaps to support replay of a Game in which an illegal move wasn't caught during play.
+* Controller
+    * Human Player
+        * Notify human Player of Game ending. (Not needed for stateless computer Player.)
+        * Support human play between two humans using different devices.
+        * Support human play generating JPG or PGN of board images (perhaps via SVG output & selenium), or MP4 of Game (using PGN generations + ffmpeg).
+        * Support human play through a GUI.
+    * AI Player
+        * Support AI Player using Neural Network & training via random play.
+    * Support stateful controllers/players, and notification of Game events.
+* PGN files
+    * Handle multi-line comments.
+    * Handle turns split across lines.
+    * Pass line numbers through parsing methods, for more informative error handling.
+
+## Possible performance improvements
+  * Find moves move efficiently (e.g., in Board's get\_moves\_matching() & get\_moves\_to()).
+
