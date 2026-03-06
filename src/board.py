@@ -500,7 +500,6 @@ class Board:
                     assert self.is_in_pawn_promo_zone(to_npos)
             return moves
 
-        # TODO: Consider expanding to handle capture by non-Pawn pieces
         if (ms.pt is None and ms.fr_file and ms.is_capture and ms.to_file
                 and (not ms.fr_rank and not ms.to_rank)):
             bb_file = BITBOARD_FILES[G.FILE_CHAR_TO_HEX0[ms.fr_file] + 5]
@@ -567,7 +566,8 @@ class Board:
                 move.capt_pt = self.get_pt_at(to_npos)
                 yield move
 
-    # TODO: Allow for selection of promotion_pt on Pawn promotion
+    # Note: In the case of Pawn promotion, this routine returns one
+    #       Move for each possible PieceType used in the promotion.
     def get_moves_pseudolegal_pawn(self, npos: Npos) -> Iterator[Move]:
         fwd1_npos = self.get_leap_pawn_adv(npos)
         fwd1_piece = self.get_piece_at(fwd1_npos)
@@ -625,7 +625,6 @@ class Board:
                         yield move
                 break # Can't slide past piece
 
-    # TODO: Check slider moves being blocked
     # TODO: Check for move legality
     def get_moves_to(self, to_npos: Npos) -> Iterable[Move]:
         result = []
@@ -732,7 +731,6 @@ class Board:
 
         # Phase 3: Pawn promotion.
         #
-        # TODO: Implement Pawn promotion
         if move.promotion_pt:
             assert self.is_in_pawn_promo_zone(move.to_npos)
             move.pt = PieceType.Pawn

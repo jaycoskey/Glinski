@@ -21,8 +21,6 @@ from src.player import Player
 #       board duplication.
 class Game:
     # TODO: Add various means of initialization: fen, pgn_path, pgn_str.
-    # TODO: Add user/controller interaction via Controller classes:
-    #       RandomUser, TextUser, etc.
     def __init__(self, **kwargs):
         self.attrs: OrderedDict[str, str] = None
         self.board: Board = None

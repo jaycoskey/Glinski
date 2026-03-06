@@ -7,8 +7,6 @@ from src.move_parse_phase import MoveParsePhase
 from src.piece_type import PieceType
 
 
-# TODO: Consider changing name to MoveSpec.
-#
 # In the move Qc3xBf9#!
 #   Q ~ pt
 #   c = fr_file

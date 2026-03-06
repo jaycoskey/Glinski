@@ -10,8 +10,8 @@ from src.move_eval import MoveEval
 from src.piece_type import PieceType
 
 
-# TODO: Moves are instantiated with only 3 arguments (from, to, promo type),
-# TODO: but non-core attributes (e.g., move evaluation) can be updated later.
+# Moves are instantiated with only 3 arguments (fr_npos, to_npos, promo type).
+# Other attributes (e.g., capture type, move eval, etc.) can be updated later.
 class Move:
     def __init__(self, fr_npos: Npos, to_npos: Npos, promotion_pt:PieceType=None):
         self._fr_npos: int = fr_npos
