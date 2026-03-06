@@ -240,7 +240,7 @@ class HumanPlayer(Controller):
                 board.move_undo()  # Undo the opponents most recent move.
                 board.move_undo()  # Undo this player's most recent move.
                 continue
-            assert False  # Should not reach here, after cmd validation @ top of loop.
+            raise RuntimeError(f'Unrecognized command: {cmd}')
 
     @classmethod
     def do_accept_offer_draw(cls, board: Board) -> bool:
