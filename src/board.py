@@ -14,7 +14,8 @@ from src.bitboard import BB_PAWN_HOME_BLACK, BB_PAWN_HOME_WHITE
 from src.bitboard import BB_PAWN_PROMO_BLACK, BB_PAWN_PROMO_WHITE
 from src.bitboard import BITBOARD_FILES
 from src.board_color import BoardColor
-from src.board_error_flags import BoardErrorFlags, MissingKingException
+from src.board_error_flags import BoardErrorFlags
+from src.board_error_flags import MissingKingException, PawnOnBackRankException
 from src.board_state import BoardState
 from src.game_state import GameState
 from src.geometry import Geometry as G
@@ -511,7 +512,7 @@ class Board:
                         or self.get_pt_at(fr_npos) != PieceType.Pawn):
                     continue
                 if self.is_in_pawn_promo_zone(fr_npos):
-                    assert False  # TODO: There shouldn't be a Pawn in the last rank.
+                    raise PawnOnBackRankException(f'Pawn on back rank at {G.npos_to_alg(fr_npos)}')
 
                 for to_npos in self.get_leap_pawn_capt(fr_npos):
                     if G.npos_to_file_char(to_npos) != ms.to_file:

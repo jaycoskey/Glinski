@@ -16,3 +16,6 @@ class BoardErrorFlags(IntFlag):
 class MissingKingException(Exception):
     pass
 
+class PawnOnBackRankException(Exception):
+    pass
+
