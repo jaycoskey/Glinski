@@ -554,3 +554,8 @@ class Geometry:
         npos = cls.COORDS_TO_NPOS[(pos.hex0, pos.hex1)]
         return npos
 
+    @classmethod
+    def pos_to_rank(cls, pos: HexPos) -> int:
+        rank = 6 - max(0, pos.hex0) + pos.hex1
+        return rank
+
