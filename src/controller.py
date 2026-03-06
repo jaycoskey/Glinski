@@ -257,7 +257,7 @@ class RandomPlayer(Controller):
     @classmethod
     def choose_move(cls, board: Board) -> Union[Move, MoveAlternative]:
         moves = board.get_moves_legal()
-        assert moves, 'RandomPlayer {board.cur_player.name} has no moves'
+        assert moves, f'RandomPlayer {board.cur_player.name} has no moves'
         choice_index = randint(0, len(moves) - 1)
         print('*', end='')
         return moves[choice_index]
