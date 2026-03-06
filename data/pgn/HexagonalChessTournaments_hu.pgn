@@ -3173,16 +3173,17 @@
 [GameID "212"]
 [White "Rudolf László"]
 [Black "Rutkovszky T."]
+[Result "1-0"]
 
 1.Hdf4 Fe9 2.e6 Ff8 3.d5 d6 4.f6 Fg8 5.Bd1 dxe6 6.dxe6 g6
-7.exf7 exf7 8.Vxe10 Hxe10 9.fxg6 Fxg6 10.Hxg6 fxg6 11.Bid4 Hdf8
-12.Bxg6 He5 13.Fd5 Bf8 14.Fxf9 Kxf9 15.Bd9 Kf10 16.Bxb7 Bf11
-17.Fc4 Kh9 18.Fd4 Bf3 19.Fxe5 Bg3 20.Fg2 Fc1 21.Bg9 Ki8
-22.Bb4 Hf8 23.Bg10 Bxg10 24.Bxf8 Kh9 25.Be8 Kh8 26.Bf8 Ki6
-27.Bf6 Kh8 28.Hi3 Fxg2 29.Hxg2 k6 30.Kf2 Bi1 31.Hh4 Bh2
-32.Kg1 Bg3 33.Kh1 Bd1 34.Hf7 Kk7 35.Hi5 Kl5 36.Bl1 Ki6
-37.Hf7 Kk7 38.Hg9 Kh8 39.Bd6 Kh9 40.Hh6 Bg8 41.Bc6 Kh8
-42.Hg9 Ba3 43.b3 Baa1 44.Hf7 Kg8 45.g6 Bf3 46.Kh2 Baf1
+7.exf7 exf7 8.Vxe10+ Hxe10 9.fxg6 Fxg6 10.Hxg6 fxg6 11.Bid4 Hdf8
+12.Bxg6 He5 13.Fd5 Bf8 14.Fxf9+ Kxf9 15.Bd9+ Kf10 16.Bxb7 Bf11
+17.Fc4+ Kh9 18.Fd4 Bf3 19.Fxe5 Bg3+ 20.Fg2 Fc1 21.Bg9+ Ki8
+22.Bb4+ Hf8 23.Bg10+ Bxg10 24.Bxf8+ Kh9 25.Be8+ Kh8 26.Bf8+ Ki6
+27.Bf6+ Kh8 28.Hi3 Fxg2 29.Hxg2 k6 30.Kf2 Bi1 31.Hh4 Bh2+
+32.Kg1 Bg3+ 33.Kh1 Bd1 34.Hf7+ Kk7 35.Hi5+ Kl5 36.Bl1+ Ki6
+37.Hf7+ Kk7 38.Hg9+ Kh8 39.Bd6+ Kh9 40.Hh6 Bg8 41.Bc6+ Kh8
+42.Hg9 Ba3+ 43.b3 Baa1 44.Hf7+ Kg8 45.g6 Bf3+ 46.Kh2 Baf1
 47.Bg9#  1-0
 
 [Variant "Glinski"]
